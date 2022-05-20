@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
-using System.Drawing;
+using System.Windows.Media;
 
 namespace jf_FinalProject.logic
 {
@@ -41,19 +41,19 @@ namespace jf_FinalProject.logic
         /// <c>GREEN</c> attribute is an object of <c>Color</c> and represent green color.
         /// we use it for highlighting line of codes in UI. its a readonly attribute and cant change.
         /// </summary>
-        public readonly Color GREEN = Color.FromArgb(0x4c, 0xe6, 0x00); // #4ce600
+        public readonly Color GREEN = Color.FromRgb(0x4c, 0xe6, 0x00); // #4ce600 
 
         /// <summary>
         /// <c>RED</c> attribute is an object of <c>Color</c> and represent red color.
         /// we use it for highlighting line of codes in UI. its a readonly attribute and cant change.
         /// </summary>
-        public readonly Color RED = Color.FromArgb(0xff, 0x5c, 0x33); // #ff5c33
+        public readonly Color RED = Color.FromRgb(0xff, 0x5c, 0x33); // #ff5c33
 
         /// <summary>
         /// <c>ORANGE</c> attribute is an object of <c>Color</c> and represent orange color.
         /// we use it for highlighting line of codes in UI. its a readonly attribute and cant change.
         /// </summary>
-        public readonly Color ORANGE = Color.FromArgb(0xff, 0xcc, 0x00);
+        public readonly Color ORANGE = Color.FromRgb(0xff, 0xcc, 0x00);
         #endregion
 
         #region Constructor Of Class

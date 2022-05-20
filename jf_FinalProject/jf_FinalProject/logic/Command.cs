@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using System.Windows.Media;
 
 namespace jf_FinalProject.logic
 {
@@ -124,6 +124,7 @@ namespace jf_FinalProject.logic
             this.lineNumber = lineNumber;
             this.bgColor = bgColor;
         }
+        
 
         /// <summary>
         /// this constructor create a Command object just with type
