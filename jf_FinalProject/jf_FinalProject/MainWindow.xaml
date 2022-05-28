@@ -1,110 +1,519 @@
-﻿<Window x:Class="jf_FinalProject.main"
+﻿<Window x:Class="jf_FinalProject.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:jf_FinalProject.Helper"
-        xmlns:vm="clr-namespace:jf_FinalProject.ViewModel"
-        x:Name="ResponsiveWindow"
+        xmlns:local="clr-namespace:jf_FinalProject"
         mc:Ignorable="d"
-        Title="main"
-        Height="700"
-        Width="1350"
-        MinWidth="428"
+        Title="MainWindow" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
+        Background="#292F34"
         WindowStartupLocation="CenterScreen"
-        Background="Transparent">
+        ShowInTaskbar="False"
+        ResizeMode="CanResizeWithGrip"
+        Name="main"
+        >
+    <!--Color of Icons: #ffdc04-->
+    <Border BorderBrush="#292F34" BorderThickness="10,10,10,10" CornerRadius="15" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45" />
+                <RowDefinition Height="18*" />
+                <RowDefinition Height="18*" />
+            </Grid.RowDefinitions>
+            
+            <!--Hamburger icon-->
+            <Button Name="menuButton" Grid.Column="0" Grid.Row="0" Background="Transparent" 
+                    BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}" 
+                    HorizontalAlignment="left" Click="hamburgerButton_Click">
+                <Image Grid.Row="0" Grid.Column="0" Name="hamburgerBackgroundImage"
+                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\hamburger_icon.png" 
+                   HorizontalAlignment="left" Width="30" Height="30" Margin="5"
+                   MouseEnter="HamburgerButton_MouseEnter" MouseLeave="HamburgerButton_MouseLeave" />
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
 
-    <Window.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="/DataTemplates.xaml"/>
-                <ResourceDictionary Source="/Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-			<BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
-		</ResourceDictionary>
-    </Window.Resources>
-
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
-    
-    <Grid>
-        <Border Background="#282D33"
-                BorderBrush="#3A4149"
-                BorderThickness="5"
-                CornerRadius="8,8,0,8" />
-        
-        <!--// Responsive Layouts //-->
-        <ContentControl Content="{Binding}">
-            <ContentControl.Style>
-                <Style TargetType="ContentControl">
-                    <!--// Default Layout //-->
-                    <Setter Property="ContentTemplate" 
-                            Value="{StaticResource Laptop_Layout}" />
+            <!--Shut Down Button-->
+            <Button Name="shutDownButton" Grid.Column="1" Grid.Row="0"  
+                    HorizontalAlignment="Right" Background="Transparent" BorderThickness="0"
+                    BorderBrush="{x:Null}" Foreground="{x:Null}" Click="shutDownButton_Click" >
+                <Image Name="shutdownBackgroundImage" 
+                       Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\shutdown_def.png" 
+                       Width="27" Height="27" Margin="0,0,5,0" 
+                       MouseEnter="shutDownButton_MouseEnter" MouseLeave="shutDownButton_MouseLeave" />
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            
+            <!--Maximize - Minimize Button-->
+            <Button Name="MaxMinButton" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" 
+                    Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}" 
+                    Foreground="{x:Null}" Margin="0,0,35,0" Click="minMaxButton_Click" >
+                <Image Name="maxMinButton" 
+                       Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\max_def.png" 
+                       Width="32" Height="32" Stretch="Fill" Margin="0,0,10,0"
+                       MouseEnter="maxMinButton_MouseEnter" MouseLeave="maxMinButton_MouseLeave" />
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            
+            <!--Menu-->
+            <Border Name="menuBorder" BorderBrush="#292F34" 
+                    Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" BorderThickness="5" 
+                    CornerRadius="10" Margin="5,5,0,5">
+                <Grid 
+                    Width="0" HorizontalAlignment="Left" Background="#3A4149"
+                    Name="menuContainer">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     
-                    <Style.Triggers>
+                    <!--Menu Items-->
+                    <StackPanel VerticalAlignment="Center">
                         
-                        <!--// Desktop layout {width > 1400px} //-->
-                        <DataTrigger Binding="{Binding Path=ActualWidth, 
-                            RelativeSource={RelativeSource AncestorType=Window}, 
-                            Converter={x:Static local:IsGreaterThanConverter.Instance}, 
-                            ConverterParameter=1400}" Value="True">
-                            <Setter Property="ContentTemplate" Value="{StaticResource Desktop_Layout}" />
-                        </DataTrigger>
+                        <!--Atumatic-->
+                        <WrapPanel Name="AutomaticContainer" HorizontalAlignment="left" 
+                                   Margin="0,0,0,0" Width="200">
+                            <Image Name="AutomaticButtonBackgroundImage" 
+                                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\discount_icon.png" 
+                                   HorizontalAlignment="Left" Width="32" Height="32" 
+                                   Margin="10,0,0,0" />
+                            <Label Content="Automatic" HorizontalAlignment="Right" 
+                                   Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
+                            <WrapPanel.Style>
+                                <Style TargetType="WrapPanel">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#292F34" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </WrapPanel.Style>
+                        </WrapPanel>
                         
-                        <!--Tablet Landscape Layout {width < 1200px}-->
-                        <DataTrigger Binding="{Binding Path=ActualWidth, 
-                            RelativeSource={RelativeSource AncestorType=Window}, 
-                            Converter={x:Static local:IsLessThanConverter.Instance}, 
-                            ConverterParameter=1200}" Value="True">
-                            <Setter Property="ContentTemplate" Value="{StaticResource Tablet_Landscape_Layout}" />
-                        </DataTrigger>
-
-                        <!--Tablet Portrait Layout {width < 1024px}-->
-                        <DataTrigger Binding="{Binding Path=ActualWidth, 
-                            RelativeSource={RelativeSource AncestorType=Window}, 
-                            Converter={x:Static local:IsLessThanConverter.Instance}, 
-                            ConverterParameter=1024}" Value="True">
-                            <Setter Property="ContentTemplate" Value="{StaticResource Tablet_Portrait_Layout}" />
-                        </DataTrigger>
-
-                        <!--Mobile Landscape Layout {width < 812px}-->
-                        <DataTrigger Binding="{Binding Path=ActualWidth, 
-                            RelativeSource={RelativeSource AncestorType=Window}, 
-                            Converter={x:Static local:IsLessThanConverter.Instance}, 
-                            ConverterParameter=812}" Value="True">
-                            <Setter Property="ContentTemplate" Value="{StaticResource Mobile_Landscape_Layout}" />
-                        </DataTrigger>
-
-                        <!--Mobile Portrait Layout {width < 667px}-->
-                        <DataTrigger Binding="{Binding Path=ActualWidth, 
-                            RelativeSource={RelativeSource AncestorType=Window}, 
-                            Converter={x:Static local:IsLessThanConverter.Instance}, 
-                            ConverterParameter=667}" Value="True">
-                            <Setter Property="ContentTemplate" Value="{StaticResource Mobile_Portrait_Layout}" />
-                        </DataTrigger>
-                    </Style.Triggers>
+                        <!--Manual-->
+                        <WrapPanel Grid.Row="2" Name="manualContainer" 
+                                   HorizontalAlignment="left" Margin="0,10,0,0" Width="200"  
+                                   Background="#292F34" >
+                            <Image Name="manualButtonBackgroundImage" 
+                                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\dashboard_icon.png" 
+                                   HorizontalAlignment="Left" Width="32" Height="32"
+                                   Margin="10,0,0,0" />
+                            <Label Content="Manual" HorizontalAlignment="Right" 
+                                   Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
+                            <WrapPanel.Style>
+                                <Style TargetType="WrapPanel">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#292F34" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </WrapPanel.Style>
+                        </WrapPanel>
+                        
+                        <!--About-->
+                        <WrapPanel Grid.Row="3" Name="aboutContainer" 
+                                   HorizontalAlignment="left" Margin="0,10,0,0" Width="200">
+                            <Image Name="aboutButtonBackgroundImage" 
+                                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\about.png" 
+                                   HorizontalAlignment="Left" Width="32" Height="32" 
+                                   Margin="10,0,0,0" />
+                            <Label Content="About" HorizontalAlignment="Right" 
+                                   Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
+                            <WrapPanel.Style>
+                                <Style TargetType="WrapPanel">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#292F34" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </WrapPanel.Style>
+                        </WrapPanel>
+                    </StackPanel>
                     
-                </Style>
-            </ContentControl.Style>
-        </ContentControl>
-        
-        <!--// Side Menu // [for Tablet, Mobile Layouts]-->
-        <ContentControl Content="{Binding}" Visibility="{Binding IsPanelVisible, Converter={StaticResource BooleanToVisibility}}">
-            <ContentControl.Style>
-                <Style TargetType="ContentControl">
-                    <Setter Property="ContentTemplate" 
-                            Value="{StaticResource MenuTemplate}" />
-                </Style>
-            </ContentControl.Style>
-        </ContentControl>
+                    <!--Bottom Description-->
+                    <Label Grid.Row="1" Content="ToklanTos" VerticalAlignment="Bottom" 
+                           HorizontalAlignment="Center" Foreground="#DCE0E4" 
+                           FontSize="11" />
+                </Grid>
+            </Border>
 
-        <!--// Close App Button //-->
-        <Button Command="{Binding CloseAppCommand}"
-                CommandParameter="{Binding ElementName=ResponsiveWindow}"
-                Style="{StaticResource CloseAppStyle}" />
-    </Grid>
+            <!--Main Top Border--> 
+            <Border Name="mainTopBorder" Background="#3A4149" 
+                    Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="1" BorderThickness="5" 
+                    CornerRadius="10" Margin="5,0,0,0" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Hydrau" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Unloading" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Brake" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Hand Brake" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="4" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Load" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="5" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Unload" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="6" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Fan" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="7" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Conditioner" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="8" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Up" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="9" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Down" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="10" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Watering" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="11" Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="ConstP" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="12"  Grid.Row="0" Margin="0,45,0,0">
+                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
+                        <Label Content="Back" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Name="mainBottomBorder" Background="#3A4149" 
+                    Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
+                    CornerRadius="10" Margin="5,0,0,0" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--Brake Button-->
+                    <Button Grid.Column="0" Grid.Row="0" Content="BRAKE" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="Background" Value="#292F34" />
+                                        <Setter Property="Foreground" Value="#DCE0E4" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="#292F34" CornerRadius="20">
+                                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <!--HYDRAULIC STATION Button-->
+                    <Button Grid.Column="0" Grid.Row="1" Content="HYDRAULIC STATION" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="Background" Value="#292F34" />
+                                        <Setter Property="Foreground" Value="#DCE0E4" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="#292F34" CornerRadius="20">
+                                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <!--UNLOADING (X) Button-->
+                    <Button Grid.Column="0" Grid.Row="2" Content="UNLOADING (X)" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="Background" Value="#292F34" />
+                                        <Setter Property="Foreground" Value="#DCE0E4" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="#292F34" CornerRadius="20">
+                                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <!--CONSTANT PRESSURE Button-->
+                    <Button Grid.Column="0" Grid.Row="3" Content="CONSTANT PRESSURE" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="Background" Value="#292F34" />
+                                        <Setter Property="Foreground" Value="#DCE0E4" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="#292F34" CornerRadius="20">
+                                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    
+                    <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Content="Water Tank" Foreground="#DCE0E4" FontSize="12" />
+                        <Button Grid.Column="0" Grid.Row="1" Content="UP (I)" Background="#FFDD00" Margin="10" >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                                                    <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Cursor" Value="Hand" />
+                                            <Setter Property="Background" Value="#292F34" />
+                                            <Setter Property="Foreground" Value="#DCE0E4" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="#292F34" CornerRadius="20">
+                                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Grid.Column="1" Grid.Row="1" Content="DOWN (D)" Background="#FFDD00" Margin="10" >
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                                                    <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Cursor" Value="Hand" />
+                                            <Setter Property="Background" Value="#292F34" />
+                                            <Setter Property="Foreground" Value="#DCE0E4" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="#292F34" CornerRadius="20">
+                                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                          VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

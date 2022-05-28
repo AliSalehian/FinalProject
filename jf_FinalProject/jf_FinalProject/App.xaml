@@ -4,11 +4,6 @@
              xmlns:local="clr-namespace:jf_FinalProject"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/DataTemplates.xaml" />
-                <ResourceDictionary Source="/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+         
     </Application.Resources>
 </Application>

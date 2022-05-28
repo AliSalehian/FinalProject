@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F7512227-B283-44AB-943D-2B62B2CA61FD}</ProjectGuid>
+    <ProjectGuid>{E4A3BCF4-27FC-43FD-8859-E39638BD5959}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>jf_FinalProject</RootNamespace>
     <AssemblyName>jf_FinalProject</AssemblyName>
@@ -55,38 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helper\Converter.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\RelayCommand.cs" />
-    <Page Include="DataTemplates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="logic\Command.cs" />
-    <Compile Include="logic\Compiler.cs" />
-    <Compile Include="logic\CustomError.cs" />
-    <Compile Include="logic\Explanation.cs" />
-    <Compile Include="logic\Node.cs" />
-    <Compile Include="logic\Performable.cs" />
-    <Compile Include="logic\Runner.cs" />
-    <Compile Include="logic\Sensor.cs" />
-    <Compile Include="logic\SensorHandler.cs" />
-    <Compile Include="logic\SymbolTable.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Page Include="Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -115,35 +95,30 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\analytics_icon.png" />
-    <Resource Include="Assets\calendar_icon.png" />
-    <Resource Include="Assets\categories_icon.png" />
-    <Resource Include="Assets\close_menu_def.png" />
-    <Resource Include="Assets\close_menu_mo.png" />
-    <Resource Include="Assets\dashboard_icon.png" />
-    <Resource Include="Assets\delivery_icon.png" />
-    <Resource Include="Assets\Devices_Image.png" />
-    <Resource Include="Assets\discount_icon.png" />
     <Resource Include="Assets\hamburger_icon.png" />
-    <Resource Include="Assets\hamburger_mo.png" />
-    <Resource Include="Assets\line_chart.png" />
-    <Resource Include="Assets\max_def.png" />
-    <Resource Include="Assets\max_mo.png" />
-    <Resource Include="Assets\order32.png" />
-    <Resource Include="Assets\product_icon.png" />
-    <Resource Include="Assets\reports_icon.png" />
-    <Resource Include="Assets\sales_icon.png" />
     <Resource Include="Assets\shutdown_def.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Assets\shutdown_mo.png" />
-    <Resource Include="Assets\stats_icon.png" />
-    <Resource Include="Assets\stocks_icon.png" />
-    <Resource Include="Assets\user_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Manual_icon.png" />
+    <Resource Include="Assets\max_def.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\automation_icon %281%29.png" />
+    <Resource Include="Assets\max_mo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\hamburger_mo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\dashboard_icon.png" />
+    <Resource Include="Assets\discount_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\error.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
