@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,26 +15,56 @@ namespace jf_FinalProject
     public partial class MainWindow : Window
     {
         private bool IsMenuOpen { get; set; }
+
+        public bool IsManual { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             IsMenuOpen = false;
+            IsManual = true;
         }
 
         private void shutDownButton_Click(object sender, EventArgs e) { Application.Current.Shutdown(); }
 
-        private void shutDownButton_MouseEnter(object sender, EventArgs e) { shutdownBackgroundImage.Source = new BitmapImage(new Uri(@"D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\shutdown_mo.png")); }
+        private void shutDownButton_MouseEnter(object sender, EventArgs e) { shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_mo.png"))); }
 
-        private void shutDownButton_MouseLeave(object sender, EventArgs e) { shutdownBackgroundImage.Source = new BitmapImage(new Uri(@"D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\shutdown_def.png")); }
+        private void shutDownButton_MouseLeave(object sender, EventArgs e) { shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_def.png"))); }
 
-        private void maxMinButton_MouseEnter(object sender, EventArgs e) { maxMinButton.Source = new BitmapImage(new Uri(@"D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\max_mo.png")); }
+        private void maxMinButton_MouseEnter(object sender, EventArgs e) { maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_mo.png"))); }
 
-        private void maxMinButton_MouseLeave(object sender, EventArgs e) { maxMinButton.Source = new BitmapImage(new Uri(@"D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\max_def.png")); }
+        private void maxMinButton_MouseLeave(object sender, EventArgs e) { maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_def.png"))); }
 
-        private void HamburgerButton_MouseEnter(object sender, EventArgs e) { hamburgerBackgroundImage.Source = new BitmapImage(new Uri(@"D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\hamburger_mo.png")); }
+        private void HamburgerButton_MouseEnter(object sender, EventArgs e) { hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_mo.png"))); }
 
-        private void HamburgerButton_MouseLeave(object sender, EventArgs e) { hamburgerBackgroundImage.Source = new BitmapImage(new Uri(@"D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\hamburger_icon.png")); }
+        private void HamburgerButton_MouseLeave(object sender, EventArgs e) { hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_icon.png"))); }
 
+        private void PressureUpButton_MouseEnter(object sender, EventArgs e) { pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_gray.png"))); }
+
+        private void PressureUpButton_MouseLeave(object sender, EventArgs e) { pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_yellow.png"))); }
+
+        private void PressureDownButton_MouseEnter(object sender, EventArgs e) { pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_gray.png"))); }
+
+        private void PressureDownButton_MouseLeave(object sender, EventArgs e) { pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_yellow.png"))); }
+
+        private void AutomaticButton_Click(object sender, EventArgs e)
+        {
+            mainBottomBorderManual.Visibility = Visibility.Hidden;
+            mainBottomBorderAtomatic.Visibility = Visibility.Visible;
+
+            manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#3A4149");
+            AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#292F34");
+            IsManual = false;
+        }
+
+        private void ManualButton_Click(object sender, EventArgs e)
+        {
+            mainBottomBorderManual.Visibility = Visibility.Visible;
+            mainBottomBorderAtomatic.Visibility = Visibility.Hidden;
+
+            manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#292F34"); 
+            AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#3A4149");
+            IsManual = true;
+        }
         private void minMaxButton_Click(object sender, EventArgs e)
         {
             if (main.WindowState == WindowState.Normal)
@@ -71,7 +102,8 @@ namespace jf_FinalProject
                 opacityAnimation.From = 0.0;
                 opacityAnimation.To = 1.0;
                 Grid.SetColumn(mainTopBorder, 1);
-                Grid.SetColumn(mainBottomBorder, 1);
+                Grid.SetColumn(mainBottomBorderManual, 1);
+                Grid.SetColumn(mainBottomBorderAtomatic, 1);
             }
             borderColor.Duration = TimeSpan.FromSeconds(duration);
             widthAnimation.Duration = TimeSpan.FromSeconds(duration);
@@ -100,7 +132,8 @@ namespace jf_FinalProject
         {
             await Task.Delay(700);
             Grid.SetColumn(mainTopBorder, columnNumber);
-            Grid.SetColumn(mainBottomBorder, columnNumber);
+            Grid.SetColumn(mainBottomBorderManual, columnNumber);
+            Grid.SetColumn(mainBottomBorderAtomatic, columnNumber);
         }
     }
 }

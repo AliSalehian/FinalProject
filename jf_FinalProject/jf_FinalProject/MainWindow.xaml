@@ -1,19 +1,30 @@
-﻿<Window x:Class="jf_FinalProject.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:jf_FinalProject"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="jf_FinalProject.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
+        Title="MainWindow" MinHeight="700" MinWidth="1200"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="#292F34"
         WindowStartupLocation="CenterScreen"
         ShowInTaskbar="False"
         ResizeMode="CanResizeWithGrip"
-        Name="main"
+        x:Name="main"
+        WindowState="Maximized"
         >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/GlobalStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <!--Color of Icons: #ffdc04-->
     <Border BorderBrush="#292F34" BorderThickness="10,10,10,10" CornerRadius="15" >
         <Grid>
@@ -26,171 +37,85 @@
                 <RowDefinition Height="18*" />
                 <RowDefinition Height="18*" />
             </Grid.RowDefinitions>
-            
+
             <!--Hamburger icon-->
-            <Button Name="menuButton" Grid.Column="0" Grid.Row="0" Background="Transparent" 
-                    BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}" 
-                    HorizontalAlignment="left" Click="hamburgerButton_Click">
-                <Image Grid.Row="0" Grid.Column="0" Name="hamburgerBackgroundImage"
+            <Button x:Name="menuButton" Grid.Column="0" Grid.Row="0"
+                    HorizontalAlignment="left" Click="hamburgerButton_Click" Style="{StaticResource FunctionalBtn}" >
+                <Image Grid.Row="0" Grid.Column="0" x:Name="hamburgerBackgroundImage"
                    Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\hamburger_icon.png" 
                    HorizontalAlignment="left" Width="30" Height="30" Margin="5"
                    MouseEnter="HamburgerButton_MouseEnter" MouseLeave="HamburgerButton_MouseLeave" />
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
             </Button>
 
             <!--Shut Down Button-->
-            <Button Name="shutDownButton" Grid.Column="1" Grid.Row="0"  
-                    HorizontalAlignment="Right" Background="Transparent" BorderThickness="0"
-                    BorderBrush="{x:Null}" Foreground="{x:Null}" Click="shutDownButton_Click" >
-                <Image Name="shutdownBackgroundImage" 
+            <Button x:Name="shutDownButton" Grid.Column="1" Grid.Row="0"  
+                    HorizontalAlignment="Right"
+                    Click="shutDownButton_Click" Style="{StaticResource FunctionalBtn}" >
+                <Image x:Name="shutdownBackgroundImage" 
                        Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\shutdown_def.png" 
                        Width="27" Height="27" Margin="0,0,5,0" 
                        MouseEnter="shutDownButton_MouseEnter" MouseLeave="shutDownButton_MouseLeave" />
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
             </Button>
-            
+
             <!--Maximize - Minimize Button-->
-            <Button Name="MaxMinButton" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" 
-                    Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}" 
-                    Foreground="{x:Null}" Margin="0,0,35,0" Click="minMaxButton_Click" >
-                <Image Name="maxMinButton" 
+            <Button x:Name="MaxMinButton" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" 
+                    Margin="0,0,35,0" Click="minMaxButton_Click" Style="{StaticResource FunctionalBtn}" >
+                <Image x:Name="maxMinButton" 
                        Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\max_def.png" 
                        Width="32" Height="32" Stretch="Fill" Margin="0,0,10,0"
                        MouseEnter="maxMinButton_MouseEnter" MouseLeave="maxMinButton_MouseLeave" />
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
             </Button>
-            
+
             <!--Menu-->
-            <Border Name="menuBorder" BorderBrush="#292F34" 
+            <Border x:Name="menuBorder" BorderBrush="#292F34" 
                     Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" BorderThickness="5" 
                     CornerRadius="10" Margin="5,5,0,5">
                 <Grid 
                     Width="0" HorizontalAlignment="Left" Background="#3A4149"
-                    Name="menuContainer">
+                    x:Name="menuContainer">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    
+
                     <!--Menu Items-->
                     <StackPanel VerticalAlignment="Center">
-                        
-                        <!--Atumatic-->
-                        <WrapPanel Name="AutomaticContainer" HorizontalAlignment="left" 
-                                   Margin="0,0,0,0" Width="200">
-                            <Image Name="AutomaticButtonBackgroundImage" 
+
+                        <!--Automatic-->
+                        <WrapPanel x:Name="AutomaticContainer" HorizontalAlignment="left" 
+                                   Margin="0,0,0,0" Width="200" Style="{StaticResource InMenuBtn}" MouseDown="AutomaticButton_Click" >
+                            <Image x:Name="AutomaticButtonBackgroundImage" 
                                    Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\discount_icon.png" 
                                    HorizontalAlignment="Left" Width="32" Height="32" 
                                    Margin="10,0,0,0" />
                             <Label Content="Automatic" HorizontalAlignment="Right" 
                                    Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
-                            <WrapPanel.Style>
-                                <Style TargetType="WrapPanel">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#292F34" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </WrapPanel.Style>
                         </WrapPanel>
-                        
+
                         <!--Manual-->
-                        <WrapPanel Grid.Row="2" Name="manualContainer" 
+                        <WrapPanel Grid.Row="2" x:Name="manualContainer" 
                                    HorizontalAlignment="left" Margin="0,10,0,0" Width="200"  
-                                   Background="#292F34" >
-                            <Image Name="manualButtonBackgroundImage" 
+                                   Background="#292F34" Style="{StaticResource InMenuBtn}" MouseDown="ManualButton_Click" >
+                            <Image x:Name="manualButtonBackgroundImage" 
                                    Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\dashboard_icon.png" 
                                    HorizontalAlignment="Left" Width="32" Height="32"
                                    Margin="10,0,0,0" />
                             <Label Content="Manual" HorizontalAlignment="Right" 
                                    Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
-                            <WrapPanel.Style>
-                                <Style TargetType="WrapPanel">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#292F34" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </WrapPanel.Style>
                         </WrapPanel>
-                        
+
                         <!--About-->
-                        <WrapPanel Grid.Row="3" Name="aboutContainer" 
-                                   HorizontalAlignment="left" Margin="0,10,0,0" Width="200">
-                            <Image Name="aboutButtonBackgroundImage" 
+                        <WrapPanel Grid.Row="3" x:Name="aboutContainer" 
+                                   HorizontalAlignment="left" Margin="0,10,0,0" Width="200" Style="{StaticResource InMenuBtn}">
+                            <Image x:Name="aboutButtonBackgroundImage" 
                                    Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\about.png" 
                                    HorizontalAlignment="Left" Width="32" Height="32" 
                                    Margin="10,0,0,0" />
                             <Label Content="About" HorizontalAlignment="Right" 
                                    Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
-                            <WrapPanel.Style>
-                                <Style TargetType="WrapPanel">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#292F34" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </WrapPanel.Style>
                         </WrapPanel>
                     </StackPanel>
-                    
+
                     <!--Bottom Description-->
                     <Label Grid.Row="1" Content="ToklanTos" VerticalAlignment="Bottom" 
                            HorizontalAlignment="Center" Foreground="#DCE0E4" 
@@ -198,8 +123,8 @@
                 </Grid>
             </Border>
 
-            <!--Main Top Border--> 
-            <Border Name="mainTopBorder" Background="#3A4149" 
+            <!--Main Top Border-->
+            <Border x:Name="mainTopBorder" Background="#3A4149" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" >
                 <Grid>
@@ -277,7 +202,8 @@
                 </Grid>
             </Border>
 
-            <Border Name="mainBottomBorder" Background="#3A4149" 
+            <!--Column One in Bottom Border-->
+            <Border x:Name="mainBottomBorderManual" Background="#3A4149" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" >
                 <Grid>
@@ -288,231 +214,136 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <!--Brake Button-->
-                    <Button Grid.Column="0" Grid.Row="0" Content="BRAKE" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
-                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Cursor" Value="Hand" />
-                                        <Setter Property="Background" Value="#292F34" />
-                                        <Setter Property="Foreground" Value="#DCE0E4" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border Background="#292F34" CornerRadius="20">
-                                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                    <Border x:Name="mainBottomBorderColumn1Manual" Background="#292F34" 
+                    Grid.Column="0" BorderThickness="5" 
+                    CornerRadius="10" Margin="0,5,10,0">
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <!--Brake Button-->
+                            <Button Grid.Row="0" Content="BRAKE" Margin="40,10,40,10" Background="#FFDD00" FontSize="11" Style="{StaticResource YelloBtn}" />
 
-                    <!--HYDRAULIC STATION Button-->
-                    <Button Grid.Column="0" Grid.Row="1" Content="HYDRAULIC STATION" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
-                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Cursor" Value="Hand" />
-                                        <Setter Property="Background" Value="#292F34" />
-                                        <Setter Property="Foreground" Value="#DCE0E4" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border Background="#292F34" CornerRadius="20">
-                                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                            <!--HYDRAULIC STATION Button-->
+                            <Button Grid.Row="1" Content="HYDRAULIC STATION" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
 
-                    <!--UNLOADING (X) Button-->
-                    <Button Grid.Column="0" Grid.Row="2" Content="UNLOADING (X)" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
-                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Cursor" Value="Hand" />
-                                        <Setter Property="Background" Value="#292F34" />
-                                        <Setter Property="Foreground" Value="#DCE0E4" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border Background="#292F34" CornerRadius="20">
-                                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                            <!--UNLOADING (X) Button-->
+                            <Button Grid.Row="2" Content="UNLOADING (X)" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
 
-                    <!--CONSTANT PRESSURE Button-->
-                    <Button Grid.Column="0" Grid.Row="3" Content="CONSTANT PRESSURE" Margin="40,10,40,10" Background="#FFDD00" FontSize="11">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="20">
-                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Cursor" Value="Hand" />
-                                        <Setter Property="Background" Value="#292F34" />
-                                        <Setter Property="Foreground" Value="#DCE0E4" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border Background="#292F34" CornerRadius="20">
-                                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    
-                    <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                            <!--CONSTANT PRESSURE Button-->
+                            <Button Grid.Row="3" Content="CONSTANT PRESSURE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
+                        </Grid>
+                    </Border>
 
-                        <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Content="Water Tank" Foreground="#DCE0E4" FontSize="12" />
-                        <Button Grid.Column="0" Grid.Row="1" Content="UP (I)" Background="#FFDD00" Margin="10" >
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="20">
-                                                    <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Cursor" Value="Hand" />
-                                            <Setter Property="Background" Value="#292F34" />
-                                            <Setter Property="Foreground" Value="#DCE0E4" />
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Border Background="#292F34" CornerRadius="20">
-                                                            <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button Grid.Column="1" Grid.Row="1" Content="DOWN (D)" Background="#FFDD00" Margin="10" >
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="20">
-                                                    <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Cursor" Value="Hand" />
-                                            <Setter Property="Background" Value="#292F34" />
-                                            <Setter Property="Foreground" Value="#DCE0E4" />
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Border Background="#292F34" CornerRadius="20">
-                                                            <ContentPresenter HorizontalAlignment="Center" 
-                                                          VerticalAlignment="Center"/>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </Grid>
+                    <!--Column Two in Bottom Border-->
+                    <Border x:Name="mainBottomBorderColumn2Manual" Background="#292F34" 
+                    Grid.Column="1" BorderThickness="5" 
+                    CornerRadius="10" Margin="0,5,10,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!--Top Box-->
+                            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="#3A4149" Margin="5" CornerRadius="10" />
+                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Content="Water Tank" Foreground="#DCE0E4" FontSize="12" Margin="10,0,0,0" />
+                            <Button Grid.Column="0" Grid.Row="1" Content="UP" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Column="1" Grid.Row="1" Content="DOWN" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
+
+                            <!--Middle Box-->
+                            <Border Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="#3A4149" Margin="5" CornerRadius="10" />
+                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Content="Static Torque" Foreground="#DCE0E4" FontSize="12" Margin="10,0,0,0" />
+                            <Button Grid.Column="0" Grid.Row="3" Content="UNLOAD" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Column="1" Grid.Row="3" Content="LOAD" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
+
+                            <!--Bottom Box-->
+                            <Border Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="#3A4149" Margin="5" CornerRadius="10" />
+                            <Button Grid.Column="0" Grid.Row="4" Content="FAN START" Margin="10,10,0,10" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Column="1" Grid.Row="4" Content="CONDITIONER" Margin="5,10,0,10" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Column="2" Grid.Row="4" Content="WATERING" Margin="5,10,10,10" Style="{StaticResource YelloBtn}" />
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="mainBottomBorderColumn3Manual" Background="#292F34" 
+                    Grid.Column="2" BorderThickness="5" 
+                    CornerRadius="10" Margin="0,5,10,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Column="0" Grid.Row="0" Background="#3A4149" Margin="5" CornerRadius="10" />
+                            <Grid Grid.Column="0" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" >
+                                    <Button Margin="5,10,5,0" Style="{StaticResource FunctionalBtn}">
+                                        <Image Grid.Row="0" Grid.Column="0" x:Name="pressureUpBtn"
+                                           Source="Assets\flesh_up_yellow.png" 
+                                           VerticalAlignment="Top" Width="24" Height="24"
+                                           MouseEnter="PressureUpButton_MouseEnter" MouseLeave="PressureUpButton_MouseLeave" />
+                                    </Button>
+
+                                    <Button Margin="5,0,5,10" Style="{StaticResource FunctionalBtn}">
+                                        <Image Grid.Row="0" Grid.Column="0" x:Name="pressureDownBtn"
+                                           Source="Assets\flesh_down_yellow.png" 
+                                           VerticalAlignment="Bottom" Width="24" Height="24"
+                                           MouseEnter="PressureDownButton_MouseEnter" MouseLeave="PressureDownButton_MouseLeave" />
+                                    </Button>
+                                </StackPanel>
+
+                                <Slider Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </Border>
                 </Grid>
+            </Border>
+
+            <Border x:Name="mainBottomBorderAtomatic" Background="#3A4149" 
+                    Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
+                    CornerRadius="10" Margin="5,0,0,0" Visibility="Hidden">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="ali" Background="#292F34" BorderThickness="6" CornerRadius="10" Margin="5" Padding="5">
+                        <RichTextBox VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" BorderThickness="0" Background="#292F34" >
+                            <RichTextBox.Resources>
+                                <Style TargetType="{x:Type ScrollBar}">
+                                    <Setter Property="Background" Value="#3A4149"/>
+                                    <Setter Property="BorderBrush" Value="#3A4149"/>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#3A4149" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RichTextBox.Resources>
+                        </RichTextBox>
+                    </Border>
+                </Grid>
+
             </Border>
         </Grid>
     </Border>
