@@ -2,9 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:jf_FinalProject"
                     >
+    <!--color defenition-->
+    <SolidColorBrush x:Key="darkBackGround" Color="#292F34" />
+    <SolidColorBrush x:Key="lightBackGround" Color="#3A4149" />
+    <SolidColorBrush x:Key="grayBackGround" Color="#DCE0E4" />
+    <SolidColorBrush x:Key="customYellow" Color="#FFDD00" />
 
+    <!--yellow buttons-->
     <Style x:Key="YelloBtn" TargetType="Button">
-        <Setter Property="Background" Value="#FFDD00" />
+        <Setter Property="Background" Value="{StaticResource customYellow}" />
         <Setter Property="FontSize" Value="10" />
         <Setter Property="Template">
             <Setter.Value>
@@ -19,11 +25,11 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="Hand" />
-                <Setter Property="Background" Value="#DCE0E4" />
+                <Setter Property="Background" Value="{StaticResource grayBackGround}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Background="#DCE0E4" CornerRadius="10">
+                            <Border Background="{StaticResource grayBackGround}" CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" 
                                                               VerticalAlignment="Center"/>
                             </Border>
@@ -34,6 +40,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--functional buttons-->
     <Style x:Key="FunctionalBtn" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -56,12 +63,45 @@
         </Style.Triggers>
     </Style>
 
+    <!--buttons in menu-->
     <Style x:Key="InMenuBtn" TargetType="WrapPanel">
+        <Setter Property="Cursor" Value="Hand" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#292F34" />
+                <Setter Property="Cursor" Value="Hand" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+    
+    <!--label of status in top border-->
+    <Style x:Key="StatusLabel" TargetType="Label">
+        <Setter Property="Foreground" Value="{StaticResource grayBackGround}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="10" />
+    </Style>
+    
+    <!--error image-->
+    <Style x:Key="ErrorImage" TargetType="Image">
+        <Setter Property="Source" Value="..\..\Assets\error.png" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Height" Value="45" />
+        <Setter Property="Width" Value="45" />
+    </Style>
+    
+    <!--button image in menu-->
+    <Style x:Key="ButtonImageInMenu" TargetType="Image">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="10,0,0,0" />
+    </Style>
+    
+    <!--button label in menu-->
+    <Style x:Key="ButtonLabelInMenu" TargetType="Label">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Foreground" Value="{StaticResource grayBackGround}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Margin" Value="15,0,0,5" />
     </Style>
 
 </ResourceDictionary>

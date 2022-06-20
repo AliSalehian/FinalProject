@@ -26,7 +26,7 @@
     </Window.Resources>
 
     <!--Color of Icons: #ffdc04-->
-    <Border BorderBrush="#292F34" BorderThickness="10,10,10,10" CornerRadius="15" >
+    <Border BorderBrush="{StaticResource darkBackGround}" BorderThickness="10,10,10,10" CornerRadius="15" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
@@ -40,9 +40,9 @@
 
             <!--Hamburger icon-->
             <Button x:Name="menuButton" Grid.Column="0" Grid.Row="0"
-                    HorizontalAlignment="left" Click="hamburgerButton_Click" Style="{StaticResource FunctionalBtn}" >
+                    HorizontalAlignment="left" Click="HamburgerButton_Click" Style="{StaticResource FunctionalBtn}" >
                 <Image Grid.Row="0" Grid.Column="0" x:Name="hamburgerBackgroundImage"
-                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\hamburger_icon.png" 
+                   Source="..\..\Assets\hamburger_icon.png" 
                    HorizontalAlignment="left" Width="30" Height="30" Margin="5"
                    MouseEnter="HamburgerButton_MouseEnter" MouseLeave="HamburgerButton_MouseLeave" />
             </Button>
@@ -50,28 +50,28 @@
             <!--Shut Down Button-->
             <Button x:Name="shutDownButton" Grid.Column="1" Grid.Row="0"  
                     HorizontalAlignment="Right"
-                    Click="shutDownButton_Click" Style="{StaticResource FunctionalBtn}" >
+                    Click="ShutDownButton_Click" Style="{StaticResource FunctionalBtn}" >
                 <Image x:Name="shutdownBackgroundImage" 
-                       Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\shutdown_def.png" 
+                       Source="..\..\Assets\shutdown_def.png" 
                        Width="27" Height="27" Margin="0,0,5,0" 
-                       MouseEnter="shutDownButton_MouseEnter" MouseLeave="shutDownButton_MouseLeave" />
+                       MouseEnter="ShutDownButton_MouseEnter" MouseLeave="ShutDownButton_MouseLeave" />
             </Button>
 
             <!--Maximize - Minimize Button-->
             <Button x:Name="MaxMinButton" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" 
-                    Margin="0,0,35,0" Click="minMaxButton_Click" Style="{StaticResource FunctionalBtn}" >
+                    Margin="0,0,35,0" Click="MinMaxButton_Click" Style="{StaticResource FunctionalBtn}" >
                 <Image x:Name="maxMinButton" 
-                       Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\max_def.png" 
+                       Source="..\..\Assets\max_def.png" 
                        Width="32" Height="32" Stretch="Fill" Margin="0,0,10,0"
-                       MouseEnter="maxMinButton_MouseEnter" MouseLeave="maxMinButton_MouseLeave" />
+                       MouseEnter="MaxMinButton_MouseEnter" MouseLeave="MaxMinButton_MouseLeave" />
             </Button>
 
             <!--Menu-->
-            <Border x:Name="menuBorder" BorderBrush="#292F34" 
+            <Border x:Name="menuBorder" BorderBrush="{StaticResource darkBackGround}" 
                     Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" BorderThickness="5" 
                     CornerRadius="10" Margin="5,5,0,5">
                 <Grid 
-                    Width="0" HorizontalAlignment="Left" Background="#3A4149"
+                    Width="0" HorizontalAlignment="Left" Background="{StaticResource lightBackGround}"
                     x:Name="menuContainer">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -85,11 +85,9 @@
                         <WrapPanel x:Name="AutomaticContainer" HorizontalAlignment="left" 
                                    Margin="0,0,0,0" Width="200" Style="{StaticResource InMenuBtn}" MouseDown="AutomaticButton_Click" >
                             <Image x:Name="AutomaticButtonBackgroundImage" 
-                                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\discount_icon.png" 
-                                   HorizontalAlignment="Left" Width="32" Height="32" 
-                                   Margin="10,0,0,0" />
-                            <Label Content="Automatic" HorizontalAlignment="Right" 
-                                   Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
+                                   Source="..\..\Assets\discount_icon.png" 
+                                   Style="{StaticResource ButtonImageInMenu}"/>
+                            <Label Content="Automatic" Style="{StaticResource ButtonLabelInMenu}"/>
                         </WrapPanel>
 
                         <!--Manual-->
@@ -97,34 +95,30 @@
                                    HorizontalAlignment="left" Margin="0,10,0,0" Width="200"  
                                    Background="#292F34" Style="{StaticResource InMenuBtn}" MouseDown="ManualButton_Click" >
                             <Image x:Name="manualButtonBackgroundImage" 
-                                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\dashboard_icon.png" 
-                                   HorizontalAlignment="Left" Width="32" Height="32"
-                                   Margin="10,0,0,0" />
-                            <Label Content="Manual" HorizontalAlignment="Right" 
-                                   Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
+                                   Source="..\..\Assets\dashboard_icon.png" 
+                                   Style="{StaticResource ButtonImageInMenu}"/>
+                            <Label Content="Manual" Style="{StaticResource ButtonLabelInMenu}"/>
                         </WrapPanel>
 
                         <!--About-->
                         <WrapPanel Grid.Row="3" x:Name="aboutContainer" 
                                    HorizontalAlignment="left" Margin="0,10,0,0" Width="200" Style="{StaticResource InMenuBtn}">
                             <Image x:Name="aboutButtonBackgroundImage" 
-                                   Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\about.png" 
-                                   HorizontalAlignment="Left" Width="32" Height="32" 
-                                   Margin="10,0,0,0" />
-                            <Label Content="About" HorizontalAlignment="Right" 
-                                   Foreground="#DCE0E4" FontSize="18" Margin="15,0,0,5" />
+                                   Source="..\..\Assets\about.png" 
+                                   Style="{StaticResource ButtonImageInMenu}" />
+                            <Label Content="About" Style="{StaticResource ButtonLabelInMenu}"/>
                         </WrapPanel>
                     </StackPanel>
 
                     <!--Bottom Description-->
                     <Label Grid.Row="1" Content="ToklanTos" VerticalAlignment="Bottom" 
-                           HorizontalAlignment="Center" Foreground="#DCE0E4" 
+                           HorizontalAlignment="Center" Foreground="{StaticResource grayBackGround}" 
                            FontSize="11" />
                 </Grid>
             </Border>
 
             <!--Main Top Border-->
-            <Border x:Name="mainTopBorder" Background="#3A4149" 
+            <Border x:Name="mainTopBorder" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" >
                 <Grid>
@@ -148,62 +142,62 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Hydrau" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Hydrau" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Unloading" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Unloading" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="2" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Brake" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Brake" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="3" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Hand Brake" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Hand Brake" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="4" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Load" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Load" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="5" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Unload" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Unload" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="6" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Fan" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Fan" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="7" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Conditioner" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Conditioner" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="8" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Up" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Up" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="9" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Down" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Down" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="10" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Watering" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Watering" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="11" Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="ConstP" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="ConstP" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="12"  Grid.Row="0" Margin="0,45,0,0">
-                        <Image Source="D:\uni\project\code\FinalProject\jf_FinalProject\jf_FinalProject\Assets\error.png" HorizontalAlignment="Center" Width="45" Height="45" />
-                        <Label Content="Back" Foreground="#DCE0E4" HorizontalAlignment="Center" FontSize="10" />
+                        <Image Style="{StaticResource ErrorImage}" />
+                        <Label Content="Back" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
                 </Grid>
             </Border>
 
             <!--Column One in Bottom Border-->
-            <Border x:Name="mainBottomBorderManual" Background="#3A4149" 
+            <Border x:Name="mainBottomBorderManual" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" >
                 <Grid>
@@ -225,7 +219,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <!--Brake Button-->
-                            <Button Grid.Row="0" Content="BRAKE" Margin="40,10,40,10" Background="#FFDD00" FontSize="11" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Row="0" Content="BRAKE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
 
                             <!--HYDRAULIC STATION Button-->
                             <Button Grid.Row="1" Content="HYDRAULIC STATION" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
@@ -257,19 +251,19 @@
                             </Grid.RowDefinitions>
 
                             <!--Top Box-->
-                            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="#3A4149" Margin="5" CornerRadius="10" />
-                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Content="Water Tank" Foreground="#DCE0E4" FontSize="12" Margin="10,0,0,0" />
+                            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" />
+                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Content="Water Tank" Foreground="{StaticResource grayBackGround}" FontSize="12" Margin="10,0,0,0" />
                             <Button Grid.Column="0" Grid.Row="1" Content="UP" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
                             <Button Grid.Column="1" Grid.Row="1" Content="DOWN" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
 
                             <!--Middle Box-->
-                            <Border Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="#3A4149" Margin="5" CornerRadius="10" />
-                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Content="Static Torque" Foreground="#DCE0E4" FontSize="12" Margin="10,0,0,0" />
+                            <Border Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" />
+                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Content="Static Torque" Foreground="{StaticResource grayBackGround}" FontSize="12" Margin="10,0,0,0" />
                             <Button Grid.Column="0" Grid.Row="3" Content="UNLOAD" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
                             <Button Grid.Column="1" Grid.Row="3" Content="LOAD" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
 
                             <!--Bottom Box-->
-                            <Border Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="#3A4149" Margin="5" CornerRadius="10" />
+                            <Border Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" />
                             <Button Grid.Column="0" Grid.Row="4" Content="FAN START" Margin="10,10,0,10" Style="{StaticResource YelloBtn}" />
                             <Button Grid.Column="1" Grid.Row="4" Content="CONDITIONER" Margin="5,10,0,10" Style="{StaticResource YelloBtn}" />
                             <Button Grid.Column="2" Grid.Row="4" Content="WATERING" Margin="5,10,10,10" Style="{StaticResource YelloBtn}" />
@@ -289,7 +283,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Column="0" Grid.Row="0" Background="#3A4149" Margin="5" CornerRadius="10" />
+                            <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" />
                             <Grid Grid.Column="0" Grid.Row="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -298,14 +292,14 @@
                                 <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" >
                                     <Button Margin="5,10,5,0" Style="{StaticResource FunctionalBtn}">
                                         <Image Grid.Row="0" Grid.Column="0" x:Name="pressureUpBtn"
-                                           Source="Assets\flesh_up_yellow.png" 
+                                           Source="..\..\Assets\flesh_up_yellow.png" 
                                            VerticalAlignment="Top" Width="24" Height="24"
                                            MouseEnter="PressureUpButton_MouseEnter" MouseLeave="PressureUpButton_MouseLeave" />
                                     </Button>
 
                                     <Button Margin="5,0,5,10" Style="{StaticResource FunctionalBtn}">
                                         <Image Grid.Row="0" Grid.Column="0" x:Name="pressureDownBtn"
-                                           Source="Assets\flesh_down_yellow.png" 
+                                           Source="..\..\Assets\flesh_down_yellow.png" 
                                            VerticalAlignment="Bottom" Width="24" Height="24"
                                            MouseEnter="PressureDownButton_MouseEnter" MouseLeave="PressureDownButton_MouseLeave" />
                                     </Button>
@@ -318,29 +312,62 @@
                 </Grid>
             </Border>
 
-            <Border x:Name="mainBottomBorderAtomatic" Background="#3A4149" 
+            <Border x:Name="mainBottomBorderAtomatic" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
-                    CornerRadius="10" Margin="5,0,0,0" Visibility="Hidden">
+                    CornerRadius="10" Margin="0" Visibility="Hidden">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Border x:Name="ali" Background="#292F34" BorderThickness="6" CornerRadius="10" Margin="5" Padding="5">
-                        <RichTextBox VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" BorderThickness="0" Background="#292F34" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--code visualizer-->
+                    <Label Grid.Column="0" Grid.Row="0" x:Name="codePrintedFileName" Content="untitled.jf*" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10,0,5" FontSize="12" Foreground="{StaticResource grayBackGround}" Background="{StaticResource lightBackGround}" BorderThickness="0,1,0,0" BorderBrush="{StaticResource customYellow}"/>
+                    <Border Grid.Column="0" Grid.Row="1" x:Name="displayCodeRichTextBox" Background="#292F34" BorderThickness="1" BorderBrush="{StaticResource customYellow}" CornerRadius="10" Margin="10,0,0,10" Padding="5">
+                        <!--code rich text box-->
+                        <RichTextBox Grid.Row="1" x:Name="selectedCode" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="#292F34" BorderThickness="0" KeyDown="selectedCode_KeyDown">
                             <RichTextBox.Resources>
+                                <Style TargetType="{x:Type Paragraph}">
+                                    <Setter Property="Margin" Value="5"/>
+                                </Style>
                                 <Style TargetType="{x:Type ScrollBar}">
-                                    <Setter Property="Background" Value="#3A4149"/>
-                                    <Setter Property="BorderBrush" Value="#3A4149"/>
-
+                                    <Setter Property="Background" Value="{StaticResource lightBackGround}"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource customYellow}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource customYellow}"/>
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#3A4149" />
+                                            <Setter Property="Background" Value="#3A4149"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </RichTextBox.Resources>
                         </RichTextBox>
+                    </Border>
+
+                    <!--choose file-->
+                    <Border Grid.Column="1" Grid.RowSpan="2" x:Name="addFileBorder" Background="#292F34" BorderThickness="6" CornerRadius="10" Margin="5" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0" Grid.Column="0" x:Name="addFileButton" Content="Add" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="AddFileButton_Click"/>
+                            <Button Grid.Row="0" Grid.Column="1" x:Name="deleteAllFileButton" Content="Delete All" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="DeleteAllFileButton_Click"/>
+                            <Button Grid.Row="0" Grid.Column="2" x:Name="deleteSelectedFileButton" Content="Delete Selected" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="DeleteSelectedFileButton_Click"/>
+                            <Button Grid.Row="0" Grid.Column="3" x:Name="runAllButton" Content="Run All" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="RunAllButton_Click"/>
+                            <Border Grid.Row="1" Grid.ColumnSpan="4" BorderBrush="{StaticResource customYellow}" BorderThickness="1" CornerRadius="5">
+                                <ListBox x:Name="selectedFileListBox" Background="#292F34" Margin="5" BorderThickness="0" FontSize="14" Foreground="White" SelectionChanged="FileListBox_SelectionChanged"/>
+                            </Border>
+                        </Grid>
                     </Border>
                 </Grid>
 
