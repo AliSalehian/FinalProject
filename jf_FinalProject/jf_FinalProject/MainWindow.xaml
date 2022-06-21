@@ -208,6 +208,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <!--Column One in Bottom Border-->
                     <Border x:Name="mainBottomBorderColumn1Manual" Background="#292F34" 
                     Grid.Column="0" BorderThickness="5" 
                     CornerRadius="10" Margin="0,5,10,0">
@@ -222,13 +223,13 @@
                             <Button Grid.Row="0" Content="BRAKE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
 
                             <!--HYDRAULIC STATION Button-->
-                            <Button Grid.Row="1" Content="HYDRAULIC STATION" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Row="1" Content="HYDRAULIC&#xa;  STATION" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
 
                             <!--UNLOADING (X) Button-->
                             <Button Grid.Row="2" Content="UNLOADING (X)" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
 
                             <!--CONSTANT PRESSURE Button-->
-                            <Button Grid.Row="3" Content="CONSTANT PRESSURE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Row="3" Content="CONSTANT&#xa; PRESSURE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
                         </Grid>
                     </Border>
 
@@ -252,13 +253,13 @@
 
                             <!--Top Box-->
                             <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" />
-                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Content="Water Tank" Foreground="{StaticResource grayBackGround}" FontSize="12" Margin="10,0,0,0" />
+                            <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" VerticalAlignment="Center"  Content="Water Tank" Foreground="{StaticResource grayBackGround}" FontSize="12" Margin="10,0,0,0" />
                             <Button Grid.Column="0" Grid.Row="1" Content="UP" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
                             <Button Grid.Column="1" Grid.Row="1" Content="DOWN" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
 
                             <!--Middle Box-->
                             <Border Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" />
-                            <Label Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Content="Static Torque" Foreground="{StaticResource grayBackGround}" FontSize="12" Margin="10,0,0,0" />
+                            <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center"  Content="Static Torque" Foreground="{StaticResource grayBackGround}" FontSize="12" Margin="10,0,0,0" />
                             <Button Grid.Column="0" Grid.Row="3" Content="UNLOAD" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
                             <Button Grid.Column="1" Grid.Row="3" Content="LOAD" Margin="10,0,0,20" Style="{StaticResource YelloBtn}" />
 
@@ -270,6 +271,7 @@
                         </Grid>
                     </Border>
 
+                    <!--Column Three in Bottom Border-->
                     <Border x:Name="mainBottomBorderColumn3Manual" Background="#292F34" 
                     Grid.Column="2" BorderThickness="5" 
                     CornerRadius="10" Margin="0,5,10,0">
@@ -321,6 +323,99 @@
                                     <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
                                 </Grid>
                             </Border>
+                        </Grid>
+                    </Border>
+
+                    <!--Column Four in Bottom Border-->
+                    <Border x:Name="mainBottomBorderColumn4Manual" Background="#292F34" 
+                    Grid.Column="3" BorderThickness="5" 
+                    CornerRadius="10" Margin="0,5,10,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource lightBackGround}" Margin="5,5,5,0" CornerRadius="10" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Content="Brake Mode" VerticalContentAlignment="Center" Style="{StaticResource FourthColumnLabel}" Margin="10,0,0,0"/>
+                                    <Button Grid.Column="0" Grid.Row="1" Content="Const Speed&#xa;    Brake(E)" Margin="10,15,10,15" Style="{StaticResource YelloBtn}" />
+                                    <Button Grid.Column="1" Grid.Row="1" Content="  Inertia &#xa;Brake(N)" Margin="10,15,10,15" Style="{StaticResource YelloBtn}" />
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.Column="0" Grid.Row="1" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Direction" VerticalContentAlignment="Center" Style="{StaticResource FourthColumnLabel}" Margin="10,0,0,0"/>
+                                    <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <Run Foreground="{StaticResource grayBackGround}">Back Run(R)</Run>
+                                    </CheckBox>
+                                    <Button Grid.Row="2" Grid.Column="0" Content="Run" Style="{StaticResource YelloBtn}" Margin="10,15,30,15"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!--Column Five in Bottom Border-->
+                    <Border x:Name="mainBottomBorderColumn5Manual" Background="#292F34" 
+                    Grid.Column="4" BorderThickness="5" 
+                    CornerRadius="10" Margin="0,5,10,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Static Torque" VerticalContentAlignment="Center" Style="{StaticResource FourthColumnLabel}" Margin="10,0,0,0"/>
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Background="#292F34" CornerRadius="10" BorderThickness="5" Margin="20,5,10,5">
+                                    <TextBox Grid.Column="0" BorderThickness="0" TextAlignment="Center" VerticalContentAlignment="Center" FontSize="12" MaxLength="5" Background="{StaticResource grayBackGround}" Foreground="Black"/>
+                                </Border>
+                                <Border Grid.Column="1" Background="#292F34" CornerRadius="10" BorderThickness="5" Margin="10,5,20,5">
+                                    <TextBox Grid.Column="0" BorderThickness="0" TextAlignment="Center" VerticalContentAlignment="Center" FontSize="12" MaxLength="5" Background="{StaticResource grayBackGround}" Foreground="Black"/>
+                                </Border>
+                            </Grid>
+                            <CheckBox Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,0,0">
+                                <Run Foreground="{StaticResource grayBackGround}">Hand Brake</Run>
+                            </CheckBox>
+                            <CheckBox Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0">
+                                <Run Foreground="{StaticResource grayBackGround}">Data Saving</Run>
+                            </CheckBox>
+                            <WrapPanel Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Label Content="F:" HorizontalAlignment="Left" Style="{StaticResource FourthColumnLabel}" Margin="10,0,10,0"/>
+                                <TextBox Width="100" Height="30" HorizontalAlignment="Center" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" MaxLength="5" Background="{StaticResource grayBackGround}" Foreground="Black"/>
+                            </WrapPanel>
+                            <Button Grid.Row="5" Grid.Column="0" Content="Quick Test" Style="{StaticResource YelloBtn}" Margin="20,10,100,10"/>
                         </Grid>
                     </Border>
                 </Grid>
