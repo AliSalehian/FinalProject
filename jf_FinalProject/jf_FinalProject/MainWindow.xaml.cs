@@ -55,13 +55,13 @@ namespace jf_FinalProject
 
         private void HamburgerButton_MouseLeave(object sender, EventArgs e) => hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_icon.png")));
 
-        private void PressureUpButton_MouseEnter(object sender, EventArgs e) => pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_gray.png")));
+        //private void PressureUpButton_MouseEnter(object sender, EventArgs e) => pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_gray.png")));
 
-        private void PressureUpButton_MouseLeave(object sender, EventArgs e) => pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_yellow.png")));
+        //private void PressureUpButton_MouseLeave(object sender, EventArgs e) => pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_yellow.png")));
 
-        private void PressureDownButton_MouseEnter(object sender, EventArgs e) => pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_gray.png")));
+        //private void PressureDownButton_MouseEnter(object sender, EventArgs e) => pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_gray.png")));
 
-        private void PressureDownButton_MouseLeave(object sender, EventArgs e) => pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_yellow.png")));
+        //private void PressureDownButton_MouseLeave(object sender, EventArgs e) => pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_yellow.png")));
 
         private void AutomaticButton_Click(object sender, EventArgs e)
         {

@@ -274,39 +274,53 @@
                     Grid.Column="2" BorderThickness="5" 
                     CornerRadius="10" Margin="0,5,10,0">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource lightBackGround}" Margin="5" CornerRadius="10" />
-                            <Grid Grid.Column="0" Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" >
-                                    <Button Margin="5,10,5,0" Style="{StaticResource FunctionalBtn}">
-                                        <Image Grid.Row="0" Grid.Column="0" x:Name="pressureUpBtn"
-                                           Source="..\..\Assets\flesh_up_yellow.png" 
-                                           VerticalAlignment="Top" Width="24" Height="24"
-                                           MouseEnter="PressureUpButton_MouseEnter" MouseLeave="PressureUpButton_MouseLeave" />
-                                    </Button>
-
-                                    <Button Margin="5,0,5,10" Style="{StaticResource FunctionalBtn}">
-                                        <Image Grid.Row="0" Grid.Column="0" x:Name="pressureDownBtn"
-                                           Source="..\..\Assets\flesh_down_yellow.png" 
-                                           VerticalAlignment="Bottom" Width="24" Height="24"
-                                           MouseEnter="PressureDownButton_MouseEnter" MouseLeave="PressureDownButton_MouseLeave" />
-                                    </Button>
-                                </StackPanel>
-
-                                <Slider Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" />
-                            </Grid>
+                            <Border Grid.Row="0" Background="{StaticResource lightBackGround}" Margin="5,5,5,0" CornerRadius="10" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Content="Pressure[MPa]" Style="{StaticResource SliderLabel}" Margin="15,0,0,0"/>
+                                    <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="1" Background="{StaticResource lightBackGround}" Margin="5,5,5,0" CornerRadius="10" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Content="Fan Speed[%]" Style="{StaticResource SliderLabel}" Margin="15,0,0,0"/>
+                                    <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="2" Background="{StaticResource lightBackGround}" Margin="5,5,5,0" CornerRadius="10" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Content="Torque[NM]" Style="{StaticResource SliderLabel}" Margin="15,0,0,0"/>
+                                    <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="3" Background="{StaticResource lightBackGround}" Margin="5,5,5,5" CornerRadius="10" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Content="Speed[N/min]" Style="{StaticResource SliderLabel}" Margin="15,0,0,0"/>
+                                    <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
+                                </Grid>
+                            </Border>
                         </Grid>
                     </Border>
                 </Grid>
