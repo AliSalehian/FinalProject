@@ -434,10 +434,11 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <!--code visualizer-->
+                    <Button Grid.Row="0" Grid.Column="0" x:Name="saveFileButton" Content="Save" Width="50" HorizontalAlignment="Right" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="SaveFileButton_Click"/>
                     <Label Grid.Column="0" Grid.Row="0" x:Name="codePrintedFileName" Content="untitled.jf*" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10,0,5" FontSize="12" Foreground="{StaticResource grayBackGround}" Background="{StaticResource lightBackGround}" BorderThickness="0,1,0,0" BorderBrush="{StaticResource customYellow}"/>
                     <Border Grid.Column="0" Grid.Row="1" x:Name="displayCodeRichTextBox" Background="#292F34" BorderThickness="1" BorderBrush="{StaticResource customYellow}" CornerRadius="10" Margin="10,0,0,10" Padding="5">
                         <!--code rich text box-->
-                        <RichTextBox Grid.Row="1" x:Name="selectedCode" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="#292F34" BorderThickness="0" KeyDown="selectedCode_KeyDown">
+                        <RichTextBox Grid.Row="1" x:Name="selectedCode" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="#292F34" BorderThickness="0" KeyDown="SelectedCode_KeyDown" PreviewKeyDown="SelectedCode_PreviewKeyDown">
                             <RichTextBox.Resources>
                                 <Style TargetType="{x:Type Paragraph}">
                                     <Setter Property="Margin" Value="5"/>

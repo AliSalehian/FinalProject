@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace jf_FinalProject
 {
@@ -43,25 +44,59 @@ namespace jf_FinalProject
 
         private void ShutDownButton_Click(object sender, EventArgs e) => Application.Current.Shutdown();
 
-        private void ShutDownButton_MouseEnter(object sender, EventArgs e) => shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_mo.png")));
+        private void ShutDownButton_MouseEnter(object sender, EventArgs e)
+        {
+            #if DEBUG
+            shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_mo.png")));
+            #else
+            shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\shutdown_mo.png")));
+            #endif
+        }
 
-        private void ShutDownButton_MouseLeave(object sender, EventArgs e) => shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_def.png")));
+        private void ShutDownButton_MouseLeave(object sender, EventArgs e)
+        {
+            #if DEBUG
+            shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_def.png")));
+            #else
+            shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\shutdown_def.png")));
+            #endif
+        }
 
-        private void MaxMinButton_MouseEnter(object sender, EventArgs e) => maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_mo.png")));
+        private void MaxMinButton_MouseEnter(object sender, EventArgs e)
+        {
+            #if DEBUG
+            maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_mo.png")));
+            #else
+            maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\max_mo.png")));
+            #endif
+        }
 
-        private void MaxMinButton_MouseLeave(object sender, EventArgs e) => maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_def.png")));
+        private void MaxMinButton_MouseLeave(object sender, EventArgs e)
+        {
+            #if DEBUG
+            maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_def.png")));
+            #else
+                        maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\max_def.png")));
+            #endif
+        }
 
-        private void HamburgerButton_MouseEnter(object sender, EventArgs e) => hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_mo.png")));
+        private void HamburgerButton_MouseEnter(object sender, EventArgs e)
+        {
+            #if DEBUG
+            hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_mo.png")));
+            #else
+            hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\hamburger_mo.png")));
+            #endif
+        }
 
-        private void HamburgerButton_MouseLeave(object sender, EventArgs e) => hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_icon.png")));
-
-        //private void PressureUpButton_MouseEnter(object sender, EventArgs e) => pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_gray.png")));
-
-        //private void PressureUpButton_MouseLeave(object sender, EventArgs e) => pressureUpBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_up_yellow.png")));
-
-        //private void PressureDownButton_MouseEnter(object sender, EventArgs e) => pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_gray.png")));
-
-        //private void PressureDownButton_MouseLeave(object sender, EventArgs e) => pressureDownBtn.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\flesh_down_yellow.png")));
+        private void HamburgerButton_MouseLeave(object sender, EventArgs e)
+        {
+            #if DEBUG
+            hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_icon.png")));
+            #else
+            hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\hamburger_icon.png")));
+            #endif
+        }
 
         private void AutomaticButton_Click(object sender, EventArgs e)
         {
@@ -117,7 +152,24 @@ namespace jf_FinalProject
 
         private void RunAllButton_Click(object sender, EventArgs e)
         {
-
+            #if DEBUG
+            new ToastContentBuilder()
+                .AddArgument("action", "viewConversation")
+                .AddArgument("conversationId", 9813)
+                .AddText("JF Message")
+                .AddText("Start Run All Codes")
+                .AddAppLogoOverride(new Uri(Path.GetFullPath(@"..\..\Assets\ToklanToosLogo.png")), ToastGenericAppLogoCrop.Circle)
+                .Show();
+            #else
+            new ToastContentBuilder()
+                            .AddArgument("action", "viewConversation")
+                            .AddArgument("conversationId", 9813)
+                            .AddText("JF Message")
+                            .AddText("Start Run All Codes")
+                            .AddAppLogoOverride(new Uri(Path.GetFullPath(@"Assets\ToklanToosLogo.png")), ToastGenericAppLogoCrop.Circle)
+                            .Show();
+                            
+            #endif
         }
 
         private void FileListBox_SelectionChanged(object sender, EventArgs e)
@@ -166,6 +218,32 @@ namespace jf_FinalProject
             else if (main.WindowState == WindowState.Maximized)
             {
                 main.WindowState = WindowState.Normal;
+            }
+        }
+
+        private void SaveFileButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.CreatePrompt = true;
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.FileName = "myCode";
+            saveFileDialog.DefaultExt = "jf";
+            saveFileDialog.Filter = "JF Code (*.jf)|*.jf";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            bool? result = saveFileDialog.ShowDialog();
+            Stream fileStream;
+
+            if (result == true)
+            {
+                // Open the file, copy the contents of memoryStream to fileStream,
+                // and close fileStream. Set the memoryStream.Position value to 0 
+                // to copy the entire stream. 
+                fileStream = saveFileDialog.OpenFile();
+                MemoryStream userInput = new MemoryStream();
+                userInput.Position = 0;
+                userInput.WriteTo(fileStream);
+                fileStream.Close();
+                codePrintedFileName.Content = Path.GetFileName(saveFileDialog.FileName);
             }
         }
 
@@ -228,22 +306,29 @@ namespace jf_FinalProject
             Grid.SetColumn(mainBottomBorderAtomatic, columnNumber);
         }
 
-        private void selectedCode_KeyDown(object sender, KeyEventArgs e)
+        private void SelectedCode_KeyDown(object sender, KeyEventArgs e)
         {
+            if (!codePrintedFileName.Content.ToString().Contains("*"))
+                codePrintedFileName.Content += "*";
+        }
+
+        private void SelectedCode_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
             if (e.Key == Key.Enter)
             {
-                MessageBox.Show("enter clicked");
-                FlowDocument myFlowDoc = new FlowDocument();
-                Run CurrentNumberOfLine = new Run($"\n{++_rtbIndex}");
-                CurrentNumberOfLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00");
-                Run currentLine = new Run($"\t ");
-                currentLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffffff");
-                Paragraph myParagraph = new Paragraph();
-                myParagraph.Inlines.Add(CurrentNumberOfLine);
-                myParagraph.Inlines.Add(currentLine);
-                myFlowDoc.Blocks.Add(myParagraph);
-                selectedCode.Document = myFlowDoc;
-                MessageBox.Show("enter clicked");
+                ////FlowDocument myFlowDoc = new FlowDocument();
+                //Run CurrentNumberOfLine = new Run($"{++_rtbIndex}");
+                //CurrentNumberOfLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00");
+                //Run currentLine = new Run($"\t ");
+                //currentLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffffff");
+                //Paragraph myParagraph = new Paragraph();
+                //myParagraph.Inlines.Add(CurrentNumberOfLine);
+                //myParagraph.Inlines.Add(currentLine);
+                ////myFlowDoc.Blocks.Add(myParagraph);
+                ////selectedCode.Document = myFlowDoc;
+                //selectedCode.Document.Blocks.Add(myParagraph);
+                //e.Handled = true;
             }
         }
     }
