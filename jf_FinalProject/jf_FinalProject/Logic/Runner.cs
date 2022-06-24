@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
+using System.Windows.Media;
 
 namespace jf
 {
@@ -14,6 +15,20 @@ namespace jf
     class Runner
     {
 
+        public delegate void RichTextNeedUpdateHandler(object sender, CommandEventArgs e);
+
+        public event RichTextNeedUpdateHandler RichTextNeedUpdate;
+
+        protected virtual void OnRichTextNeedUpdate(string type, int lineNumber, SolidColorBrush color)
+        {
+
+            RichTextNeedUpdate(this, new CommandEventArgs() { Type = type, LineNumber = lineNumber, Color = color });
+            //if (RichTextNeedUpdate != null)
+            //{
+            //    RichTextNeedUpdate(this, new CommandEventArgs() { Type = type, LineNumber = lineNumber, Color = color });
+            //}
+        }
+
         #region Attributes Of Class
 
         /// <summary>
@@ -22,12 +37,6 @@ namespace jf
         /// <c>Program</c> class and pass from <c>Program</c> to here.
         /// </summary>
         Compiler _compiler;
-
-        /// <summary>
-        /// <c>commands</c> attribute is a queue that we put commands in it and UI will use it
-        /// its like <c>compiler</c>attribute, a global attribute so we will not create it in this class
-        /// </summary>
-        Queue<Command> _commands;
 
         /// <summary>
         /// <c>sensorHandler</c> attribute is an object of <c>SensorHandler</c> class. this object
@@ -40,19 +49,19 @@ namespace jf
         /// <c>GREEN</c> attribute is an object of <c>Color</c> and represent green color.
         /// we use it for highlighting line of codes in UI. its a readonly attribute and cant change.
         /// </summary>
-        //public readonly Color GREEN = Color.FromArgb(0x4c, 0xe6, 0x00); // #4ce600
+        public readonly SolidColorBrush GREEN = (SolidColorBrush)new BrushConverter().ConvertFrom("#4ce600"); // #4ce600
 
         /// <summary>
         /// <c>RED</c> attribute is an object of <c>Color</c> and represent red color.
         /// we use it for highlighting line of codes in UI. its a readonly attribute and cant change.
         /// </summary>
-        //public readonly Color RED = Color.FromArgb(0xff, 0x5c, 0x33); // #ff5c33
+        public readonly SolidColorBrush RED = (SolidColorBrush)new BrushConverter().ConvertFrom("#ff5c33"); // #ff5c33
 
         /// <summary>
         /// <c>ORANGE</c> attribute is an object of <c>Color</c> and represent orange color.
         /// we use it for highlighting line of codes in UI. its a readonly attribute and cant change.
         /// </summary>
-        //public readonly Color ORANGE = Color.FromArgb(0xff, 0xcc, 0x00);
+        public readonly SolidColorBrush ORANGE = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffcc00");
         #endregion
 
         #region Constructor Of Class
@@ -60,15 +69,13 @@ namespace jf
         /// <summary>
         /// this constuctor get all global attributes that used by other backend classes and UI
         /// part of project
-        /// (<paramref name="compiler"/>, <paramref name="commands"/>, <paramref name="sensorHandler"/>)
+        /// (<paramref name="compiler"/>, <paramref name="sensorHandler"/>)
         /// </summary>
         /// <param name="compiler"> is an object of <c>jf.Compiler</c> class that compile code</param>
-        /// <param name="commands">is a queue that shared with UI part of project</param>
         /// <param name="sensorHandler">is an object of <c>SensorHandler</c> class</param>
-        public Runner(Compiler compiler, Queue<Command> commands, SensorHandler sensorHandler)
+        public Runner(Compiler compiler, SensorHandler sensorHandler)
         {
             this._compiler = compiler;
-            this._commands = commands;
             this._sensorHandler = sensorHandler;
         }
         #endregion
@@ -83,7 +90,10 @@ namespace jf
         /// <param name="text">is a string that is a single command that we want write it in file</param>
         public void WriteCommandToFile(string text)
         {
-            const string commandFilePath = "../../board/commands.txt";
+            if (!Directory.Exists(@"../../board")){
+                Directory.CreateDirectory(@"../../board");
+            }
+            const string commandFilePath = @"../../board/Commands.txt";
             using (StreamWriter sw = new StreamWriter(commandFilePath, append: true))
             {
                 sw.WriteLine(text);
@@ -295,10 +305,10 @@ namespace jf
             /* for each error highlight that line with red color.
              * we do it with create command for UI.
              */
-            //foreach(CustomError error in compilerErrors)
-            //{
-            //    //this.commands.Enqueue(new Command("highlight", error.getLineNumber(), this.RED));
-            //}
+            foreach (CustomError error in compilerErrors)
+            {
+                OnRichTextNeedUpdate("highlight", error.getLineNumber(), RED);
+            }
 
             if (errorDetected)
             {
@@ -318,7 +328,7 @@ namespace jf
                  */
                 if (realLines[realLineCounter].Item2.ToLower() == "begin")
                 {
-                    //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                    OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                     isPerformable = true;
                     realLineCounter++;
                     break;
@@ -327,19 +337,19 @@ namespace jf
                 // pass empty lines
                 if(realLines[realLineCounter].Item2 == "")
                 {
-                    //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                    OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                     realLineCounter++;
                     continue;
                 }
 
                 // check if we are still in explanation part of code and there is no UI command in queue
-                if (this._commands.Count == 0 && !isPerformable)
+                if (!isPerformable)
                 {
                     switch (explanation.st.table[lineCounter][0].ToLower())
                     {
                         // jf122 do nothing but it should exist in top of code
                         case "jf122":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             lineCounter++;
                             realLineCounter++;
                             break;
@@ -348,14 +358,14 @@ namespace jf
                          * our compiler just pass lines that started with code keyword
                          */
                         case "code":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             lineCounter++;
                             realLineCounter++;
                             break;
 
                         // mode keyword create a hardware command
                         case "mode":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             this.WriteCommandToFile("mode " + explanation.st.table[lineCounter][1]);
                             lineCounter++;
                             realLineCounter++;
@@ -363,20 +373,20 @@ namespace jf
 
                         // r0, i and kmu are configs of hardware and create hardware commands
                         case "r0":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
-                            this._commands.Enqueue(new Command("set", explanation.st.table[lineCounter][1]));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
+                            //this._commands.Enqueue(new Command("set", explanation.st.table[lineCounter][1]));
                             this.WriteCommandToFile("r0 " + explanation.st.table[lineCounter][1]);
                             lineCounter++;
                             realLineCounter++;
                             break;
                         case "i":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             this.WriteCommandToFile("i " + explanation.st.table[lineCounter][1]);
                             lineCounter++;
                             realLineCounter++;
                             break;
                         case "kmu":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             this.WriteCommandToFile("kmu " + explanation.st.table[lineCounter][1]);
                             lineCounter++;
                             realLineCounter++;
@@ -386,7 +396,7 @@ namespace jf
                          * runner. compiler handle it completly
                          */
                         case "data":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             lineCounter++;
                             realLineCounter++;
                             break;
@@ -442,17 +452,17 @@ namespace jf
                     switch (current.identifier.ToLower())
                     {
                         case "begin":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             break;
                         case "var":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 realLineCounter++;
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
@@ -472,26 +482,26 @@ namespace jf
                                 }
                                 if (indexOfData > data.Count) indexOfData--;
                                 this.FindVariableAndChangeValue(variables, current.attribute, data[indexOfData]);
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 indexOfData++;
                                 realLineCounter++;
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "restore":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 indexOfData = 0;
                                 realLineCounter++;
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
@@ -499,7 +509,7 @@ namespace jf
                             if (ifConditionSatisfied.Peek())
                             {
                                 double test1 = 0;
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 realLineCounter++;
                                 string[] temp1 = current.attribute.Split(',');
                                 double newValue = 0;
@@ -516,54 +526,54 @@ namespace jf
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "set":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 this.WriteCommandToFile("set " + current.attribute);
                                 // TODO: we should complete it later
                                 realLineCounter++;
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "turn":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 this.WriteCommandToFile("turn " + current.attribute);
                                 realLineCounter++;
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "fan":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 this.WriteCommandToFile("fan " + current.attribute);
                                 realLineCounter++;
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "speed":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 this.WriteCommandToFile("speed " + current.attribute);
                                 // TODO: command increase speed and reed speed sensor till condition satisfied. if c is exist speed should keep on condition 
                                 // else turn off motor
@@ -575,14 +585,14 @@ namespace jf
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "wait":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 if (this.CheckCondition(current.attribute, variables))
                                 {
                                     this.WriteCommandToFile("wait condiotion satisfied");
@@ -606,14 +616,14 @@ namespace jf
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "brake":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 // TODO: command should log if r flag seted
                                 string condition = current.attribute.Split(',')[1].Replace("UNTIL", "");
                                 string presure = current.attribute.Split(',')[0];
@@ -633,14 +643,14 @@ namespace jf
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "loop":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 // TODO: check error handler in compiler for LOOP. LOOP should have attribute
                                 loopCount.Push(Int32.Parse(current.attribute));
                                 loopStarted.Push(true);
@@ -651,14 +661,14 @@ namespace jf
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "lend":
                             if (ifConditionSatisfied.Peek())
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                                 bool conditionStisfied = true;
                                 string LoopCondition = "";
                                 int validDuration = 0;
@@ -752,22 +762,22 @@ namespace jf
                             }
                             else
                             {
-                                //this.commands.Enqueue(new Command("highlight", realLineCounter, this.ORANGE));
+                                OnRichTextNeedUpdate("highlight", realLineCounter, ORANGE);
                                 realLineCounter++;
                             }
                             break;
                         case "end":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             this.WriteCommandToFile("end!!!");
                             realLineCounter++;
                             break;
                         case "if":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             ifConditionSatisfied.Push(this.CheckCondition(current.attribute, variables));
                             realLineCounter++;
                             break;
                         case "endif":
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             ifConditionSatisfied.Pop();
                             index++;
                             realLineCounter++;
@@ -782,7 +792,7 @@ namespace jf
                         }
                         if (realLines[realLineCounter].Item2 == "")
                         {
-                            //this.commands.Enqueue(new Command("highlight", realLineCounter, this.GREEN));
+                            OnRichTextNeedUpdate("highlight", realLineCounter, GREEN);
                             realLineCounter++;
                         }
                         else break;

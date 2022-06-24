@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Microsoft.Toolkit.Uwp.Notifications;
+using jf;
 
 namespace jf_FinalProject
 {
@@ -30,8 +31,8 @@ namespace jf_FinalProject
 
         public bool IsManual { get; set; }
 
-        public List<string> SelectedFilePath 
-        { 
+        public List<string> SelectedFilePath
+        {
             get { return _selectedFilePath; }
             set { _selectedFilePath = value; }
         }
@@ -40,62 +41,68 @@ namespace jf_FinalProject
             InitializeComponent();
             IsMenuOpen = false;
             IsManual = true;
+            TextRange range1 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
+            range1.Text = $"{++_rtbIndex}";
+            range1.ApplyPropertyValue(TextElement.ForegroundProperty, (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00"));
+            TextRange range2 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
+            range2.Text = "\t";
+            range2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.White);
         }
 
         private void ShutDownButton_Click(object sender, EventArgs e) => Application.Current.Shutdown();
 
         private void ShutDownButton_MouseEnter(object sender, EventArgs e)
         {
-            #if DEBUG
+#if DEBUG
             shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_mo.png")));
-            #else
+#else
             shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\shutdown_mo.png")));
-            #endif
+#endif
         }
 
         private void ShutDownButton_MouseLeave(object sender, EventArgs e)
         {
-            #if DEBUG
+#if DEBUG
             shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\shutdown_def.png")));
-            #else
+#else
             shutdownBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\shutdown_def.png")));
-            #endif
+#endif
         }
 
         private void MaxMinButton_MouseEnter(object sender, EventArgs e)
         {
-            #if DEBUG
+#if DEBUG
             maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_mo.png")));
-            #else
+#else
             maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\max_mo.png")));
-            #endif
+#endif
         }
 
         private void MaxMinButton_MouseLeave(object sender, EventArgs e)
         {
-            #if DEBUG
+#if DEBUG
             maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\max_def.png")));
-            #else
+#else
                         maxMinButton.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\max_def.png")));
-            #endif
+#endif
         }
 
         private void HamburgerButton_MouseEnter(object sender, EventArgs e)
         {
-            #if DEBUG
+#if DEBUG
             hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_mo.png")));
-            #else
+#else
             hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\hamburger_mo.png")));
-            #endif
+#endif
         }
 
         private void HamburgerButton_MouseLeave(object sender, EventArgs e)
         {
-            #if DEBUG
+#if DEBUG
             hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"..\..\Assets\hamburger_icon.png")));
-            #else
+#else
             hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\hamburger_icon.png")));
-            #endif
+#endif
         }
 
         private void AutomaticButton_Click(object sender, EventArgs e)
@@ -142,34 +149,12 @@ namespace jf_FinalProject
             _numberOfSelectedFile--;
             _selectedFilePath.RemoveAt(selectedIndex);
             int index = 0;
-            for (int i=0; i< selectedFileListBox.Items.Count; i++)
+            for (int i = 0; i < selectedFileListBox.Items.Count; i++)
             {
                 string oldValue = selectedFileListBox.Items[i].ToString();
                 oldValue = Regex.Replace(oldValue, @"[\d-]", string.Empty).Trim();
                 selectedFileListBox.Items[i] = $"{++index}\t{oldValue}";
             }
-        }
-
-        private void RunAllButton_Click(object sender, EventArgs e)
-        {
-            #if DEBUG
-            new ToastContentBuilder()
-                .AddArgument("action", "viewConversation")
-                .AddArgument("conversationId", 9813)
-                .AddText("JF Message")
-                .AddText("Start Run All Codes")
-                .AddAppLogoOverride(new Uri(Path.GetFullPath(@"..\..\Assets\ToklanToosLogo.png")), ToastGenericAppLogoCrop.Circle)
-                .Show();
-            #else
-            new ToastContentBuilder()
-                            .AddArgument("action", "viewConversation")
-                            .AddArgument("conversationId", 9813)
-                            .AddText("JF Message")
-                            .AddText("Start Run All Codes")
-                            .AddAppLogoOverride(new Uri(Path.GetFullPath(@"Assets\ToklanToosLogo.png")), ToastGenericAppLogoCrop.Circle)
-                            .Show();
-                            
-            #endif
         }
 
         private void FileListBox_SelectionChanged(object sender, EventArgs e)
@@ -205,7 +190,7 @@ namespace jf_FinalProject
             mainBottomBorderManual.Visibility = Visibility.Visible;
             mainBottomBorderAtomatic.Visibility = Visibility.Hidden;
 
-            manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue); 
+            manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
             AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             IsManual = true;
         }
@@ -219,6 +204,31 @@ namespace jf_FinalProject
             {
                 main.WindowState = WindowState.Normal;
             }
+        }
+
+        private string ExtractRawDataFromRichTextBox()
+        {
+            TextRange range = new TextRange(selectedCode.Document.ContentStart, selectedCode.Document.ContentEnd);
+            string[] lines = range.Text.Split('\n');
+            string result = "";
+            foreach (string line in lines)
+            {
+                string temp = line;
+                while (true)
+                {
+                    if (char.IsDigit(temp[0]))
+                    {
+                        temp.Remove(0, 1);
+                    }
+                    else
+                    {
+                        temp = temp.Trim();
+                        break;
+                    }
+                }
+                result += temp + "\n";
+            }
+            return result;
         }
 
         private void SaveFileButton_Click(object sender, EventArgs e)
@@ -235,13 +245,11 @@ namespace jf_FinalProject
 
             if (result == true)
             {
-                // Open the file, copy the contents of memoryStream to fileStream,
-                // and close fileStream. Set the memoryStream.Position value to 0 
-                // to copy the entire stream. 
                 fileStream = saveFileDialog.OpenFile();
-                MemoryStream userInput = new MemoryStream();
-                userInput.Position = 0;
-                userInput.WriteTo(fileStream);
+                string rawData = ExtractRawDataFromRichTextBox();
+                //MemoryStream userInput = new MemoryStream();
+                //userInput.Position = 0;
+                //userInput.WriteTo(fileStream);
                 fileStream.Close();
                 codePrintedFileName.Content = Path.GetFileName(saveFileDialog.FileName);
             }
@@ -317,19 +325,63 @@ namespace jf_FinalProject
 
             if (e.Key == Key.Enter)
             {
-                ////FlowDocument myFlowDoc = new FlowDocument();
-                //Run CurrentNumberOfLine = new Run($"{++_rtbIndex}");
-                //CurrentNumberOfLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00");
-                //Run currentLine = new Run($"\t ");
-                //currentLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffffff");
-                //Paragraph myParagraph = new Paragraph();
-                //myParagraph.Inlines.Add(CurrentNumberOfLine);
-                //myParagraph.Inlines.Add(currentLine);
-                ////myFlowDoc.Blocks.Add(myParagraph);
-                ////selectedCode.Document = myFlowDoc;
-                //selectedCode.Document.Blocks.Add(myParagraph);
-                //e.Handled = true;
+                selectedCode.CaretPosition = selectedCode.CaretPosition.InsertLineBreak();
+                selectedCode.AppendText(" ");
+                TextRange range1 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
+                range1.Text.Replace(" ", $"{++_rtbIndex}");
+                range1.ApplyPropertyValue(TextElement.ForegroundProperty, (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00"));
+                TextRange range2 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
+                range2.Text = "\t";
+                range2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.White);
+                e.Handled = true;
             }
+        }
+
+        private void RunAllButton_Click(object sender, EventArgs e)
+        {
+
+            if (_selectedFilePath.Count >= 0)
+            {
+                MessageBox.Show("askldjoWQEFJBV");
+                #region Push Notification
+#if DEBUG
+                new ToastContentBuilder()
+                .AddArgument("action", "viewConversation")
+                .AddArgument("conversationId", 9813)
+                .AddText("JF Message")
+                .AddText("Start Run All Codes")
+                .AddAppLogoOverride(new Uri(Path.GetFullPath(@"..\..\Assets\ToklanToosLogo.png")), ToastGenericAppLogoCrop.Circle)
+                .Show();
+#else
+            new ToastContentBuilder()
+                            .AddArgument("action", "viewConversation")
+                            .AddArgument("conversationId", 9813)
+                            .AddText("JF Message")
+                            .AddText("Start Run All Codes")
+                            .AddAppLogoOverride(new Uri(Path.GetFullPath(@"Assets\ToklanToosLogo.png")), ToastGenericAppLogoCrop.Circle)
+                            .Show();
+                            
+#endif
+                #endregion
+
+                #region Start Run
+                foreach (string path in _selectedFilePath)
+                {
+                    Compiler compiler = new Compiler();
+                    compiler.compile(path);
+                    SensorHandler sensor = new SensorHandler();
+                    Runner runner = new Runner(compiler, sensor);
+                    runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
+                    runner.Run();
+                }
+                #endregion
+            }
+
+        }
+
+        private void OnRichTextNeedUpdate(object sender, CommandEventArgs e)
+        {
+            MessageBox.Show($"type is {e.Type} and line number is {e.LineNumber}");
         }
     }
 }

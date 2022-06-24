@@ -96,7 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Logic\Command.cs" />
+    <Compile Include="Logic\CommandEventArgs.cs" />
     <Compile Include="Logic\Compiler.cs" />
     <Compile Include="Logic\CustomError.cs" />
     <Compile Include="Logic\Explanation.cs" />

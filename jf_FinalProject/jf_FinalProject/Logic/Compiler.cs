@@ -54,11 +54,6 @@ namespace jf
         #endregion
 
         #region Attributes Of Class
-        /// <summary>
-        /// <c>commands</c> is a queue that is a proxy between UI and backend part of program.
-        /// <c>Compiler</c> use this proxy to send codes to UI
-        /// </summary>
-        Queue<jf.Command> commands;
 
         /// <summary>
         /// <c>tokens</c> is a generic list of <c>Token</c>s that contains all tokens of code 
@@ -208,10 +203,9 @@ namespace jf
         /// </summary>
         /// <param name="absolutePath">path of code file. this path must contains file name</param>
         /// <param name="queue">this queue is peoxy between UI and backend. compiler use it to send command to UI</param>
-        public void compile(string absolutePath, Object queue)
+        public void compile(string absolutePath)
         {
             #region Initialize Object Attributes
-            this.commands = (Queue<jf.Command>) queue;
             Tuple<int, int> startOfPerformable;
             this.tokens = new List<Token>();
             this.lines = new List<String>();
@@ -223,13 +217,8 @@ namespace jf
 
             #region Create Tokens And Symbol Tables
             this.Lineizer(absolutePath);
-            // TODO : bring not begin keyword here and run fillPerformable if we have have begin keyword
             startOfPerformable = this.FillExplanation();
             this.FillPerformable(startOfPerformable);
-            #endregion
-
-            #region Send Command To UI For Creating TextBox To Show Code
-            this.commands.Enqueue(new Command("create ritchbox"));
             #endregion
         }
 
