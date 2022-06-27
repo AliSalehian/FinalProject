@@ -41,12 +41,7 @@ namespace jf_FinalProject
             InitializeComponent();
             IsMenuOpen = false;
             IsManual = true;
-            TextRange range1 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
-            range1.Text = $"{++_rtbIndex}";
-            range1.ApplyPropertyValue(TextElement.ForegroundProperty, (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00"));
-            TextRange range2 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
-            range2.Text = "\t";
-            range2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.White);
+            lineIndex.AppendText($"{++_rtbIndex}");
         }
 
         private void ShutDownButton_Click(object sender, EventArgs e) => Application.Current.Shutdown();
@@ -134,6 +129,9 @@ namespace jf_FinalProject
         {
             selectedFileListBox.Items.Clear();
             selectedCode.Document.Blocks.Clear();
+            lineIndex.Document.Blocks.Clear();
+            _rtbIndex = 0;
+            lineIndex.AppendText($"{++_rtbIndex}");
             _numberOfSelectedFile = 0;
             selectedCode.IsReadOnly = false;
             codePrintedFileName.Content = "untitled.jf";
@@ -144,6 +142,9 @@ namespace jf_FinalProject
             int selectedIndex = selectedFileListBox.Items.IndexOf(selectedFileListBox.SelectedItem);
             selectedFileListBox.Items.RemoveAt(selectedIndex);
             selectedCode.Document.Blocks.Clear();
+            lineIndex.Document.Blocks.Clear();
+            _rtbIndex = 0;
+            lineIndex.AppendText($"{++_rtbIndex}");
             selectedCode.IsReadOnly = false;
             codePrintedFileName.Content = "untitled.jf";
             _numberOfSelectedFile--;
@@ -168,20 +169,24 @@ namespace jf_FinalProject
             string[] lines = File.ReadAllLines(selectedFilePath);
             _rtbIndex = 0;
             selectedCode.Document.Blocks.Clear();
+            lineIndex.Document.Blocks.Clear();
+            _rtbIndex = 0;
+            lineIndex.AppendText($"{++_rtbIndex}");
             selectedCode.IsReadOnly = true;
 
-            FlowDocument myFlowDoc = new FlowDocument();
+            FlowDocument numberOfLineFlowDoc = new FlowDocument();
+            FlowDocument lineFlowDoc = new FlowDocument();
             foreach (string line in lines)
             {
-                Run CurrentNumberOfLine = new Run($"{++_rtbIndex}");
-                CurrentNumberOfLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00");
-                Run currentLine = new Run($"\t{line}");
-                currentLine.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffffff");
-                Paragraph myParagraph = new Paragraph();
-                myParagraph.Inlines.Add(CurrentNumberOfLine);
-                myParagraph.Inlines.Add(currentLine);
-                myFlowDoc.Blocks.Add(myParagraph);
-                selectedCode.Document = myFlowDoc;
+                Paragraph lineNumberParagraph = new Paragraph();
+                lineNumberParagraph.Inlines.Add($"{++_rtbIndex}");
+                numberOfLineFlowDoc.Blocks.Add(lineNumberParagraph);
+                lineIndex.Document = numberOfLineFlowDoc;
+
+                Paragraph lineParagraph = new Paragraph();
+                lineParagraph.Inlines.Add($"{line}");
+                lineFlowDoc.Blocks.Add(lineParagraph);
+                selectedCode.Document = lineFlowDoc;
             }
         }
 
@@ -206,30 +211,6 @@ namespace jf_FinalProject
             }
         }
 
-        private string ExtractRawDataFromRichTextBox()
-        {
-            TextRange range = new TextRange(selectedCode.Document.ContentStart, selectedCode.Document.ContentEnd);
-            string[] lines = range.Text.Split('\n');
-            string result = "";
-            foreach (string line in lines)
-            {
-                string temp = line;
-                while (true)
-                {
-                    if (char.IsDigit(temp[0]))
-                    {
-                        temp.Remove(0, 1);
-                    }
-                    else
-                    {
-                        temp = temp.Trim();
-                        break;
-                    }
-                }
-                result += temp + "\n";
-            }
-            return result;
-        }
 
         private void SaveFileButton_Click(object sender, EventArgs e)
         {
@@ -246,7 +227,7 @@ namespace jf_FinalProject
             if (result == true)
             {
                 fileStream = saveFileDialog.OpenFile();
-                string rawData = ExtractRawDataFromRichTextBox();
+                //string rawData = ExtractRawDataFromRichTextBox();
                 //MemoryStream userInput = new MemoryStream();
                 //userInput.Position = 0;
                 //userInput.WriteTo(fileStream);
@@ -325,15 +306,12 @@ namespace jf_FinalProject
 
             if (e.Key == Key.Enter)
             {
-                selectedCode.CaretPosition = selectedCode.CaretPosition.InsertLineBreak();
-                selectedCode.AppendText(" ");
-                TextRange range1 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
-                range1.Text.Replace(" ", $"{++_rtbIndex}");
-                range1.ApplyPropertyValue(TextElement.ForegroundProperty, (SolidColorBrush)new BrushConverter().ConvertFrom("#FFDD00"));
-                TextRange range2 = new TextRange(selectedCode.Document.ContentEnd, selectedCode.Document.ContentEnd);
-                range2.Text = "\t";
-                range2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.White);
-                e.Handled = true;
+                //lineIndex.AppendText($"{++_rtbIndex}");
+                FlowDocument flow = lineIndex.Document;
+                Paragraph p = new Paragraph();
+                p.Inlines.Add($"{++_rtbIndex}");
+                flow.Blocks.Add(p);
+                lineIndex.Document = flow;
             }
         }
 
@@ -342,7 +320,6 @@ namespace jf_FinalProject
 
             if (_selectedFilePath.Count >= 0)
             {
-                MessageBox.Show("askldjoWQEFJBV");
                 #region Push Notification
 #if DEBUG
                 new ToastContentBuilder()
@@ -379,9 +356,20 @@ namespace jf_FinalProject
 
         }
 
+        private void TextChangedEvent(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            lineIndex.ScrollToVerticalOffset(e.VerticalOffset);
+        }
+
         private void OnRichTextNeedUpdate(object sender, CommandEventArgs e)
         {
-            MessageBox.Show($"type is {e.Type} and line number is {e.LineNumber}");
+            //TextRange range = new TextRange(selectedCode.Document.ContentStart, selectedCode.Document.ContentEnd);
+            //MessageBox.Show($"type is {e.Type} and line number is {e.LineNumber}");
         }
     }
 }
