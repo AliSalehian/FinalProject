@@ -96,6 +96,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Logger\CommandSendLog.cs" />
+    <Compile Include="Logger\DeveloperLog.cs" />
+    <Compile Include="Logger\jfCodeErrorLog.cs" />
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Logger\SensorCheckLog.cs" />
     <Compile Include="Logic\CommandEventArgs.cs" />
     <Compile Include="Logic\Compiler.cs" />
     <Compile Include="Logic\CustomError.cs" />
@@ -201,6 +206,9 @@
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.19041.1</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Serilog">
       <Version>2.11.0</Version>
     </PackageReference>
@@ -240,6 +248,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LogFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
