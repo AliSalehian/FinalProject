@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.IO;
+using jf_FinalProject;
 
 namespace jf
 {
@@ -159,19 +160,19 @@ namespace jf
         #endregion
 
         #region Methods Of Class
-        public Compiler(){}
+        public Compiler() { }
 
         /// <summary>
         /// <c>getPerformableTableRoot</c> method is getter of <c>performableSymboltTable</c> root node
         /// </summary>
         /// <returns>return a Node that is root of performable symbol table</returns>
-        public Node getPerformableTableRoot(){ return this.performableSymboltTable.root; }
+        public Node getPerformableTableRoot() { return this.performableSymboltTable.root; }
 
         /// <summary>
         /// <c>getRealLine</c> method is getter of <c>realLines</c> attribute
         /// </summary>
         /// <returns>list of Tuples that contains <c>realLines</c></returns>
-        public List<Tuple<int, string>> getRealLine(){ return this.realLines; }
+        public List<Tuple<int, string>> getRealLine() { return this.realLines; }
 
         /// <summary>
         /// <c>getConstants</c> method is getter of <c>constants</c> attribute
@@ -234,7 +235,7 @@ namespace jf
             string[] result = new string[2];
             string[] words = line.Split(' ');
             result[0] = words[0];
-            for(int i=1; i < words.Length; i++)
+            for (int i = 1; i < words.Length; i++)
             {
                 result[1] += words[i].Trim();
             }
@@ -254,12 +255,12 @@ namespace jf
             #region Open Code File And Read It Line By Line
             using (StreamReader sr = new StreamReader(absolutePath))
             {
-                while(sr.Peek() >= 0)
+                while (sr.Peek() >= 0)
                 {
 
                     #region Go To Next Line If Current Line Is Empty
                     string line = sr.ReadLine();
-                    if(line.Length == 0)
+                    if (line.Length == 0)
                     {
                         this.realLines.Add(Tuple.Create(realLineNumber, ""));
                         realLineNumber++;
@@ -270,7 +271,7 @@ namespace jf
                     #region Create Tokens For Each Word
                     string[] words = line.Split(' ');
                     int wordNumber = 0;
-                    foreach(var word in words)
+                    foreach (var word in words)
                     {
 
                         #region Pass Empty Words
@@ -469,7 +470,7 @@ namespace jf
             else
             {
                 bool isItInDefined = false;
-                string[] sensorsNameList = { "p", "m" , "n", "f", "t1", "t2", "t3", "time" };
+                string[] sensorsNameList = { "p", "m", "n", "f", "t1", "t2", "t3", "time" };
                 foreach (Tuple<string, double> t in this.variables)
                 {
                     if (t.Item1 == operand1)
@@ -553,6 +554,7 @@ namespace jf
                         if (identifierAndAttribute[1] != "0" && identifierAndAttribute[1] != "1")
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[6]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[6]);
                             break;
                         }
 
@@ -562,6 +564,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
 
@@ -569,7 +572,7 @@ namespace jf
                         List<double> constValue = new List<double>();
                         constValue.Clear();
                         constValue.Add(double.Parse(identifierAndAttribute[1]));
-                        this.constants.Add(Tuple.Create(identifierAndAttribute[0],constValue));
+                        this.constants.Add(Tuple.Create(identifierAndAttribute[0], constValue));
                         break;
                     #endregion
 
@@ -583,6 +586,7 @@ namespace jf
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[7]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[7]);
                             break;
                         }
 
@@ -592,6 +596,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
 
@@ -604,6 +609,7 @@ namespace jf
                         if (constValue[0] < 0)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[21]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[21]);
                             break;
                         }
 
@@ -620,6 +626,7 @@ namespace jf
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[8]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[8]);
                             break;
                         }
 
@@ -629,6 +636,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
 
@@ -649,6 +657,7 @@ namespace jf
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[9]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[9]);
                             break;
                         }
 
@@ -658,6 +667,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
 
@@ -679,6 +689,7 @@ namespace jf
                         if (identifierAndAttribute.Length < 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[22]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[22]);
                             break;
                         }
 
@@ -703,6 +714,7 @@ namespace jf
                                     this.allErrorsText[10] = String.Format("'{0}' value is not number in data, its should be number", s);
                                 }
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[10]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[10]);
                                 break;
                             }
                             constValue.Add(double.Parse(s));
@@ -716,17 +728,19 @@ namespace jf
                     #region begin Keyword Errors
                     case "begin":
                         this.errors.Add(new CustomError(lineNumber, this.allErrorsText[11]));
+                        jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[11]);
                         break;
-                    #endregion
+                        #endregion
                 }
             }
             #endregion
 
-            
+
             #region Detect Errors in Performable Part Of Code
             else
             {
-                switch (identifierAndAttribute[0].ToLower()) {
+                switch (identifierAndAttribute[0].ToLower())
+                {
 
                     #region var Keyword Errors
                     case "var":
@@ -740,6 +754,7 @@ namespace jf
                         if (temp.Length != 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[14]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[14]);
                             break;
                         }
 
@@ -749,6 +764,7 @@ namespace jf
                         if (!Char.IsLetter(temp[0][0]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[15]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[15]);
                             break;
                         }
 
@@ -759,6 +775,7 @@ namespace jf
                         if (double.TryParse(temp[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[16]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[16]);
                             break;
                         }
 
@@ -776,6 +793,7 @@ namespace jf
                         if (identifierAndAttribute.Length == 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[17]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[17]);
                             break;
                         }
 
@@ -794,6 +812,7 @@ namespace jf
                         if (isItInDefined == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
                             break;
                         }
                         break;
@@ -808,6 +827,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[19]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[19]);
                         }
                         break;
                     #endregion
@@ -823,6 +843,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[23]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[23]);
                             break;
                         }
 
@@ -837,6 +858,7 @@ namespace jf
                         if (!Char.IsLetter(temp[0][0]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[15]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[15]);
                             break;
                         }
 
@@ -853,6 +875,7 @@ namespace jf
                         if (isItInDefined == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
                             break;
                         }
 
@@ -865,6 +888,7 @@ namespace jf
                             if (double.TryParse(temp[1], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[16]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[16]);
                                 break;
                             }
                         }
@@ -886,6 +910,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
                                 break;
                             }
                         }
@@ -901,6 +926,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[24]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[24]);
                             break;
                         }
 
@@ -910,6 +936,7 @@ namespace jf
                         if (identifierAndAttribute[1].ToLower() != "pp" && identifierAndAttribute[1].ToLower() != "pm")
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[20]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[20]);
                         }
                         break;
                     #endregion
@@ -923,6 +950,7 @@ namespace jf
                         if (temp.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[34]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[34]);
                             break;
                         }
 
@@ -943,6 +971,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[25]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[25]);
                             break;
                         }
 
@@ -955,6 +984,7 @@ namespace jf
                             if (double.TryParse(identifierAndAttribute[1], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[26]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[26]);
                                 break;
                             }
                         }
@@ -976,6 +1006,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
                                 break;
                             }
                         }
@@ -991,6 +1022,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[27]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[27]);
                             break;
                         }
 
@@ -1004,6 +1036,7 @@ namespace jf
                             if (temp[2] != "r")
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[28]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[28]);
                                 break;
                             }
                         }
@@ -1014,6 +1047,7 @@ namespace jf
                         if (!(temp[0][0] == 'p' || temp[0][0] == 'm'))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[29]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[29]);
                             break;
                         }
 
@@ -1023,6 +1057,7 @@ namespace jf
                         if (temp[0][1] != '=')
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[30]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[30]);
                             break;
                         }
 
@@ -1043,6 +1078,7 @@ namespace jf
                             if (double.TryParse(temp[0], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[31]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[31]);
                                 break;
                             }
                         }
@@ -1064,6 +1100,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[31]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[31]);
                                 break;
                             }
                         }
@@ -1075,6 +1112,7 @@ namespace jf
                         if (!temp[1].StartsWith("until"))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[32]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[32]);
                             break;
                         }
 
@@ -1086,6 +1124,7 @@ namespace jf
                         if (!this.checkForConditionError(temp[1]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[33]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[33]);
                             break;
                         }
                         break;
@@ -1101,6 +1140,7 @@ namespace jf
                         if (temp1.Length > 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
 
@@ -1108,6 +1148,7 @@ namespace jf
                         if (!this.checkForConditionError(identifierAndAttribute[1]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[36]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[36]);
                             break;
                         }
                         break;
@@ -1119,6 +1160,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
                         break;
@@ -1131,9 +1173,10 @@ namespace jf
                         if (temp2.Length > 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
-                        
+
                         /* attribute can be variable or number, first we check if first letter of it
                          * not be alphabet, so its a number and we should be able to parse it to number
                          * if we cant do that we have an error
@@ -1143,6 +1186,7 @@ namespace jf
                             if (double.TryParse(identifierAndAttribute[1], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[37]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[37]);
                                 break;
                             }
                         }
@@ -1164,6 +1208,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[37]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[37]);
                                 break;
                             }
                         }
@@ -1177,6 +1222,7 @@ namespace jf
                         if (temp3.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
                             break;
                         }
 
@@ -1188,12 +1234,14 @@ namespace jf
                             if (double.TryParse(temp3[0], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[38]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[38]);
                                 break;
                             }
                             temp3[1] = temp3[1].ToLower().Replace("while", "");
                             if (!checkForConditionError(temp3[1]))
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[39]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[39]);
                                 break;
                             }
                         }
@@ -1203,8 +1251,10 @@ namespace jf
                          */
                         else if (identifierAndAttribute[1].ToLower().Contains("while"))
                         {
-                            if(!this.checkForConditionError(identifierAndAttribute[1].ToLower().Replace("while", "").Trim())){
-                                this.errors.Add(new CustomError(lineNumber, this.allErrorsText[39]));
+                            if (!this.checkForConditionError(identifierAndAttribute[1].ToLower().Replace("while", "").Trim()))
+                            {
+                                errors.Add(new CustomError(lineNumber, allErrorsText[39]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[39]);
                                 break;
                             }
                         }
@@ -1214,7 +1264,8 @@ namespace jf
                         {
                             if (double.TryParse(identifierAndAttribute[1], out number) == false)
                             {
-                                this.errors.Add(new CustomError(lineNumber, this.allErrorsText[38]));
+                                errors.Add(new CustomError(lineNumber, allErrorsText[38]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38]);
                                 break;
                             }
                         }
@@ -1226,22 +1277,25 @@ namespace jf
                         // if keyword has one attribute, if it has more attribute we have an error
                         if (identifierAndAttribute.Length != 2)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
                             break;
                         }
                         string[] temp4 = identifierAndAttribute[1].Split(',');
                         if (temp4.Length > 1)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
                             break;
                         }
 
                         /* attribute of if keyword is a condition so we check this condition
                          * to be a valid condition
                          */
-                        if (!this.checkForConditionError(identifierAndAttribute[1]))
+                        if (!checkForConditionError(identifierAndAttribute[1]))
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[40]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[40]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[40]);
                             break;
                         }
                         break;
@@ -1254,7 +1308,8 @@ namespace jf
                         {
                             if (identifierAndAttribute[1] != null)
                             {
-                                this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                                errors.Add(new CustomError(lineNumber, allErrorsText[100]));
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
                                 break;
                             }
                         }
@@ -1264,15 +1319,17 @@ namespace jf
                     #region water Keyword Errors
                     case "water":
                         // water keyword has just one attribute, if it has attribute we have an error
-                        if(identifierAndAttribute.Length != 2)
+                        if (identifierAndAttribute.Length != 2)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
                             break;
                         }
                         string[] temp5 = identifierAndAttribute[1].Split(',');
                         if (temp5.Length > 1)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
                             break;
                         }
                         /* attribute of water should be a number and its just can be 
@@ -1280,7 +1337,8 @@ namespace jf
                          */
                         if (!(identifierAndAttribute[1] == "0" || identifierAndAttribute[1] == "1"))
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[41]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[41]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[41]);
                             break;
                         }
                         break;
@@ -1292,24 +1350,27 @@ namespace jf
                         // fan keyword has just one attribute, if it has attribute we have an error
                         if (identifierAndAttribute.Length != 2)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
                             break;
                         }
                         string[] temp6 = identifierAndAttribute[1].Split(',');
                         if (temp6.Length > 1)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[100]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
                             break;
                         }
 
                         // attribute of fan is a number, we check it here
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[38]));
+                            errors.Add(new CustomError(lineNumber, allErrorsText[38]));
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38]);
                             break;
                         }
                         break;
-                    #endregion
+                        #endregion
                 }
             }
             #endregion
@@ -1329,9 +1390,10 @@ namespace jf
             /* if startLineNumber is null or its values are less than 0, its means that there is no
              * begin keyword in code and we have an error
              */
-                        if (startLineNumber == null || startLineNumber.Item1 < 0)
+            if (startLineNumber == null || startLineNumber.Item1 < 0)
             {
-                this.errors.Add(new CustomError(startLineNumber.Item1, this.allErrorsText[5]));
+                errors.Add(new CustomError(startLineNumber.Item1, allErrorsText[5]));
+                jf_FinalProject.Logger.Logger.Log(this, startLineNumber.Item1, allErrorsText[5]);
             }
             #endregion
 
@@ -1340,19 +1402,19 @@ namespace jf
             int realLineCounter = startLineNumber.Item1;
             Stack parentStack = new Stack();
             bool isEnded = false;
-            string firstLine = this.realLines[startLineNumber.Item1].Item2;
-            string[] result = this.Tokenizer(firstLine);
-            this.performableSymboltTable.root = new Node(result[0], result[1], realLineCounter);
-            parentStack.Push(this.performableSymboltTable.root);
+            string firstLine = realLines[startLineNumber.Item1].Item2;
+            string[] result = Tokenizer(firstLine);
+            performableSymboltTable.root = new Node(result[0], result[1], realLineCounter);
+            parentStack.Push(performableSymboltTable.root);
             #endregion
 
             #region Create Symbol Table Tree
             /* iterate lines from begin keyword to end keyword. performable part of code
              * is last part of code
              */
-            for (i = startLineNumber.Item1 + 1; i < this.realLines.Count; i++)
+            for (i = startLineNumber.Item1 + 1; i < realLines.Count; i++)
             {
-                string line = this.realLines[i].Item2;
+                string line = realLines[i].Item2;
 
                 // pass empty lines
                 if (line.Length == 0)
@@ -1361,7 +1423,7 @@ namespace jf
                 }
 
                 // tokenize line
-                result = this.Tokenizer(line);
+                result = Tokenizer(line);
 
                 /* check current line for error. if chechForError method find any error,
                  * it will add it to errors list
@@ -1411,20 +1473,22 @@ namespace jf
                      */
                     if (result[0].ToLower() == "lend" && temp.identifier == "if")
                     {
-                        this.errors.Add(new CustomError(i, this.allErrorsText[1]));
+                        errors.Add(new CustomError(i, allErrorsText[1]));
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[1]);
                     }
                     if (result[0].ToLower() == "endif" && temp.identifier == "loop")
                     {
-                        this.errors.Add(new CustomError(i, this.allErrorsText[1]));
+                        errors.Add(new CustomError(i, allErrorsText[1]));
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[1]);
                     }
 
                     /* this part of code check for extra end of block keyword
                      * extra end of block is an error
                      */
-                    if (temp == this.performableSymboltTable.root)
+                    if (temp == performableSymboltTable.root)
                     {
-
-                        this.errors.Add(new CustomError(i, this.allErrorsText[2]));
+                        errors.Add(new CustomError(i, allErrorsText[2]));
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[2]);
                     }
                     current = new Node(result[0], result[1], i)
                     {
@@ -1439,7 +1503,6 @@ namespace jf
                 // end keyword is end of code. its end compiler but before that we check an error
                 else if (result[0].ToLower() == "end")
                 {
-
                     /* this part of code check for early end keyword. one or more blocks started 
                      * and before they end, end keyword occured in code. its an error
                      * 
@@ -1451,10 +1514,10 @@ namespace jf
                      * in this exmaple loop block started but before its end and compiler see lend
                      * keyword, end keyword accured and we faced with an error
                      */
-                    if ((Node)parentStack.Peek() == this.performableSymboltTable.root)
+                    if ((Node)parentStack.Peek() == performableSymboltTable.root)
                     {
-
-                        this.errors.Add(new CustomError(i, this.allErrorsText[3]));
+                        this.errors.Add(new CustomError(i, allErrorsText[3]));
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[3]);
                     }
                     break;
                 }
@@ -1463,18 +1526,22 @@ namespace jf
             #endregion
 
             // if there is another line after end keyword, its an error
-            if (isEnded == false) {
-                this.errors.Add(new CustomError(i, this.allErrorsText[4]));
-            }
-            string[] lastLine = this.Tokenizer(this.lines[this.lines.Count - 1]);
-            if(lastLine[0].ToLower() != "end")
+            if (isEnded == false)
             {
-                this.errors.Add(new CustomError(i, this.allErrorsText[12]));
+                this.errors.Add(new CustomError(i, allErrorsText[4]));
+                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[4]);
+            }
+            string[] lastLine = this.Tokenizer(lines[lines.Count - 1]);
+            if (lastLine[0].ToLower() != "end")
+            {
+                this.errors.Add(new CustomError(i, allErrorsText[12]));
+                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[12]);
             }
 
-            if(lastLine.Length > 2)
+            if (lastLine.Length > 2)
             {
-                this.errors.Add(new CustomError(i, this.allErrorsText[13]));
+                this.errors.Add(new CustomError(i, allErrorsText[13]));
+                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[13]);
             }
         }
 
@@ -1489,7 +1556,7 @@ namespace jf
         {
             int lineCounter = 0;
             int realLineCounter = 0;
-            foreach(var line in this.realLines)
+            foreach (Tuple<int, string> line in realLines)
             {
 
                 // pass empty lines

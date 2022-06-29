@@ -13,7 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using jf;
-using jf_FinalProject.Logger;
+using System.Runtime.CompilerServices;
 
 
 namespace jf_FinalProject
@@ -44,12 +44,17 @@ namespace jf_FinalProject
             IsMenuOpen = false;
             IsManual = true;
             lineIndex.AppendText($"{++_rtbIndex}");
-            Logger.Logger.Log("arman kiriye");
-            Logger.Logger.Log("arman kiriye");
-            Logger.Logger.Log("arman kiriye");
-            Logger.Logger.Log(1, $"{this.GetType().Name}.cs", "arman ridi dash");
-            Logger.Logger.Log(1, $"{this.GetType().Name}.cs", "arman ridi dash");
-            Logger.Logger.Log(1, $"{this.GetType().Name}.cs", "arman ridi dash");
+            Logger.Logger.Log("arman dog");
+            Logger.Logger.Log("arman dog");
+            Logger.Logger.Log("arman dog");
+            Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
+            Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
+            Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
+        }
+
+        private static int GetCurrentLine([CallerLineNumber] int lineNumber = 0)
+        {
+            return lineNumber;
         }
 
         private void ShutDownButton_Click(object sender, EventArgs e) => Application.Current.Shutdown();
