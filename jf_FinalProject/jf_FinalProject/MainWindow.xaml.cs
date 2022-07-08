@@ -29,6 +29,7 @@ namespace jf_FinalProject
         private int _rtbIndex = 0;
         private string _darkBackGroundValue = "#292F34";
         private string _lightBackGroundValue = "#3A4149";
+        private bool _fileHasError = false;
         private bool IsMenuOpen { get; set; }
 
         public bool IsManual { get; set; }
@@ -148,6 +149,7 @@ namespace jf_FinalProject
             _numberOfSelectedFile = 0;
             selectedCode.IsReadOnly = false;
             codePrintedFileName.Content = "untitled.jf";
+            codePrintedLogLabel.Content = "Log of untitled.jf";
         }
 
         private void DeleteSelectedFileButton_Click(object sender, EventArgs e)
@@ -160,6 +162,7 @@ namespace jf_FinalProject
             lineIndex.AppendText($"{++_rtbIndex}");
             selectedCode.IsReadOnly = false;
             codePrintedFileName.Content = "untitled.jf";
+            codePrintedLogLabel.Content = "Log of ' untitled.jf '";
             _numberOfSelectedFile--;
             _selectedFilePath.RemoveAt(selectedIndex);
             int index = 0;
@@ -355,6 +358,7 @@ namespace jf_FinalProject
                 #endregion
 
                 #region Start Run
+                Logger.Logger logger = new Logger.Logger();
                 foreach (string path in _selectedFilePath)
                 {
                     Compiler compiler = new Compiler();
@@ -362,7 +366,8 @@ namespace jf_FinalProject
                     SensorHandler sensor = new SensorHandler();
                     Runner runner = new Runner(compiler, sensor);
                     runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
-                    runner.Run();
+                    logger.NewLog += OnNewLog;
+                    _fileHasError = runner.Run();
                 }
                 #endregion
             }
@@ -383,6 +388,11 @@ namespace jf_FinalProject
         {
             //TextRange range = new TextRange(selectedCode.Document.ContentStart, selectedCode.Document.ContentEnd);
             //MessageBox.Show($"type is {e.Type} and line number is {e.LineNumber}");
+        }
+
+        private void OnNewLog(object sender, Logger.LogEventArgs e)
+        {
+            MessageBox.Show($"caller name is {e.CallerName} and Error message is {e.ErrorMessage} and number of line is {e.LineNumber}");
         }
     }
 }

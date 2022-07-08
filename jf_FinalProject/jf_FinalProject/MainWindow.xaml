@@ -428,6 +428,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
@@ -436,7 +437,7 @@
                     <!--code visualizer-->
                     <Button Grid.Row="0" Grid.Column="0" x:Name="saveFileButton" Content="Save" Width="50" HorizontalAlignment="Right" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="SaveFileButton_Click"/>
                     <Label Grid.Column="0" Grid.Row="0" x:Name="codePrintedFileName" Content="untitled.jf*" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10,0,5" FontSize="12" Foreground="{StaticResource grayBackGround}" Background="{StaticResource lightBackGround}" BorderThickness="0,1,0,0" BorderBrush="{StaticResource customYellow}"/>
-                    <Border Grid.Column="0" Grid.Row="1" x:Name="displayCodeRichTextBox" Background="#292F34" BorderThickness="1" BorderBrush="{StaticResource customYellow}" CornerRadius="10" Margin="10,0,0,10" Padding="5">
+                    <Border Grid.Column="0" Grid.Row="1" x:Name="displayCodeRichTextBox" Background="#292F34" BorderThickness="1" BorderBrush="{StaticResource customYellow}" CornerRadius="10" Margin="10,0,0,15" Padding="5">
                         <!--code rich text box-->
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -471,7 +472,7 @@
                     </Border>
 
                     <!--choose file-->
-                    <Border Grid.Column="1" Grid.RowSpan="2" x:Name="addFileBorder" Background="#292F34" BorderThickness="6" CornerRadius="10" Margin="5" Padding="5">
+                    <Border Grid.Column="1" Grid.RowSpan="2" x:Name="addFileBorder" Background="#292F34" BorderThickness="6" CornerRadius="10" Margin="5,5,0,5" Padding="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -489,6 +490,26 @@
                             <Button Grid.Row="0" Grid.Column="3" x:Name="runAllButton" Content="Run All" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="RunAllButton_Click"/>
                             <Border Grid.Row="1" Grid.ColumnSpan="4" BorderBrush="{StaticResource customYellow}" BorderThickness="1" CornerRadius="5">
                                 <ListBox x:Name="selectedFileListBox" Background="#292F34" Margin="5" BorderThickness="0" FontSize="14" Foreground="White" SelectionChanged="FileListBox_SelectionChanged"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!--Log Visualizer-->
+                    <Border Grid.Column="2" Grid.RowSpan="2" x:Name="logVisualizerBorder" Background="#292F34" BorderThickness="6" CornerRadius="10" Margin="0,5,5,5" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="codePrintedLogLabel" Content="Log of untitled.jf" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,5" FontSize="12" Foreground="{StaticResource grayBackGround}" Background="#292F34" BorderThickness="0,1,0,0" BorderBrush="{StaticResource customYellow}"/>
+                            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  BorderBrush="{StaticResource customYellow}" BorderThickness="1" CornerRadius="5">
+                                <ListBox Background="#292F34" Margin="5" BorderThickness="0" FontSize="14" Foreground="White" SelectionChanged="FileListBox_SelectionChanged" Focusable="False" IsHitTestVisible="False">
+                                    <ListBoxItem Foreground="Chartreuse">No Error And Warning</ListBoxItem>
+                                </ListBox>
                             </Border>
                         </Grid>
                     </Border>

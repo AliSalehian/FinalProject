@@ -10,6 +10,16 @@ namespace jf_FinalProject.Logger
         private readonly static string _commandSendFileName = "CommandSend.json";
         private readonly static string _developerFileName = "Developer.json";
         private readonly static string _jfErrorFileName = "JfErrors.json";
+        private readonly static string _sensorCheckFileName = "SensorCheck.json";
+
+        public delegate void LogHandler(object sender, LogEventArgs e);
+
+        public event LogHandler NewLog;
+
+        protected virtual void OnNewLog(string callerName, string errorMessage, int lineNumber)
+        {
+            NewLog(this, new LogEventArgs() { CallerName = callerName, ErrorMessage = errorMessage, LineNumber = lineNumber });
+        }
         private static StreamWriter OpenJsonFile(string fileName)
         {
             string basePath = Path.GetFullPath(Directory.GetCurrentDirectory());
@@ -26,6 +36,7 @@ namespace jf_FinalProject.Logger
             return sr;
         }
 
+        #region Command Send Log
         /// <summary>
         /// this logger log commands that our code create for hardware
         /// </summary>
@@ -38,7 +49,9 @@ namespace jf_FinalProject.Logger
             sr.Write(jsonData + ",\n");
             sr.Close();
         }
+        #endregion
 
+        #region Developer Log
         /// <summary>
         /// this logger log errors and events that happened in c# code. Its understandable just for
         /// Developers
@@ -54,7 +67,9 @@ namespace jf_FinalProject.Logger
             sr.Write(jsonData + ",\n");
             sr.Close();
         }
+        #endregion
 
+        #region JF Code Error Log
         /// <summary>
         /// this logger log errors that occured in jf code
         /// </summary>
@@ -79,8 +94,27 @@ namespace jf_FinalProject.Logger
             string jsonData = JsonConvert.SerializeObject(jfLog, Formatting.Indented);
             sr.Write(jsonData + ",\n");
             sr.Close();
+            Logger g = new Logger();
+            g.OnNewLog(sender.GetType().Name, errorMessage, lineNumber);
         }
+        #endregion
 
+        #region Sensor Check Log
+        /// <summary>
+        /// this logger log when code check value of a sensor and save sensor name, its value and exact
+        /// time that we check it in log file.
+        /// </summary>
+        /// <param name="sensorName">Its a string that contains name of sensor that we check</param>
+        /// <param name="sensorValue">Its a double that is value of sensor</param>
+        public static void Log(string sensorName, double sensorValue)
+        {
+            StreamWriter sr = OpenJsonFile(_sensorCheckFileName);
+            SensorCheckLog sensorCheckLog = new SensorCheckLog { SensorName = sensorName, SensorValue = sensorValue, Time = DateTime.Now };
+            string jsonData = JsonConvert.SerializeObject(sensorCheckLog, Formatting.Indented);
+            sr.Write(jsonData + ",\n");
+            sr.Close();
+        }
+        #endregion
         public static int GetCurrentLine([CallerLineNumber] int lineNumber = 0)
         {
             return lineNumber;

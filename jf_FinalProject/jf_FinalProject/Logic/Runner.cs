@@ -276,8 +276,8 @@ namespace jf
         /// <c>run</c> method is main method of <c>jf.Runner</c> class.
         /// its run code line by line, create command for UI and hardware.
         /// </summary>
-        /// <returns></returns>
-        public int Run()
+        /// <returns>A boolean value. true if code run correctly, else return false</returns>
+        public bool Run()
         {
             #region Initialize Variables
             bool errorDetected = false;
@@ -312,7 +312,7 @@ namespace jf
 
             if (errorDetected)
             {
-                return 0;
+                return false;
             }
 
             #region Run Explanation Part Of Code
@@ -846,7 +846,7 @@ namespace jf
             }
             #endregion
 
-            return 1;
+            return true;
         }
         #endregion
     }

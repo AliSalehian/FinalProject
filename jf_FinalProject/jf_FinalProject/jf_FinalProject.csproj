@@ -99,6 +99,7 @@
     <Compile Include="Logger\CommandSendLog.cs" />
     <Compile Include="Logger\DeveloperLog.cs" />
     <Compile Include="Logger\jfCodeErrorLog.cs" />
+    <Compile Include="Logger\LogEventArgs.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\SensorCheckLog.cs" />
     <Compile Include="Logic\CommandEventArgs.cs" />
