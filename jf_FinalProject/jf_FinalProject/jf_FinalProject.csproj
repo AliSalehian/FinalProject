@@ -99,13 +99,13 @@
     <Compile Include="Logger\CommandSendLog.cs" />
     <Compile Include="Logger\DeveloperLog.cs" />
     <Compile Include="Logger\jfCodeErrorLog.cs" />
-    <Compile Include="Logger\LogEventArgs.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\SensorCheckLog.cs" />
     <Compile Include="Logic\CommandEventArgs.cs" />
     <Compile Include="Logic\Compiler.cs" />
     <Compile Include="Logic\CustomError.cs" />
     <Compile Include="Logic\Explanation.cs" />
+    <Compile Include="Logic\LogEventArgs.cs" />
     <Compile Include="Logic\Node.cs" />
     <Compile Include="Logic\Performable.cs" />
     <Compile Include="Logic\Runner.cs" />

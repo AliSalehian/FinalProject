@@ -505,11 +505,11 @@
                                 <RowDefinition Height="50" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="codePrintedLogLabel" Content="Log of untitled.jf" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,5" FontSize="12" Foreground="{StaticResource grayBackGround}" Background="#292F34" BorderThickness="0,1,0,0" BorderBrush="{StaticResource customYellow}"/>
+                            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="codePrintedLogLabel" Content="JF Code Errors" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,5" FontSize="12" Foreground="{StaticResource grayBackGround}" Background="#292F34" BorderThickness="0,1,0,0" BorderBrush="{StaticResource customYellow}"/>
                             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  BorderBrush="{StaticResource customYellow}" BorderThickness="1" CornerRadius="5">
-                                <ListBox Background="#292F34" Margin="5" BorderThickness="0" FontSize="14" Foreground="White" SelectionChanged="FileListBox_SelectionChanged" Focusable="False" IsHitTestVisible="False">
-                                    <ListBoxItem Foreground="Chartreuse">No Error And Warning</ListBoxItem>
-                                </ListBox>
+                                <StackPanel x:Name="jfErrorsContaner">
+                                    
+                                </StackPanel>
                             </Border>
                         </Grid>
                     </Border>

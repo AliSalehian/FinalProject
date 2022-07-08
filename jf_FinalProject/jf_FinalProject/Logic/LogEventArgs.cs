@@ -1,6 +1,6 @@
-﻿namespace jf_FinalProject.Logger
+﻿namespace jf_FinalProject.Logic
 {
-    public class LogEventArgs
+    internal class LogEventArgs
     {
         public string CallerName { get; set; }
 

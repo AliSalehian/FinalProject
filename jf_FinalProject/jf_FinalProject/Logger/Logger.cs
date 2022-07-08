@@ -12,14 +12,6 @@ namespace jf_FinalProject.Logger
         private readonly static string _jfErrorFileName = "JfErrors.json";
         private readonly static string _sensorCheckFileName = "SensorCheck.json";
 
-        public delegate void LogHandler(object sender, LogEventArgs e);
-
-        public event LogHandler NewLog;
-
-        protected virtual void OnNewLog(string callerName, string errorMessage, int lineNumber)
-        {
-            NewLog(this, new LogEventArgs() { CallerName = callerName, ErrorMessage = errorMessage, LineNumber = lineNumber });
-        }
         private static StreamWriter OpenJsonFile(string fileName)
         {
             string basePath = Path.GetFullPath(Directory.GetCurrentDirectory());
@@ -94,8 +86,6 @@ namespace jf_FinalProject.Logger
             string jsonData = JsonConvert.SerializeObject(jfLog, Formatting.Indented);
             sr.Write(jsonData + ",\n");
             sr.Close();
-            Logger g = new Logger();
-            g.OnNewLog(sender.GetType().Name, errorMessage, lineNumber);
         }
         #endregion
 

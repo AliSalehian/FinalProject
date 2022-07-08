@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using jf;
 using System.Runtime.CompilerServices;
-
+using jf_FinalProject.Logic;
 
 namespace jf_FinalProject
 {
@@ -366,8 +366,23 @@ namespace jf_FinalProject
                     SensorHandler sensor = new SensorHandler();
                     Runner runner = new Runner(compiler, sensor);
                     runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
-                    logger.NewLog += OnNewLog;
+                    runner.NewLog += OnNewLog;
                     _fileHasError = runner.Run();
+                    if (_fileHasError)
+                    {
+                        TextBox textBox = new TextBox
+                        {
+                            Text = $"there is no error in {path}",
+                            Foreground = new SolidColorBrush(Color.FromRgb(102, 255, 102)),
+                            Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue),
+                            IsEnabled = false,
+                            Padding = new Thickness(5),
+                            Margin = new Thickness(5),
+                            BorderThickness = new Thickness(0, 0, 0, 4),
+                            BorderBrush = new SolidColorBrush(Color.FromRgb(255, 255, 255))
+                        };
+                        jfErrorsContaner.Children.Add(textBox);
+                    }
                 }
                 #endregion
             }
@@ -390,9 +405,9 @@ namespace jf_FinalProject
             //MessageBox.Show($"type is {e.Type} and line number is {e.LineNumber}");
         }
 
-        private void OnNewLog(object sender, Logger.LogEventArgs e)
+        private void OnNewLog(object sender, LogEventArgs e)
         {
-            MessageBox.Show($"caller name is {e.CallerName} and Error message is {e.ErrorMessage} and number of line is {e.LineNumber}");
+            //errorLog.Items.Add($"Error in {e.CallerName} at line {e.LineNumber+1}: {e.ErrorMessage}");
         }
     }
 }

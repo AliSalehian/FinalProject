@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Collections;
 using System.Windows.Media;
+using jf_FinalProject.Logic;
 
 namespace jf
 {
@@ -16,8 +17,11 @@ namespace jf
     {
 
         public delegate void RichTextNeedUpdateHandler(object sender, CommandEventArgs e);
+        public delegate void LogHandler(object sender, LogEventArgs e);
 
-        public event RichTextNeedUpdateHandler RichTextNeedUpdate;
+        public event RichTextNeedUpdateHandler RichTextNeedUpdate; 
+        public event LogHandler NewLog;
+
 
         protected virtual void OnRichTextNeedUpdate(string type, int lineNumber, SolidColorBrush color)
         {
@@ -27,6 +31,10 @@ namespace jf
             //{
             //    RichTextNeedUpdate(this, new CommandEventArgs() { Type = type, LineNumber = lineNumber, Color = color });
             //}
+        }
+        protected virtual void OnNewLog(object sender, string errorMessage, int lineNumber)
+        {
+            NewLog(this, new LogEventArgs() { CallerName = sender.GetType().Name, ErrorMessage = errorMessage, LineNumber = lineNumber });
         }
 
         #region Attributes Of Class
@@ -308,6 +316,7 @@ namespace jf
             foreach (CustomError error in compilerErrors)
             {
                 OnRichTextNeedUpdate("highlight", error.getLineNumber(), RED);
+                OnNewLog(_compiler, error.getMessage(), error.getLineNumber());
             }
 
             if (errorDetected)
