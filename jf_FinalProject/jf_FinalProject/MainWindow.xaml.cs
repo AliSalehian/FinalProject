@@ -15,6 +15,7 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using jf;
 using System.Runtime.CompilerServices;
 using jf_FinalProject.Logic;
+using System.Collections;
 
 namespace jf_FinalProject
 {
@@ -30,6 +31,8 @@ namespace jf_FinalProject
         private string _darkBackGroundValue = "#292F34";
         private string _lightBackGroundValue = "#3A4149";
         private bool _fileHasError = false;
+        private List<string> _errorMessages = new List<string>();
+        private int _errorCount = 0;
         private bool IsMenuOpen { get; set; }
 
         public bool IsManual { get; set; }
@@ -149,7 +152,13 @@ namespace jf_FinalProject
             _numberOfSelectedFile = 0;
             selectedCode.IsReadOnly = false;
             codePrintedFileName.Content = "untitled.jf";
-            codePrintedLogLabel.Content = "Log of untitled.jf";
+            codePrintedLogLabel.Content = "JF Code Errors";
+            jfErrorsContainer.Children.Clear();
+            IEnumerator t = jfErrorsContainer.Children.GetEnumerator();
+            while (t.MoveNext())
+            {
+                jfErrorsContainer.Children.Remove((UIElement)t.Current);
+            }
         }
 
         private void DeleteSelectedFileButton_Click(object sender, EventArgs e)
@@ -183,11 +192,9 @@ namespace jf_FinalProject
             selectedFileName = Regex.Replace(selectedFileName, @"[\d-]", string.Empty);
             codePrintedFileName.Content = selectedFileName.Trim();
             string[] lines = File.ReadAllLines(selectedFilePath);
-            _rtbIndex = 0;
             selectedCode.Document.Blocks.Clear();
             lineIndex.Document.Blocks.Clear();
             _rtbIndex = 0;
-            lineIndex.AppendText($"{++_rtbIndex}");
             selectedCode.IsReadOnly = true;
 
             FlowDocument numberOfLineFlowDoc = new FlowDocument();
@@ -322,13 +329,20 @@ namespace jf_FinalProject
 
             if (e.Key == Key.Enter)
             {
-                //lineIndex.AppendText($"{++_rtbIndex}");
                 FlowDocument flow = lineIndex.Document;
                 Paragraph p = new Paragraph();
                 p.Inlines.Add($"{++_rtbIndex}");
+                p.Name = $"line{_rtbIndex}";
                 flow.Blocks.Add(p);
                 lineIndex.Document = flow;
-            }
+            }//else if (e.Key == Key.Back)
+            //{
+            //    TextPointer currentPosition = selectedCode.CaretPosition;
+            //    TextPointer nextStart = currentPosition.GetLineStartPosition(1);
+            //    TextPointer lineEnd = (nextStart != null ? nextStart : currentPosition.DocumentEnd).GetInsertionPosition(LogicalDirection.Backward);
+            //    TextRange r = new TextRange(nextStart, lineEnd);
+            //    MessageBox.Show(r.Text);
+            //}
         }
 
         private void RunAllButton_Click(object sender, EventArgs e)
@@ -361,6 +375,8 @@ namespace jf_FinalProject
                 Logger.Logger logger = new Logger.Logger();
                 foreach (string path in _selectedFilePath)
                 {
+                    _errorCount = 0;
+                    _errorMessages.Clear();
                     Compiler compiler = new Compiler();
                     compiler.compile(path);
                     SensorHandler sensor = new SensorHandler();
@@ -368,21 +384,39 @@ namespace jf_FinalProject
                     runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
                     runner.NewLog += OnNewLog;
                     _fileHasError = runner.Run();
+                    string selectedFileName = Regex.Replace(path, @"[\d-]", string.Empty);
+                    TextBlock textBlock = new TextBlock
+                    {
+                        Foreground = new SolidColorBrush(Color.FromRgb(102, 255, 102)),
+                        Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue),
+                        IsEnabled = false,
+                        Padding = new Thickness(5),
+                        Margin = new Thickness(5),
+                        TextWrapping = TextWrapping.Wrap
+                    };
                     if (_fileHasError)
                     {
-                        TextBox textBox = new TextBox
+                        textBlock.Inlines.Add(new Run 
                         {
-                            Text = $"there is no error in {path}",
-                            Foreground = new SolidColorBrush(Color.FromRgb(102, 255, 102)),
-                            Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue),
-                            IsEnabled = false,
-                            Padding = new Thickness(5),
-                            Margin = new Thickness(5),
-                            BorderThickness = new Thickness(0, 0, 0, 4),
-                            BorderBrush = new SolidColorBrush(Color.FromRgb(255, 255, 255))
-                        };
-                        jfErrorsContaner.Children.Add(textBox);
+                            Text = $"there is no error in {path}"
+                        });
                     }
+                    else
+                    {
+                        textBlock.Foreground = new SolidColorBrush(Color.FromRgb(255, 102, 102));
+                        textBlock.Inlines.Add(new Run
+                        {
+                            Text = $"there are {_errorCount} errors in {path}:\n\n"
+                        });
+                        foreach(string error in _errorMessages)
+                        {
+                            textBlock.Inlines.Add(new Run
+                            {
+                                Text = $"{error}\n\n"
+                            });
+                        }
+                    }
+                    jfErrorsContainer.Children.Add(textBlock);
                 }
                 #endregion
             }
@@ -407,7 +441,9 @@ namespace jf_FinalProject
 
         private void OnNewLog(object sender, LogEventArgs e)
         {
-            //errorLog.Items.Add($"Error in {e.CallerName} at line {e.LineNumber+1}: {e.ErrorMessage}");
+            _errorCount++;
+            //_errorMessages += $"Error in {e.CallerName} at line {e.LineNumber + 1}:\t{e.ErrorMessage}";
+            _errorMessages.Add($"{e.CallerName} Error at line {e.LineNumber + 1}: {e.ErrorMessage}");
         }
     }
 }
