@@ -442,6 +442,7 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <RichTextBox Grid.Column="0" x:Name="lineIndex" FontSize="14" Foreground="{StaticResource customYellow}" Background="#292F34" BorderThickness="0" IsReadOnly="True">
@@ -451,7 +452,12 @@
                                     </Style>
                                 </RichTextBox.Resources>
                             </RichTextBox>
-                            <RichTextBox Grid.Column="1" x:Name="selectedCode" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="#292F34" BorderThickness="0" KeyDown="SelectedCode_KeyDown" PreviewKeyDown="SelectedCode_PreviewKeyDown" TextChanged="TextChangedEvent" ScrollViewer.ScrollChanged="ScrollChanged">
+                            <ScrollViewer  Grid.Column="1" x:Name="codePointerScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                <StackPanel x:Name="codePointer">
+                                
+                                </StackPanel>
+                            </ScrollViewer>
+                            <RichTextBox Grid.Column="2" x:Name="selectedCode"  HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="#292F34" BorderThickness="0" KeyDown="SelectedCode_KeyDown" PreviewKeyDown="SelectedCode_PreviewKeyDown" TextChanged="TextChangedEvent" ScrollViewer.ScrollChanged="ScrollChanged">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="5"/>

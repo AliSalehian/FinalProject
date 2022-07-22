@@ -30,6 +30,8 @@ namespace jf_FinalProject
         private int _rtbIndex = 0;
         private string _darkBackGroundValue = "#292F34";
         private string _lightBackGroundValue = "#3A4149";
+        private string _green = "#00ff00";
+        private SolidColorBrush _greenColor;
         private bool _fileHasError = false;
         private List<string> _errorMessages = new List<string>();
         private int _errorCount = 0;
@@ -45,8 +47,11 @@ namespace jf_FinalProject
         public MainWindow()
         {
             InitializeComponent();
+            _greenColor = (SolidColorBrush)new BrushConverter().ConvertFrom(_green);
             IsMenuOpen = false;
             IsManual = true;
+            Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
+            codePointer.Children.Add(label);
             lineIndex.AppendText($"{++_rtbIndex}");
             Logger.Logger.Log("arman dog");
             Logger.Logger.Log("arman dog");
@@ -54,6 +59,16 @@ namespace jf_FinalProject
             Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
             Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
             Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
+        }
+
+        private Label CreateLabel(Visibility visibility, string name, SolidColorBrush color)
+        {
+            Label label = new Label();
+            label.Name = name;
+            label.Foreground = color;
+            label.Visibility = visibility;
+            label.Content = ">";
+            return label;
         }
 
         private static int GetCurrentLine([CallerLineNumber] int lineNumber = 0)
@@ -147,7 +162,10 @@ namespace jf_FinalProject
             selectedFileListBox.Items.Clear();
             selectedCode.Document.Blocks.Clear();
             lineIndex.Document.Blocks.Clear();
+            codePointer.Children.Clear();
             _rtbIndex = 0;
+            Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
+            codePointer.Children.Add(label);
             lineIndex.AppendText($"{++_rtbIndex}");
             _numberOfSelectedFile = 0;
             selectedCode.IsReadOnly = false;
@@ -167,7 +185,10 @@ namespace jf_FinalProject
             selectedFileListBox.Items.RemoveAt(selectedIndex);
             selectedCode.Document.Blocks.Clear();
             lineIndex.Document.Blocks.Clear();
+            codePointer.Children.Clear();
             _rtbIndex = 0;
+            Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
+            codePointer.Children.Add(label);
             lineIndex.AppendText($"{++_rtbIndex}");
             selectedCode.IsReadOnly = false;
             codePrintedFileName.Content = "untitled.jf";
@@ -194,6 +215,7 @@ namespace jf_FinalProject
             string[] lines = File.ReadAllLines(selectedFilePath);
             selectedCode.Document.Blocks.Clear();
             lineIndex.Document.Blocks.Clear();
+            codePointer.Children.Clear();
             _rtbIndex = 0;
             selectedCode.IsReadOnly = true;
 
@@ -203,6 +225,8 @@ namespace jf_FinalProject
             {
                 Paragraph lineNumberParagraph = new Paragraph();
                 lineNumberParagraph.Inlines.Add($"{++_rtbIndex}");
+                Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
+                codePointer.Children.Add(label);
                 numberOfLineFlowDoc.Blocks.Add(lineNumberParagraph);
                 lineIndex.Document = numberOfLineFlowDoc;
 
@@ -331,6 +355,8 @@ namespace jf_FinalProject
             {
                 FlowDocument flow = lineIndex.Document;
                 Paragraph p = new Paragraph();
+                Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
+                codePointer.Children.Add(label);
                 p.Inlines.Add($"{++_rtbIndex}");
                 p.Name = $"line{_rtbIndex}";
                 flow.Blocks.Add(p);
@@ -431,12 +457,28 @@ namespace jf_FinalProject
         private void ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             lineIndex.ScrollToVerticalOffset(e.VerticalOffset);
+            codePointerScroll.ScrollToVerticalOffset(e.VerticalOffset);
         }
 
         private void OnRichTextNeedUpdate(object sender, CommandEventArgs e)
         {
-            //TextRange range = new TextRange(selectedCode.Document.ContentStart, selectedCode.Document.ContentEnd);
-            //MessageBox.Show($"type is {e.Type} and line number is {e.LineNumber}");
+            TextRange range = new TextRange(lineIndex.Document.ContentStart, lineIndex.Document.ContentEnd);
+            TextPointer current = range.Start.GetInsertionPosition(LogicalDirection.Forward);
+            int line = 0;
+            while(current != null)
+            {
+                if (line == e.LineNumber)
+                {
+                    if (line != 0)
+                    {
+                        //codePointer.Children[line - 1].Visibility = Visibility.Hidden;
+                    }
+                    codePointer.Children[line].Visibility = Visibility.Visible;
+                    break;
+                }
+                current = current.GetNextContextPosition(LogicalDirection.Forward);
+                line++;
+            }
         }
 
         private void OnNewLog(object sender, LogEventArgs e)
