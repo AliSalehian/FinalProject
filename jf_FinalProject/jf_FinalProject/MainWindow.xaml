@@ -1,4 +1,4 @@
-﻿<Window
+﻿<Window xmlns:agc="http://www.arction.com/gauges/" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,7 +11,7 @@
         AllowsTransparency="True"
         Background="#292F34"
         WindowStartupLocation="CenterScreen"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         ResizeMode="CanResizeWithGrip"
         x:Name="main"
         WindowState="Maximized"
@@ -193,6 +193,9 @@
                         <Image Style="{StaticResource ErrorImage}" />
                         <Label Content="Back" Style="{StaticResource StatusLabel}" />
                     </StackPanel>
+                    <!--<agc:Gauge Grid.Column="0" Grid.Row="1">
+                        
+                    </agc:Gauge>-->
                 </Grid>
             </Border>
 
@@ -220,13 +223,13 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <!--Brake Button-->
-                            <Button Grid.Row="0" Content="BRAKE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
+                            <Button Grid.Row="0" x:Name="brake" Content="BRAKE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="BrakeButton_Click" />
 
                             <!--HYDRAULIC STATION Button-->
-                            <Button Grid.Row="1" Content="HYDRAULIC&#xa;  STATION" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
+                            <Button x:Name="hydraulic" Grid.Row="1" Content="HYDRAULIC&#xa;  STATION" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="HydraulicButton_Click" />
 
                             <!--UNLOADING (X) Button-->
-                            <Button Grid.Row="2" Content="UNLOADING (X)" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
+                            <Button x:Name="unloadBrake" Grid.Row="2" Content="UNLOADING (X)" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="UnloadBrake_Click" />
 
                             <!--CONSTANT PRESSURE Button-->
                             <Button Grid.Row="3" Content="CONSTANT&#xa; PRESSURE" Margin="40,10,40,10" FontSize="11" Style="{StaticResource YelloBtn}" />
@@ -290,7 +293,7 @@
                                         <RowDefinition Height="2*"/>
                                     </Grid.RowDefinitions>
                                     <Label Grid.Row="0" Content="Pressure[MPa]" Style="{StaticResource SliderLabel}" Margin="15,0,0,0"/>
-                                    <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
+                                    <Slider x:Name="pressure" Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
                                 </Grid>
                             </Border>
                             <Border Grid.Row="1" Background="{StaticResource lightBackGround}" Margin="5,5,5,0" CornerRadius="10" >
@@ -310,7 +313,7 @@
                                         <RowDefinition Height="2*"/>
                                     </Grid.RowDefinitions>
                                     <Label Grid.Row="0" Content="Torque[NM]" Style="{StaticResource SliderLabel}" Margin="15,0,0,0"/>
-                                    <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
+                                    <Slider x:Name="moment" Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
                                 </Grid>
                             </Border>
                             <Border Grid.Row="3" Background="{StaticResource lightBackGround}" Margin="5,5,5,5" CornerRadius="10" >
@@ -320,7 +323,7 @@
                                         <RowDefinition Height="2*"/>
                                     </Grid.RowDefinitions>
                                     <Label Grid.Row="0" Content="Speed[N/min]" Style="{StaticResource SliderLabel}" Margin="15,0,0,0"/>
-                                    <Slider Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
+                                    <Slider x:Name="speed" Grid.Row="1" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" Style="{StaticResource CustomSliderStyle}" Margin="15,0,15,0"/>
                                 </Grid>
                             </Border>
                         </Grid>
@@ -367,10 +370,10 @@
                                     </Grid.RowDefinitions>
 
                                     <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Direction" VerticalContentAlignment="Center" Style="{StaticResource FourthColumnLabel}" Margin="10,0,0,0"/>
-                                    <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <CheckBox x:Name="backCheckBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0">
                                         <Run Foreground="{StaticResource grayBackGround}">Back Run(R)</Run>
                                     </CheckBox>
-                                    <Button Grid.Row="2" Grid.Column="0" Content="Run" Style="{StaticResource YelloBtn}" Margin="10,15,30,15"/>
+                                    <Button x:Name="manualRun" Grid.Row="2" Grid.Column="0" Content="Run" Style="{StaticResource YelloBtn}" Margin="10,15,30,15" Click="ManualRun_Click" />
                                 </Grid>
                             </Border>
                         </Grid>
@@ -423,7 +426,7 @@
 
             <Border x:Name="mainBottomBorderAtomatic" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
-                    CornerRadius="10" Margin="0" Visibility="Hidden">
+                    CornerRadius="10" Margin="5,0,0,0" Visibility="Hidden">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
@@ -442,22 +445,20 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="20"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <RichTextBox Grid.Column="0" x:Name="lineIndex" FontSize="14" Foreground="{StaticResource customYellow}" Background="#292F34" BorderThickness="0" IsReadOnly="True">
+                            <RichTextBox Grid.Column="0" Margin="0,5,0,0" x:Name="lineIndex" FontSize="14" Foreground="{StaticResource customYellow}" Background="#292F34" BorderThickness="0" IsReadOnly="True" ScrollViewer.ScrollChanged="ScrollChanged">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0,5,0,5"/>
                                     </Style>
                                 </RichTextBox.Resources>
                             </RichTextBox>
-                            <ScrollViewer  Grid.Column="1" x:Name="codePointerScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                                <StackPanel x:Name="codePointer">
-                                
-                                </StackPanel>
+                            <ScrollViewer  Grid.Column="1" x:Name="codePointerScroll" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" ScrollChanged="ScrollChanged">
+                                <StackPanel x:Name="codePointer" Margin="0" />
                             </ScrollViewer>
-                            <RichTextBox Grid.Column="2" x:Name="selectedCode"  HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="#292F34" BorderThickness="0" KeyDown="SelectedCode_KeyDown" PreviewKeyDown="SelectedCode_PreviewKeyDown" TextChanged="TextChangedEvent" ScrollViewer.ScrollChanged="ScrollChanged">
+                            <RichTextBox Grid.Column="2" Margin="0,5,0,0" x:Name="selectedCode"  HorizontalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="#292F34" BorderThickness="0" KeyDown="SelectedCode_KeyDown" PreviewKeyDown="SelectedCode_PreviewKeyDown" TextChanged="TextChangedEvent" ScrollViewer.ScrollChanged="ScrollChanged">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="5"/>
@@ -513,7 +514,7 @@
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="codePrintedLogLabel" Content="JF Code Errors" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,5" FontSize="12" Foreground="{StaticResource grayBackGround}" Background="#292F34" BorderThickness="0,1,0,0" BorderBrush="{StaticResource customYellow}"/>
                             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  BorderBrush="{StaticResource customYellow}" BorderThickness="1" CornerRadius="5">
-                                <ScrollViewer x:Name="errorContainerScrollViewer">
+                                <ScrollViewer x:Name="errorContainerScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
                                     <StackPanel x:Name="jfErrorsContainer" CanHorizontallyScroll="True" CanVerticallyScroll="True" />
                                 </ScrollViewer>
                             </Border>

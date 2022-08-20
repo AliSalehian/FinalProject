@@ -31,10 +31,14 @@ namespace jf_FinalProject
         private string _darkBackGroundValue = "#292F34";
         private string _lightBackGroundValue = "#3A4149";
         private string _green = "#00ff00";
+        private string _gray = "#DCE0E4";
+        private string _yellow = "#FFDD00";
         private SolidColorBrush _greenColor;
         private bool _fileHasError = false;
         private List<string> _errorMessages = new List<string>();
         private int _errorCount = 0;
+        private bool _hydraulicPressed = false;
+        private bool _isMotorRunning = false;
         private bool IsMenuOpen { get; set; }
 
         public bool IsManual { get; set; }
@@ -53,12 +57,6 @@ namespace jf_FinalProject
             Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
             codePointer.Children.Add(label);
             lineIndex.AppendText($"{++_rtbIndex}");
-            Logger.Logger.Log("arman dog");
-            Logger.Logger.Log("arman dog");
-            Logger.Logger.Log("arman dog");
-            Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
-            Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
-            Logger.Logger.Log(GetCurrentLine(), $"{this.GetType().Name}.cs", "arman ridi dash");
         }
 
         private Label CreateLabel(Visibility visibility, string name, SolidColorBrush color)
@@ -203,6 +201,49 @@ namespace jf_FinalProject
                 selectedFileListBox.Items[i] = $"{++index}\t{oldValue}";
             }
         }
+
+        #region Manual Hanlders
+
+        private void BrakeButton_Click(object sender, EventArgs e)
+        {
+            BrakeType brakeType = _hydraulicPressed ? BrakeType.Pressure : BrakeType.Moment;
+            Command.Brake(moment.Value, pressure.Value, brakeType);
+            brake.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_gray);
+            brake.IsEnabled = false;
+        }
+
+        private void HydraulicButton_Click(object sender, EventArgs e)
+        {
+            if (_hydraulicPressed)
+                hydraulic.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_yellow);
+            else
+                hydraulic.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_gray);
+            _hydraulicPressed = !_hydraulicPressed;
+        }
+
+        private void UnloadBrake_Click(object sender, EventArgs e)
+        {
+            Command.UnloadBrake();
+            brake.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_yellow);
+            brake.IsEnabled = true;
+        }
+
+        private void ManualRun_Click(object sender, EventArgs e)
+        {
+            _isMotorRunning = !_isMotorRunning;
+            if (_isMotorRunning)
+            {
+                RunDirection direction = (bool)backCheckBox.IsChecked ? RunDirection.Backward : RunDirection.Forward;
+                Command.Run(speed.Value, direction);
+                manualRun.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_gray);
+            }
+            else
+            {
+                manualRun.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_yellow);
+            }
+        }
+
+        #endregion
 
         private void FileListBox_SelectionChanged(object sender, EventArgs e)
         {
@@ -458,6 +499,7 @@ namespace jf_FinalProject
         {
             lineIndex.ScrollToVerticalOffset(e.VerticalOffset);
             codePointerScroll.ScrollToVerticalOffset(e.VerticalOffset);
+            selectedCode.ScrollToVerticalOffset(e.VerticalOffset);
         }
 
         private void OnRichTextNeedUpdate(object sender, CommandEventArgs e)

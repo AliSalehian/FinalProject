@@ -68,7 +68,8 @@ namespace jf_FinalProject.Logger
         /// <param name="sender">object of sender. we use it to find caller is compiler or runner</param>
         /// <param name="lineNumber">Its an integer and contains number of line that this error occured</param>
         /// <param name="errorMessage">Its a string and contains error message</param>
-        public static void Log(object sender, int lineNumber, string errorMessage)
+        /// <param name="jfFileName">Its a string and contains jf file name</param>
+        public static void Log(object sender, int lineNumber, string errorMessage, string jfFileName)
         {
             StreamWriter sr = OpenJsonFile(_jfErrorFileName);
             ErrorType errorType;
@@ -79,7 +80,9 @@ namespace jf_FinalProject.Logger
                 Log(GetCurrentLine(), "Logger.cs", $"class {sender.GetType().Name} attempt to log jfCodeErrorLog");
                 return;
             }
-            jfCodeErrorLog jfLog = new jfCodeErrorLog { LineNumber = lineNumber,
+            jfCodeErrorLog jfLog = new jfCodeErrorLog { 
+                FileName = jfFileName,
+                LineNumber = lineNumber,
                 ErrorMessage = errorMessage,
                 TypeOfError = errorType,
                 Time = DateTime.Now };

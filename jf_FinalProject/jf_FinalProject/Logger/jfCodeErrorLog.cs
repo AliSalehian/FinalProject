@@ -10,6 +10,8 @@ namespace jf_FinalProject.Logger
     }
     public class jfCodeErrorLog
     {
+
+        public string FileName { get; set; }
         public int LineNumber { get; set; }
 
         public string ErrorMessage { get; set; }

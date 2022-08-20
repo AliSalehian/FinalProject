@@ -57,6 +57,11 @@ namespace jf
         #region Attributes Of Class
 
         /// <summary>
+        /// <c>CodeFilePath</c> is a string that contains full path of jf code file
+        /// </summary>
+        private string codeFilePath;
+
+        /// <summary>
         /// <c>tokens</c> is a generic list of <c>Token</c>s that contains all tokens of code 
         /// </summary>
         private List<Token> tokens;
@@ -207,6 +212,7 @@ namespace jf
         public void compile(string absolutePath)
         {
             #region Initialize Object Attributes
+            this.codeFilePath = absolutePath;
             Tuple<int, int> startOfPerformable;
             this.tokens = new List<Token>();
             this.lines = new List<String>();
@@ -554,7 +560,7 @@ namespace jf
                         if (identifierAndAttribute[1] != "0" && identifierAndAttribute[1] != "1")
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[6]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[6]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[6], this.codeFilePath);
                             break;
                         }
 
@@ -564,7 +570,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -586,7 +592,7 @@ namespace jf
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[7]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[7]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[7], this.codeFilePath);
                             break;
                         }
 
@@ -596,7 +602,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -609,7 +615,7 @@ namespace jf
                         if (constValue[0] < 0)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[21]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[21]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[21], this.codeFilePath);
                             break;
                         }
 
@@ -626,7 +632,7 @@ namespace jf
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[8]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[8]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[8], this.codeFilePath);
                             break;
                         }
 
@@ -636,7 +642,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -657,7 +663,7 @@ namespace jf
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[9]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[9]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[9], this.codeFilePath);
                             break;
                         }
 
@@ -667,7 +673,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -689,7 +695,7 @@ namespace jf
                         if (identifierAndAttribute.Length < 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[22]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[22]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[22], this.codeFilePath);
                             break;
                         }
 
@@ -714,7 +720,7 @@ namespace jf
                                     this.allErrorsText[10] = String.Format("'{0}' value is not number in data, its should be number", s);
                                 }
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[10]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[10]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[10], this.codeFilePath);
                                 break;
                             }
                             constValue.Add(double.Parse(s));
@@ -728,7 +734,7 @@ namespace jf
                     #region begin Keyword Errors
                     case "begin":
                         this.errors.Add(new CustomError(lineNumber, this.allErrorsText[11]));
-                        jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[11]);
+                        jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[11], this.codeFilePath);
                         break;
                         #endregion
                 }
@@ -754,7 +760,7 @@ namespace jf
                         if (temp.Length != 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[14]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[14]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[14], this.codeFilePath);
                             break;
                         }
 
@@ -764,7 +770,7 @@ namespace jf
                         if (!Char.IsLetter(temp[0][0]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[15]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[15]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[15], this.codeFilePath);
                             break;
                         }
 
@@ -775,7 +781,7 @@ namespace jf
                         if (double.TryParse(temp[1], out number) == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[16]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[16]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[16], this.codeFilePath);
                             break;
                         }
 
@@ -793,7 +799,7 @@ namespace jf
                         if (identifierAndAttribute.Length == 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[17]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[17]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[17], this.codeFilePath);
                             break;
                         }
 
@@ -812,7 +818,7 @@ namespace jf
                         if (isItInDefined == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18], this.codeFilePath);
                             break;
                         }
                         break;
@@ -827,7 +833,7 @@ namespace jf
                         if (identifierAndAttribute.Length > 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[19]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[19]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[19], this.codeFilePath);
                         }
                         break;
                     #endregion
@@ -843,7 +849,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[23]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[23]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[23], this.codeFilePath);
                             break;
                         }
 
@@ -858,7 +864,7 @@ namespace jf
                         if (!Char.IsLetter(temp[0][0]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[15]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[15]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[15], this.codeFilePath);
                             break;
                         }
 
@@ -875,7 +881,7 @@ namespace jf
                         if (isItInDefined == false)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18], this.codeFilePath);
                             break;
                         }
 
@@ -888,7 +894,7 @@ namespace jf
                             if (double.TryParse(temp[1], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[16]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[16]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[16], this.codeFilePath);
                                 break;
                             }
                         }
@@ -910,7 +916,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18], this.codeFilePath);
                                 break;
                             }
                         }
@@ -926,7 +932,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[24]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[24]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[24], this.codeFilePath);
                             break;
                         }
 
@@ -936,7 +942,7 @@ namespace jf
                         if (identifierAndAttribute[1].ToLower() != "pp" && identifierAndAttribute[1].ToLower() != "pm")
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[20]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[20]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[20], this.codeFilePath);
                         }
                         break;
                     #endregion
@@ -950,7 +956,7 @@ namespace jf
                         if (temp.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[34]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[34]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[34], this.codeFilePath);
                             break;
                         }
 
@@ -971,7 +977,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[25]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[25]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[25], codeFilePath);
                             break;
                         }
 
@@ -984,7 +990,7 @@ namespace jf
                             if (double.TryParse(identifierAndAttribute[1], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[26]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[26]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[26], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1006,7 +1012,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[18]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[18], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1022,7 +1028,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 2 || identifierAndAttribute[1] == null)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[27]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[27]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[27], this.codeFilePath);
                             break;
                         }
 
@@ -1036,7 +1042,7 @@ namespace jf
                             if (temp[2] != "r")
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[28]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[28]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[28], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1047,7 +1053,7 @@ namespace jf
                         if (!(temp[0][0] == 'p' || temp[0][0] == 'm'))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[29]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[29]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[29], this.codeFilePath);
                             break;
                         }
 
@@ -1057,7 +1063,7 @@ namespace jf
                         if (temp[0][1] != '=')
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[30]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[30]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[30], this.codeFilePath);
                             break;
                         }
 
@@ -1078,7 +1084,7 @@ namespace jf
                             if (double.TryParse(temp[0], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[31]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[31]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[31], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1100,7 +1106,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[31]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[31]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[31], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1112,7 +1118,7 @@ namespace jf
                         if (!temp[1].StartsWith("until"))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[32]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[32]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[32], this.codeFilePath);
                             break;
                         }
 
@@ -1124,7 +1130,7 @@ namespace jf
                         if (!this.checkForConditionError(temp[1]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[33]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[33]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[33], this.codeFilePath);
                             break;
                         }
                         break;
@@ -1140,7 +1146,7 @@ namespace jf
                         if (temp1.Length > 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -1148,7 +1154,7 @@ namespace jf
                         if (!this.checkForConditionError(identifierAndAttribute[1]))
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[36]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[36]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[36], this.codeFilePath);
                             break;
                         }
                         break;
@@ -1160,7 +1166,7 @@ namespace jf
                         if (identifierAndAttribute.Length != 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
                         break;
@@ -1173,7 +1179,7 @@ namespace jf
                         if (temp2.Length > 1)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -1186,7 +1192,7 @@ namespace jf
                             if (double.TryParse(identifierAndAttribute[1], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[37]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[37]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[37], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1208,7 +1214,7 @@ namespace jf
                             if (isItInDefined == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[37]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[37]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[37], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1222,7 +1228,7 @@ namespace jf
                         if (temp3.Length > 2)
                         {
                             this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -1234,14 +1240,14 @@ namespace jf
                             if (double.TryParse(temp3[0], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[38]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[38]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[38], this.codeFilePath);
                                 break;
                             }
                             temp3[1] = temp3[1].ToLower().Replace("while", "");
                             if (!checkForConditionError(temp3[1]))
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[39]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[39]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[39], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1254,7 +1260,7 @@ namespace jf
                             if (!this.checkForConditionError(identifierAndAttribute[1].ToLower().Replace("while", "").Trim()))
                             {
                                 errors.Add(new CustomError(lineNumber, allErrorsText[39]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[39]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[39], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1265,7 +1271,7 @@ namespace jf
                             if (double.TryParse(identifierAndAttribute[1], out number) == false)
                             {
                                 errors.Add(new CustomError(lineNumber, allErrorsText[38]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1278,14 +1284,14 @@ namespace jf
                         if (identifierAndAttribute.Length != 2)
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100], this.codeFilePath);
                             break;
                         }
                         string[] temp4 = identifierAndAttribute[1].Split(',');
                         if (temp4.Length > 1)
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -1295,7 +1301,7 @@ namespace jf
                         if (!checkForConditionError(identifierAndAttribute[1]))
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[40]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[40]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[40], this.codeFilePath);
                             break;
                         }
                         break;
@@ -1309,7 +1315,7 @@ namespace jf
                             if (identifierAndAttribute[1] != null)
                             {
                                 errors.Add(new CustomError(lineNumber, allErrorsText[100]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
+                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100], this.codeFilePath);
                                 break;
                             }
                         }
@@ -1322,14 +1328,14 @@ namespace jf
                         if (identifierAndAttribute.Length != 2)
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100], this.codeFilePath);
                             break;
                         }
                         string[] temp5 = identifierAndAttribute[1].Split(',');
                         if (temp5.Length > 1)
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100], this.codeFilePath);
                             break;
                         }
                         /* attribute of water should be a number and its just can be 
@@ -1338,7 +1344,7 @@ namespace jf
                         if (!(identifierAndAttribute[1] == "0" || identifierAndAttribute[1] == "1"))
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[41]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[41]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[41], this.codeFilePath);
                             break;
                         }
                         break;
@@ -1351,14 +1357,14 @@ namespace jf
                         if (identifierAndAttribute.Length != 2)
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100], this.codeFilePath);
                             break;
                         }
                         string[] temp6 = identifierAndAttribute[1].Split(',');
                         if (temp6.Length > 1)
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[100], this.codeFilePath);
                             break;
                         }
 
@@ -1366,7 +1372,7 @@ namespace jf
                         if (double.TryParse(identifierAndAttribute[1], out number) == false)
                         {
                             errors.Add(new CustomError(lineNumber, allErrorsText[38]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38]);
+                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38], this.codeFilePath);
                             break;
                         }
                         break;
@@ -1393,7 +1399,7 @@ namespace jf
             if (startLineNumber == null || startLineNumber.Item1 < 0)
             {
                 errors.Add(new CustomError(startLineNumber.Item1, allErrorsText[5]));
-                jf_FinalProject.Logger.Logger.Log(this, startLineNumber.Item1, allErrorsText[5]);
+                jf_FinalProject.Logger.Logger.Log(this, startLineNumber.Item1, allErrorsText[5], this.codeFilePath);
             }
             #endregion
 
@@ -1474,12 +1480,12 @@ namespace jf
                     if (result[0].ToLower() == "lend" && temp.identifier == "if")
                     {
                         errors.Add(new CustomError(i, allErrorsText[1]));
-                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[1]);
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[1], this.codeFilePath);
                     }
                     if (result[0].ToLower() == "endif" && temp.identifier == "loop")
                     {
                         errors.Add(new CustomError(i, allErrorsText[1]));
-                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[1]);
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[1], this.codeFilePath);
                     }
 
                     /* this part of code check for extra end of block keyword
@@ -1488,7 +1494,7 @@ namespace jf
                     if (temp == performableSymboltTable.root)
                     {
                         errors.Add(new CustomError(i, allErrorsText[2]));
-                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[2]);
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[2], this.codeFilePath);
                     }
                     current = new Node(result[0], result[1], i)
                     {
@@ -1517,7 +1523,7 @@ namespace jf
                     if ((Node)parentStack.Peek() == performableSymboltTable.root)
                     {
                         this.errors.Add(new CustomError(i, allErrorsText[3]));
-                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[3]);
+                        jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[3], this.codeFilePath);
                     }
                     break;
                 }
@@ -1529,19 +1535,19 @@ namespace jf
             if (isEnded == false)
             {
                 this.errors.Add(new CustomError(i, allErrorsText[4]));
-                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[4]);
+                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[4], this.codeFilePath);
             }
             string[] lastLine = this.Tokenizer(lines[lines.Count - 1]);
             if (lastLine[0].ToLower() != "end")
             {
                 this.errors.Add(new CustomError(i, allErrorsText[12]));
-                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[12]);
+                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[12], this.codeFilePath);
             }
 
             if (lastLine.Length > 2)
             {
                 this.errors.Add(new CustomError(i, allErrorsText[13]));
-                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[13]);
+                jf_FinalProject.Logger.Logger.Log(this, i, allErrorsText[13], this.codeFilePath);
             }
         }
 
