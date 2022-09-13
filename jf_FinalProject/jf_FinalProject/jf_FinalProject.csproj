@@ -55,21 +55,15 @@
   <PropertyGroup>
     <ApplicationIcon>ToklanToosLogo.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>AE76A88390CBD5618A29E67C0B7E132B763C54F3</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>jf_FinalProject_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Arction.WPF.Gauges">
       <HintPath>..\..\..\..\Users\Acer\Desktop\gauge\Gauges_v.1.0.1\Libs\Wpf\Arction.WPF.Gauges.dll</HintPath>
+    </Reference>
+    <Reference Include="Automation.BDaq4">
+      <HintPath>C:\Windows\System32\Automation.BDaq4.dll</HintPath>
+    </Reference>
+    <Reference Include="Automation.BDaq4.Design">
+      <HintPath>C:\Windows\System32\Automation.BDaq4.Design.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities.Presentation" />
@@ -110,6 +104,7 @@
     <Compile Include="Logic\Compiler.cs" />
     <Compile Include="Logic\CustomError.cs" />
     <Compile Include="Logic\Explanation.cs" />
+    <Compile Include="Logic\HardwareInterface.cs" />
     <Compile Include="Logic\LogEventArgs.cs" />
     <Compile Include="Logic\Node.cs" />
     <Compile Include="Logic\Performable.cs" />

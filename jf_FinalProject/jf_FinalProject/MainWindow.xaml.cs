@@ -51,6 +51,8 @@ namespace jf_FinalProject
         public MainWindow()
         {
             InitializeComponent();
+            HardwareInterface hardware = new HardwareInterface();
+            hardware.starter(0);
             _greenColor = (SolidColorBrush)new BrushConverter().ConvertFrom(_green);
             IsMenuOpen = false;
             IsManual = true;
