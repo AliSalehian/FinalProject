@@ -52,7 +52,6 @@ namespace jf_FinalProject
         {
             InitializeComponent();
             HardwareInterface hardware = new HardwareInterface();
-            hardware.starter(0);
             _greenColor = (SolidColorBrush)new BrushConverter().ConvertFrom(_green);
             IsMenuOpen = false;
             IsManual = true;
@@ -134,8 +133,12 @@ namespace jf_FinalProject
 
         private void AutomaticButton_Click(object sender, EventArgs e)
         {
-            mainBottomBorderManual.Visibility = Visibility.Hidden;
             mainBottomBorderAtomatic.Visibility = Visibility.Visible;
+            mainBottomBorderManual.Visibility = Visibility.Hidden;
+            mainBottomBorderCalibration.Visibility = Visibility.Hidden;
+
+            mainTopBorder.Visibility = Visibility.Visible;
+            mainTopBorderCalibration.Visibility = Visibility.Hidden;
 
             manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
@@ -284,11 +287,32 @@ namespace jf_FinalProject
         {
             mainBottomBorderManual.Visibility = Visibility.Visible;
             mainBottomBorderAtomatic.Visibility = Visibility.Hidden;
+            mainBottomBorderCalibration.Visibility = Visibility.Hidden;
+
+            mainTopBorderCalibration.Visibility = Visibility.Hidden;
+            mainTopBorder.Visibility = Visibility.Visible;
+
 
             manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
             AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            calibrationContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             IsManual = true;
         }
+
+        private void CalibrationButton_Click(object sender, EventArgs e)
+        {
+            mainBottomBorderCalibration.Visibility = Visibility.Visible;
+            mainBottomBorderManual.Visibility = Visibility.Hidden;
+            mainBottomBorderAtomatic.Visibility = Visibility.Hidden;
+
+            mainTopBorderCalibration.Visibility = Visibility.Visible;
+            mainTopBorder.Visibility = Visibility.Hidden;
+
+            calibrationContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+        }
+
         private void MinMaxButton_Click(object sender, EventArgs e)
         {
             if (main.WindowState == WindowState.Normal)
@@ -351,8 +375,10 @@ namespace jf_FinalProject
                 opacityAnimation.From = 0.0;
                 opacityAnimation.To = 1.0;
                 Grid.SetColumn(mainTopBorder, 1);
+                Grid.SetColumn(mainTopBorderCalibration, 1);
                 Grid.SetColumn(mainBottomBorderManual, 1);
                 Grid.SetColumn(mainBottomBorderAtomatic, 1);
+                Grid.SetColumn(mainBottomBorderCalibration, 1);
             }
             borderColor.Duration = TimeSpan.FromSeconds(duration);
             widthAnimation.Duration = TimeSpan.FromSeconds(duration);
@@ -381,8 +407,10 @@ namespace jf_FinalProject
         {
             await Task.Delay(700);
             Grid.SetColumn(mainTopBorder, columnNumber);
+            Grid.SetColumn(mainTopBorderCalibration, columnNumber);
             Grid.SetColumn(mainBottomBorderManual, columnNumber);
             Grid.SetColumn(mainBottomBorderAtomatic, columnNumber);
+            Grid.SetColumn(mainBottomBorderCalibration, columnNumber);
         }
 
         private void SelectedCode_KeyDown(object sender, KeyEventArgs e)

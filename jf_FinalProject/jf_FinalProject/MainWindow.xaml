@@ -100,6 +100,18 @@
                             <Label Content="Manual" Style="{StaticResource ButtonLabelInMenu}"/>
                         </WrapPanel>
 
+
+
+                        <!--Calibration-->
+                        <WrapPanel Grid.Row="2" x:Name="calibrationContainer" 
+                                   HorizontalAlignment="left" Margin="0,10,0,0" Width="200"  
+                                   Style="{StaticResource InMenuBtn}" MouseDown="CalibrationButton_Click" >
+                            <Image x:Name="calibrationButtonBackgroundImage" 
+                                   Source="..\..\Assets\dashboard_icon.png"
+                                   Style="{StaticResource ButtonImageInMenu}"/>
+                            <Label Content="Calibration" Style="{StaticResource ButtonLabelInMenu}"/>
+                        </WrapPanel>
+
                         <!--About-->
                         <WrapPanel Grid.Row="3" x:Name="aboutContainer" 
                                    HorizontalAlignment="left" Margin="0,10,0,0" Width="200" Style="{StaticResource InMenuBtn}">
@@ -117,7 +129,7 @@
                 </Grid>
             </Border>
 
-            <!--Main Top Border-->
+            <!--Main Top Border Manual And Automatic-->
             <Border x:Name="mainTopBorder" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" >
@@ -198,8 +210,55 @@
                     </agc:Gauge>-->
                 </Grid>
             </Border>
+            
+            <!--Main Top Border Calibration-->
+            <Border x:Name="mainTopBorderCalibration" Background="{StaticResource lightBackGround}" 
+                    Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="1" BorderThickness="5" 
+                    CornerRadius="10" Margin="5,0,0,0" Visibility="Hidden" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-            <!--Column One in Bottom Border-->
+                    <WrapPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="Temperature 1" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="Temperature1" Text="1" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="Temperature 2" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="Temperature2" Text="2" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="Temperature 3" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="Temperature3" Text="3" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="Load Cell 1" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="LoadCell1" Text="4" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="Load Cell 2" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="LoadCell2" Text="5" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="RPM" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="rpm" Text="6" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="speed" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="speedSensor" Text="7" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+
+            <!--Bottom Border Manual-->
             <Border x:Name="mainBottomBorderManual" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" >
@@ -423,7 +482,7 @@
                     </Border>
                 </Grid>
             </Border>
-
+            <!--Bottom Border Automatic-->
             <Border x:Name="mainBottomBorderAtomatic" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" Visibility="Hidden">
@@ -522,6 +581,13 @@
                     </Border>
                 </Grid>
 
+            </Border>
+
+            <!--Bottom Border Calibration-->
+            <Border x:Name="mainBottomBorderCalibration" Background="{StaticResource lightBackGround}" 
+                    Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
+                    CornerRadius="10" Margin="5,0,0,0" Visibility="Hidden">
+                <Label Content="chakere agha erfan" />
             </Border>
         </Grid>
     </Border>
