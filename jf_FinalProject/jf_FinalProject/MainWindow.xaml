@@ -227,31 +227,31 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <WrapPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel x:Name="temp1Container" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectTemp1">
                         <Label Content="Temperature 1" HorizontalAlignment="Left"/>
                         <TextBox x:Name="Temperature1" Text="1" HorizontalAlignment="Right"/>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel x:Name="temp2Container" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectTemp2">
                         <Label Content="Temperature 2" HorizontalAlignment="Left"/>
                         <TextBox x:Name="Temperature2" Text="2" HorizontalAlignment="Right"/>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel x:Name="temp3Container" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectTemp3">
                         <Label Content="Temperature 3" HorizontalAlignment="Left"/>
                         <TextBox x:Name="Temperature3" Text="3" HorizontalAlignment="Right"/>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel x:Name="loadCell1Container" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectLoadCell1">
                         <Label Content="Load Cell 1" HorizontalAlignment="Left"/>
                         <TextBox x:Name="LoadCell1" Text="4" HorizontalAlignment="Right"/>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel x:Name="loadCell2Container" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectLoadCell2">
                         <Label Content="Load Cell 2" HorizontalAlignment="Left"/>
                         <TextBox x:Name="LoadCell2" Text="5" HorizontalAlignment="Right"/>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel x:Name="rpmContainer" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectRpm">
                         <Label Content="RPM" HorizontalAlignment="Left"/>
                         <TextBox x:Name="rpm" Text="6" HorizontalAlignment="Right"/>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel x:Name="speedContainer" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectSpeed">
                         <Label Content="speed" HorizontalAlignment="Left"/>
                         <TextBox x:Name="speedSensor" Text="7" HorizontalAlignment="Right"/>
                     </WrapPanel>
@@ -587,7 +587,18 @@
             <Border x:Name="mainBottomBorderCalibration" Background="{StaticResource lightBackGround}" 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="1" BorderThickness="5" 
                     CornerRadius="10" Margin="5,0,0,0" Visibility="Hidden">
-                <Label Content="chakere agha erfan" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="selectedSensorName" Grid.Column="0" Content="Nothing Selected" />
+                    <TextBlock x:Name="gain" Grid.Column="1" Text="-" />
+                    <TextBlock x:Name="arzAzMabda" Grid.Column="2" Text="-" />
+                    <Button x:Name="setCalibration" Grid.Column="3" Content="Set" />
+                </Grid>
             </Border>
         </Grid>
     </Border>

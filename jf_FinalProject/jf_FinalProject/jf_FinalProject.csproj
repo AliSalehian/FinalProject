@@ -112,6 +112,7 @@
     <Compile Include="Logic\Sensor.cs" />
     <Compile Include="Logic\SensorHandler.cs" />
     <Compile Include="Logic\SymbolTable.cs" />
+    <Compile Include="Logic\Tester.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

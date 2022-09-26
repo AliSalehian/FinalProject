@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using jf_FinalProject.Logger;
+using System.Runtime.CompilerServices;
 
 namespace jf
 {
@@ -17,20 +16,38 @@ namespace jf
         /// <c>sensors</c> attribute is an array of <c>Sensor</c> objects
         /// </summary>
         private Sensor[] sensors;
+        private Dictionary<string, Tuple<double, double>> calibrations;
         #endregion
 
         #region Constructors Of Class
         public SensorHandler()
         {
-            this.sensors = new Sensor[8];
+            //this.calibrations = new Tuple<double, double>[7];
+            //for (int i=0; i< this.calibrations.Length; i++)           
+            //    this.calibrations[i] = new Tuple<double, double>(1.0, 0.0);
+            this.sensors = new Sensor[7];
+            this.calibrations = new Dictionary<string, Tuple<double, double>>();
+
             this.sensors[0] = new Sensor("t1");
+            this.calibrations["t1"] =  new Tuple<double, double>(1.0, 0.0);
+
             this.sensors[1] = new Sensor("t2");
+            this.calibrations["t2"] = new Tuple<double, double>(1.0, 0.0);
+            
             this.sensors[2] = new Sensor("t3");
+            this.calibrations["t3"] = new Tuple<double, double>(1.0, 0.0);
+
             this.sensors[3] = new Sensor("p");
+            this.calibrations["p"] = new Tuple<double, double>(1.0, 0.0);
+
             this.sensors[4] = new Sensor("mleft");
+            this.calibrations["mleft"] = new Tuple<double, double>(1.0, 0.0);
+
             this.sensors[5] = new Sensor("mright");
-            this.sensors[6] = new Sensor("handbrake");
-            this.sensors[7] = new Sensor("n");// TODO: haji erafn should ask about it
+            this.calibrations["mright"] = new Tuple<double, double>(1.0, 0.0);
+
+            this.sensors[6] = new Sensor("n");// TODO: haji erafn should ask about it
+            this.calibrations["n"] = new Tuple<double, double>(1.0, 0.0);
             // TODO: there is another sensor that haji erfan should ask about it
         }
         #endregion
@@ -67,11 +84,13 @@ namespace jf
         public void setSensor(string sensorName, float sensorValue)
         {
             sensorName = sensorName.ToLower();
-            foreach (Sensor sensor in this.sensors)
+            for (int i = 0; i < this.sensors.Length; i++)
             {
-                if (sensorName.Equals(sensor.sensorName.ToLower()))
+                if (this.sensors[i].sensorName.Equals(sensorName.ToLower()))
                 {
-                    sensor.sensorValue = sensorValue;
+                    Tuple<double, double> selectedSensorCalibration = this.calibrations[sensorName];
+                    this.sensors[i].sensorValue = 
+                        (float)((sensorValue * selectedSensorCalibration.Item1) + selectedSensorCalibration.Item2);
                     break;
                 }
             }
@@ -93,6 +112,34 @@ namespace jf
                 }
             }
             return false;
+        }
+
+        public Tuple<double, double> getCalibration(string sensorName)
+        {
+            sensorName = sensorName.ToLower();
+            try
+            {
+                Tuple<double, double> result = this.calibrations[sensorName];
+                return result;
+            }
+            catch (Exception)
+            {
+                Logger.Log(Logger.GetCurrentLine(), "SensorHandler.cs", $"sensor '{sensorName}' is not in sensor list");
+                return new Tuple<double, double>(0.0, 0.0);
+            }
+        }
+
+        public void setCalibration(string sensorName, double gain, double arzAzMabda)
+        {
+            sensorName = sensorName.ToLower();
+            try
+            {
+                this.calibrations[sensorName] = new Tuple<double, double>(gain, arzAzMabda);
+            }
+            catch (Exception)
+            {
+                Logger.Log(Logger.GetCurrentLine(), "SensorHandler.cs", $"sensor '{sensorName}' is not in sensor list");
+            }
         }
         #endregion
     }

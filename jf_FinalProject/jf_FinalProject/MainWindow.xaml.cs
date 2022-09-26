@@ -39,6 +39,8 @@ namespace jf_FinalProject
         private int _errorCount = 0;
         private bool _hydraulicPressed = false;
         private bool _isMotorRunning = false;
+        private string selectedSensor;
+        private SensorHandler sensor = new SensorHandler();
         private bool IsMenuOpen { get; set; }
 
         public bool IsManual { get; set; }
@@ -129,6 +131,118 @@ namespace jf_FinalProject
 #else
             hamburgerBackgroundImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"Assets\hamburger_icon.png")));
 #endif
+        }
+
+        private void selectTemp1(object sender, EventArgs e)
+        {
+            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            this.selectedSensor = "temp1";
+            selectedSensorName.Content = "temperature 1";
+            Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t1");
+            gain.Text = Convert.ToString(sensorCalibration.Item1);
+            arzAzMabda.Text = Convert.ToString(sensorCalibration.Item2);
+        }
+
+        private void selectSpeed(object sender, EventArgs e)
+        {
+            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            this.selectedSensor = "speed";
+            selectedSensorName.Content = "speed";
+            Tuple<double, double> sensorCalibration = this.sensor.getCalibration("n"); //TODO: in aya bayad hamin bashe? sensor n aya speed mide be ma? 
+            gain.Text = Convert.ToString(sensorCalibration.Item1);
+            arzAzMabda.Text = Convert.ToString(sensorCalibration.Item2);
+        }
+
+        private void selectTemp2(object sender, EventArgs e)
+        {
+            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            this.selectedSensor = "temp2";
+            selectedSensorName.Content = "temperature 2";
+            Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t2");
+            gain.Text = Convert.ToString(sensorCalibration.Item1);
+            arzAzMabda.Text = Convert.ToString(sensorCalibration.Item2);
+        }
+
+        private void selectTemp3(object sender, EventArgs e)
+        {
+            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            this.selectedSensor = "temp3";
+            selectedSensorName.Content = "temperature 3";
+            Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t3");
+            gain.Text = Convert.ToString(sensorCalibration.Item1);
+            arzAzMabda.Text = Convert.ToString(sensorCalibration.Item2);
+        }
+
+        private void selectLoadCell1(object sender, EventArgs e)
+        {
+            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            this.selectedSensor = "loadCell1";
+            selectedSensorName.Content = "loadCell 1";
+            Tuple<double, double> sensorCalibration = this.sensor.getCalibration("mleft");
+            gain.Text = Convert.ToString(sensorCalibration.Item1);
+            arzAzMabda.Text = Convert.ToString(sensorCalibration.Item2);
+        }
+
+        private void selectLoadCell2(object sender, EventArgs e)
+        {
+            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            this.selectedSensor = "loadCell2";
+            selectedSensorName.Content = "loadCell 2";
+            Tuple<double, double> sensorCalibration = this.sensor.getCalibration("mright");
+            gain.Text = Convert.ToString(sensorCalibration.Item1);
+            arzAzMabda.Text = Convert.ToString(sensorCalibration.Item2);
+        }
+
+        private void selectRpm(object sender, EventArgs e)
+        {
+            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
+            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            this.selectedSensor = "rpm";
+            selectedSensorName.Content = "RPM";
+            Tuple<double, double> sensorCalibration = this.sensor.getCalibration("p");//TODO: RPM bayad beshe Presure
+            gain.Text = Convert.ToString(sensorCalibration.Item1);
+            arzAzMabda.Text = Convert.ToString(sensorCalibration.Item2);
         }
 
         private void AutomaticButton_Click(object sender, EventArgs e)
@@ -476,8 +590,7 @@ namespace jf_FinalProject
                     _errorMessages.Clear();
                     Compiler compiler = new Compiler();
                     compiler.compile(path);
-                    SensorHandler sensor = new SensorHandler();
-                    Runner runner = new Runner(compiler, sensor);
+                    Runner runner = new Runner(compiler, this.sensor);
                     runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
                     runner.NewLog += OnNewLog;
                     _fileHasError = runner.Run();
