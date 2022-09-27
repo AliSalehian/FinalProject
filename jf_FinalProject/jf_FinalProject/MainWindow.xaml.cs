@@ -142,7 +142,7 @@ namespace jf_FinalProject
             loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            this.selectedSensor = "temp1";
+            this.selectedSensor = "t1";
             selectedSensorName.Content = "temperature 1";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t1");
             gain.Text = Convert.ToString(sensorCalibration.Item1);
@@ -174,7 +174,7 @@ namespace jf_FinalProject
             loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            this.selectedSensor = "temp2";
+            this.selectedSensor = "t2";
             selectedSensorName.Content = "temperature 2";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t2");
             gain.Text = Convert.ToString(sensorCalibration.Item1);
@@ -190,7 +190,7 @@ namespace jf_FinalProject
             loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            this.selectedSensor = "temp3";
+            this.selectedSensor = "t3";
             selectedSensorName.Content = "temperature 3";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t3");
             gain.Text = Convert.ToString(sensorCalibration.Item1);
@@ -206,7 +206,7 @@ namespace jf_FinalProject
             loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            this.selectedSensor = "loadCell1";
+            this.selectedSensor = "mleft";
             selectedSensorName.Content = "loadCell 1";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("mleft");
             gain.Text = Convert.ToString(sensorCalibration.Item1);
@@ -222,7 +222,7 @@ namespace jf_FinalProject
             temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            this.selectedSensor = "loadCell2";
+            this.selectedSensor = "mright";
             selectedSensorName.Content = "loadCell 2";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("mright");
             gain.Text = Convert.ToString(sensorCalibration.Item1);
@@ -238,7 +238,7 @@ namespace jf_FinalProject
             loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            this.selectedSensor = "rpm";
+            this.selectedSensor = "p";
             selectedSensorName.Content = "RPM";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("p");//TODO: RPM bayad beshe Presure
             gain.Text = Convert.ToString(sensorCalibration.Item1);
@@ -255,6 +255,7 @@ namespace jf_FinalProject
             mainTopBorderCalibration.Visibility = Visibility.Hidden;
 
             manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            calibrationContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
             IsManual = false;
         }
@@ -425,6 +426,34 @@ namespace jf_FinalProject
             calibrationContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
             AutomaticContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
             manualContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+        }
+
+        private void setCalibration_Clicked(object sender, EventArgs e)
+        {
+            if (this.selectedSensor != "")
+            {
+                double doubleGain, doubleArzAzMabda;
+                try
+                {
+                    doubleGain = Convert.ToDouble(gain.Text);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("gain value should be a float number");
+                    return;
+                }
+
+                try
+                {
+                    doubleArzAzMabda = Convert.ToDouble(arzAzMabda.Text);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("arz az mabda value should be a float number");
+                    return;
+                }
+                this.sensor.setCalibration(this.selectedSensor, doubleGain, doubleArzAzMabda);
+            }
         }
 
         private void MinMaxButton_Click(object sender, EventArgs e)
