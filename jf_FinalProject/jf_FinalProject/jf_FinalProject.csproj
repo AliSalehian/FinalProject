@@ -103,6 +103,7 @@
     <Compile Include="Logic\CommandEventArgs.cs" />
     <Compile Include="Logic\Compiler.cs" />
     <Compile Include="Logic\CustomError.cs" />
+    <Compile Include="Logic\DataBaseConnection.cs" />
     <Compile Include="Logic\Explanation.cs" />
     <Compile Include="Logic\HardwareInterface.cs" />
     <Compile Include="Logic\LogEventArgs.cs" />

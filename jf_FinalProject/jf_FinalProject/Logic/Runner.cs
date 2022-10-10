@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
@@ -44,7 +45,7 @@ namespace jf
         /// we dont create a compiler object in <c>Runner</c> class. its created in 
         /// <c>Program</c> class and pass from <c>Program</c> to here.
         /// </summary>
-        Compiler _compiler;
+        public Compiler _compiler;
 
         /// <summary>
         /// <c>sensorHandler</c> attribute is an object of <c>SensorHandler</c> class. this object
@@ -81,9 +82,8 @@ namespace jf
         /// </summary>
         /// <param name="compiler"> is an object of <c>jf.Compiler</c> class that compile code</param>
         /// <param name="sensorHandler">is an object of <c>SensorHandler</c> class</param>
-        public Runner(Compiler compiler, SensorHandler sensorHandler)
+        public Runner(SensorHandler sensorHandler)
         {
-            this._compiler = compiler;
             this._sensorHandler = sensorHandler;
         }
         #endregion
@@ -700,6 +700,7 @@ namespace jf
                                         }
                                         else if (validDuration <= loopDuration.TotalSeconds)
                                         {
+                                            start = DateTime.Now;
                                             break;
                                         }
                                     }
@@ -726,6 +727,7 @@ namespace jf
                                         }
                                         else if (validDuration <= loopDuration.TotalSeconds)
                                         {
+                                            Thread.Sleep((validDuration - Convert.ToInt32(loopDuration.TotalSeconds)) * 1000);
                                             break;
                                         }
                                     }

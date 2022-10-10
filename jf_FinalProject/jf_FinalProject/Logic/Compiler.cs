@@ -961,15 +961,15 @@ namespace jf
                         }
 
                         // speed flag is 'c', other flags are illegal and we have an error
-                        /*if (temp.Length == 1)
+                        if (temp.Length == 2)
                         {
                             if (temp[1].ToLower() != "c")
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[35]));
                                 break;
                             }
-                        }*/
-                        identifierAndAttribute[1] = identifierAndAttribute[1].Replace(",c", "");
+                        }
+                        //identifierAndAttribute[1] = identifierAndAttribute[1].Replace(",c", "");
 
                         /* speed keyword has a value and this value is seperated from speed keyword 
                          * with one blank space, if there is no value its an error and we check it here
@@ -985,9 +985,9 @@ namespace jf
                          * not be alphabet, so its a number and we should be able to parse it to number
                          * if we cant do that we have an error
                          */
-                        if (!Char.IsLetter(identifierAndAttribute[1][0]))
+                        if (!Char.IsLetter(temp[0][0]))
                         {
-                            if (double.TryParse(identifierAndAttribute[1], out number) == false)
+                            if (double.TryParse(temp[0], out number) == false)
                             {
                                 this.errors.Add(new CustomError(lineNumber, this.allErrorsText[26]));
                                 jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[26], this.codeFilePath);
@@ -1224,55 +1224,60 @@ namespace jf
                     #region lend Keyword Errors
                     case "lend":
                         // loop keyword has no attribute, if it has attribute we have an error
-                        string[] temp3 = identifierAndAttribute[1].Split(',');
-                        if (temp3.Length > 2)
+                        if (identifierAndAttribute.Length > 1)
                         {
-                            this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
-                            jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
-                            break;
-                        }
-
-                        /* if we have 2 attribute we should check both of them,
+                            if (identifierAndAttribute[1] != null)
+                            {
+                                string[] temp3 = identifierAndAttribute[1].Split(',');
+                                if (temp3.Length > 2)
+                                {
+                                    this.errors.Add(new CustomError(lineNumber, this.allErrorsText[100]));
+                                    jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[100], this.codeFilePath);
+                                    break;
+                                }
+                                /* if we have 2 attribute we should check both of them,
                          * first one should be a number and second one should be a valid condition
                          */
-                        if (temp3.Length == 2)
-                        {
-                            if (double.TryParse(temp3[0], out number) == false)
-                            {
-                                this.errors.Add(new CustomError(lineNumber, this.allErrorsText[38]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[38], this.codeFilePath);
-                                break;
-                            }
-                            temp3[1] = temp3[1].ToLower().Replace("while", "");
-                            if (!checkForConditionError(temp3[1]))
-                            {
-                                this.errors.Add(new CustomError(lineNumber, this.allErrorsText[39]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[39], this.codeFilePath);
-                                break;
-                            }
-                        }
+                                if (temp3.Length == 2)
+                                {
+                                    if (double.TryParse(temp3[0], out number) == false)
+                                    {
+                                        this.errors.Add(new CustomError(lineNumber, this.allErrorsText[38]));
+                                        jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[38], this.codeFilePath);
+                                        break;
+                                    }
+                                    temp3[1] = temp3[1].ToLower().Replace("while", "");
+                                    if (!checkForConditionError(temp3[1]))
+                                    {
+                                        this.errors.Add(new CustomError(lineNumber, this.allErrorsText[39]));
+                                        jf_FinalProject.Logger.Logger.Log(this, lineNumber, this.allErrorsText[39], this.codeFilePath);
+                                        break;
+                                    }
+                                }
 
-                        /* if our attribute contains while keyword we have a loop with condition
-                         * and we check its condition
-                         */
-                        else if (identifierAndAttribute[1].ToLower().Contains("while"))
-                        {
-                            if (!this.checkForConditionError(identifierAndAttribute[1].ToLower().Replace("while", "").Trim()))
-                            {
-                                errors.Add(new CustomError(lineNumber, allErrorsText[39]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[39], this.codeFilePath);
-                                break;
-                            }
-                        }
+                                /* if our attribute contains while keyword we have a loop with condition
+                                 * and we check its condition
+                                 */
+                                else if (identifierAndAttribute[1].ToLower().Contains("while"))
+                                {
+                                    if (!this.checkForConditionError(identifierAndAttribute[1].ToLower().Replace("while", "").Trim()))
+                                    {
+                                        errors.Add(new CustomError(lineNumber, allErrorsText[39]));
+                                        jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[39], this.codeFilePath);
+                                        break;
+                                    }
+                                }
 
-                        // if our attribute is a number we should check that its a valid number
-                        else if (identifierAndAttribute.Length == 2)
-                        {
-                            if (double.TryParse(identifierAndAttribute[1], out number) == false)
-                            {
-                                errors.Add(new CustomError(lineNumber, allErrorsText[38]));
-                                jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38], this.codeFilePath);
-                                break;
+                                // if our attribute is a number we should check that its a valid number
+                                else if (identifierAndAttribute.Length == 2)
+                                {
+                                    if (double.TryParse(identifierAndAttribute[1], out number) == false)
+                                    {
+                                        errors.Add(new CustomError(lineNumber, allErrorsText[38]));
+                                        jf_FinalProject.Logger.Logger.Log(this, lineNumber, allErrorsText[38], this.codeFilePath);
+                                        break;
+                                    }
+                                }
                             }
                         }
                         break;
@@ -1528,6 +1533,27 @@ namespace jf
                     break;
                 }
                 if (i == this.realLines.Count - 1) isEnded = true;
+            }
+            while (true)
+            {
+                if (i < realLines.Count)
+                {
+                    if (realLines[i].Item2.Length == 0)
+                    {
+                        i++;
+                        continue;
+                    }
+                    else
+                    {
+                        isEnded = false;
+                        break;
+                    }
+                }
+                else
+                {
+                    isEnded = true;
+                    break;
+                }
             }
             #endregion
 

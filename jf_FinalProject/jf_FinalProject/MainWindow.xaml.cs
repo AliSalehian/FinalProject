@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -41,6 +42,8 @@ namespace jf_FinalProject
         private bool _isMotorRunning = false;
         private string selectedSensor;
         private SensorHandler sensor = new SensorHandler();
+        private Compiler compiler;
+        private Runner runner;
         private bool IsMenuOpen { get; set; }
 
         public bool IsManual { get; set; }
@@ -60,6 +63,8 @@ namespace jf_FinalProject
             Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
             codePointer.Children.Add(label);
             lineIndex.AppendText($"{++_rtbIndex}");
+            this.runner = new Runner(this.sensor);
+            this.compiler = new Compiler();
         }
 
         private Label CreateLabel(Visibility visibility, string name, SolidColorBrush color)
@@ -263,7 +268,7 @@ namespace jf_FinalProject
         private void AddFileButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JF Code (*.jf)|*.jf";
+            openFileDialog.Filter = "Text File (*.txt)|*.txt";
             openFileDialog.Multiselect = true;
             if (openFileDialog.ShowDialog() == true)
             {
@@ -585,6 +590,86 @@ namespace jf_FinalProject
             //}
         }
 
+        private void StartRunThread(List<string> pathList)
+        {
+            
+            foreach (string path in pathList)
+            {
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _errorCount = 0;
+                    _errorMessages.Clear();
+                    addFileButton.IsEnabled = false;
+                    deleteAllFileButton.IsEnabled = false;
+                    deleteSelectedFileButton.IsEnabled = false;
+                    runAllButton.IsEnabled = false;
+
+                    addFileButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_gray);
+                    deleteAllFileButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_gray);
+                    deleteSelectedFileButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_gray);
+                    runAllButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_gray);
+                }));
+                compiler.compile(path);
+                runner._compiler = compiler;
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
+                    runner.NewLog += OnNewLog;
+                })); 
+                this._fileHasError = runner.Run();
+                this.Dispatcher.BeginInvoke(new Action(() => {
+
+                    string selectedFileName = Regex.Replace(path, @"[\d-]", string.Empty);
+                    TextBlock textBlock = new TextBlock
+                    {
+                        Foreground = new SolidColorBrush(Color.FromRgb(102, 255, 102)),
+                        Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue),
+                        IsEnabled = false,
+                        Padding = new Thickness(5),
+                        Margin = new Thickness(5),
+                        TextWrapping = TextWrapping.Wrap
+                    };
+                    if (_fileHasError)
+                    {
+                        textBlock.Inlines.Add(new Run
+                        {
+                            Text = $"there is no error in {path}"
+                        });
+                    }
+                    else
+                    {
+                        textBlock.Foreground = new SolidColorBrush(Color.FromRgb(255, 102, 102));
+                        textBlock.Inlines.Add(new Run
+                        {
+                            Text = $"there are {_errorCount} errors in {path}:\n\n"
+                        });
+                        foreach (string error in _errorMessages)
+                        {
+                            textBlock.Inlines.Add(new Run
+                            {
+                                Text = $"{error}\n\n"
+                            });
+                        }
+                    }
+                    jfErrorsContainer.Children.Add(textBlock);
+                }));
+            }
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _errorCount = 0;
+                _errorMessages.Clear();
+                addFileButton.IsEnabled = true;
+                deleteAllFileButton.IsEnabled = true;
+                deleteSelectedFileButton.IsEnabled = true;
+                runAllButton.IsEnabled = true;
+
+                addFileButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_yellow);
+                deleteAllFileButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_yellow);
+                deleteSelectedFileButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_yellow);
+                runAllButton.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_yellow);
+            }));
+        }
+
         private void RunAllButton_Click(object sender, EventArgs e)
         {
 
@@ -613,50 +698,8 @@ namespace jf_FinalProject
 
                 #region Start Run
                 Logger.Logger logger = new Logger.Logger();
-                foreach (string path in _selectedFilePath)
-                {
-                    _errorCount = 0;
-                    _errorMessages.Clear();
-                    Compiler compiler = new Compiler();
-                    compiler.compile(path);
-                    Runner runner = new Runner(compiler, this.sensor);
-                    runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
-                    runner.NewLog += OnNewLog;
-                    _fileHasError = runner.Run();
-                    string selectedFileName = Regex.Replace(path, @"[\d-]", string.Empty);
-                    TextBlock textBlock = new TextBlock
-                    {
-                        Foreground = new SolidColorBrush(Color.FromRgb(102, 255, 102)),
-                        Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue),
-                        IsEnabled = false,
-                        Padding = new Thickness(5),
-                        Margin = new Thickness(5),
-                        TextWrapping = TextWrapping.Wrap
-                    };
-                    if (_fileHasError)
-                    {
-                        textBlock.Inlines.Add(new Run 
-                        {
-                            Text = $"there is no error in {path}"
-                        });
-                    }
-                    else
-                    {
-                        textBlock.Foreground = new SolidColorBrush(Color.FromRgb(255, 102, 102));
-                        textBlock.Inlines.Add(new Run
-                        {
-                            Text = $"there are {_errorCount} errors in {path}:\n\n"
-                        });
-                        foreach(string error in _errorMessages)
-                        {
-                            textBlock.Inlines.Add(new Run
-                            {
-                                Text = $"{error}\n\n"
-                            });
-                        }
-                    }
-                    jfErrorsContainer.Children.Add(textBlock);
-                }
+                Thread thread = new Thread(() => { StartRunThread(_selectedFilePath); });
+                thread.Start();
                 #endregion
             }
 
@@ -679,20 +722,24 @@ namespace jf_FinalProject
             TextRange range = new TextRange(lineIndex.Document.ContentStart, lineIndex.Document.ContentEnd);
             TextPointer current = range.Start.GetInsertionPosition(LogicalDirection.Forward);
             int line = 0;
-            while(current != null)
+            this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (line == e.LineNumber)
+                while (current != null)
                 {
-                    if (line != 0)
+                    if (line == e.LineNumber)
                     {
-                        //codePointer.Children[line - 1].Visibility = Visibility.Hidden;
+                        if (line != 0)
+                        {
+                            //codePointer.Children[line - 1].Visibility = Visibility.Hidden;
+                        }
+                        if (line >= codePointer.Children.Count) break;
+                        codePointer.Children[line].Visibility = Visibility.Visible;
+                        break;
                     }
-                    codePointer.Children[line].Visibility = Visibility.Visible;
-                    break;
+                    current = current.GetNextContextPosition(LogicalDirection.Forward);
+                    line++;
                 }
-                current = current.GetNextContextPosition(LogicalDirection.Forward);
-                line++;
-            }
+            }));
         }
 
         private void OnNewLog(object sender, LogEventArgs e)
