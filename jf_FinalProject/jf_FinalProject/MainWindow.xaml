@@ -227,34 +227,154 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <WrapPanel x:Name="temp1Container" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectTemp1">
-                        <Label Content="Temperature 1" HorizontalAlignment="Left"/>
-                        <Label x:Name="Temperature1" Content="1" HorizontalAlignment="Right"/>
-                    </WrapPanel>
-                    <WrapPanel x:Name="temp2Container" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectTemp2">
-                        <Label Content="Temperature 2" HorizontalAlignment="Left"/>
-                        <Label x:Name="Temperature2" Content="2" HorizontalAlignment="Right"/>
-                    </WrapPanel>
-                    <WrapPanel x:Name="temp3Container" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectTemp3">
-                        <Label Content="Temperature 3" HorizontalAlignment="Left"/>
-                        <Label x:Name="Temperature3" Content="3" HorizontalAlignment="Right"/>
-                    </WrapPanel>
-                    <WrapPanel x:Name="loadCell1Container" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectLoadCell1">
-                        <Label Content="Load Cell 1" HorizontalAlignment="Left"/>
-                        <Label x:Name="LoadCell1" Content="4" HorizontalAlignment="Right"/>
-                    </WrapPanel>
-                    <WrapPanel x:Name="loadCell2Container" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectLoadCell2">
-                        <Label Content="Load Cell 2" HorizontalAlignment="Left"/>
-                        <Label x:Name="LoadCell2" Content="5" HorizontalAlignment="Right"/>
-                    </WrapPanel>
-                    <WrapPanel x:Name="rpmContainer" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectRpm">
-                        <Label Content="RPM" HorizontalAlignment="Left"/>
-                        <Label x:Name="rpm" Content="6" HorizontalAlignment="Right"/>
-                    </WrapPanel>
-                    <WrapPanel x:Name="speedContainer" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="selectSpeed">
-                        <Label Content="speed" HorizontalAlignment="Left"/>
-                        <Label x:Name="speedSensor" Content="7" HorizontalAlignment="Right"/>
-                    </WrapPanel>
+                    <!--Temperature 1-->
+                    <Border Background="{DynamicResource darkBackGroundInCalibration}" 
+                            Grid.Column="0" Grid.Row="0" BorderThickness="5" 
+                            CornerRadius="10" Margin="5,0,0,0" x:Name="temp1Container" Cursor="Hand" MouseLeftButtonDown="selectTemp1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="1" Grid.Row="1" Content="Temperature 1" Style="{StaticResource DisplaySensorValue}"/>
+                            <Label Grid.Column="2" Grid.Row="1" x:Name="Temperature1" Content="1" Style="{StaticResource DisplaySensorValue}"/>
+                        </Grid>
+                    </Border>
+
+                    <!--Temperature 2-->
+                    <Border Background="{DynamicResource darkBackGroundInCalibration}" 
+                            Grid.Column="1" Grid.Row="0" BorderThickness="5" 
+                            CornerRadius="10" Margin="5,0,0,0" x:Name="temp2Container" Cursor="Hand" MouseLeftButtonDown="selectTemp2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Content="Temperature 2" Style="{StaticResource DisplaySensorValue}"/>
+                            <Label Grid.Column="2" Grid.Row="1" x:Name="Temperature2" Content="2" Style="{StaticResource DisplaySensorValue}"/>
+                        </Grid>
+                    </Border>
+
+                    <!--Temperature 3-->
+                    <Border Background="{DynamicResource darkBackGroundInCalibration}"  
+                            Grid.Column="2" Grid.Row="0" BorderThickness="5" 
+                            CornerRadius="10" Margin="5,0,0,0" x:Name="temp3Container" Cursor="Hand" MouseLeftButtonDown="selectTemp3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Content="Temperature 3" Style="{StaticResource DisplaySensorValue}"/>
+                            <Label Grid.Column="2" Grid.Row="1" x:Name="Temperature3" Content="3" Style="{StaticResource DisplaySensorValue}"/>
+                        </Grid>
+                    </Border>
+
+                    <!--Load Cell 1-->
+                    <Border Background="{DynamicResource darkBackGroundInCalibration}"
+                            Grid.Column="0" Grid.Row="1" BorderThickness="5" 
+                            CornerRadius="10" Margin="5,0,0,0" x:Name="loadCell1Container" Cursor="Hand" MouseLeftButtonDown="selectLoadCell1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Content="Load Cell 1" Style="{StaticResource DisplaySensorValue}"/>
+                            <Label Grid.Column="2" Grid.Row="1" x:Name="LoadCell1" Content="4" Style="{StaticResource DisplaySensorValue}"/>
+                        </Grid>
+                    </Border>
+
+                    <!--Load Cell 2-->
+                    <Border Background="{DynamicResource darkBackGroundInCalibration}"
+                            Grid.Column="1" Grid.Row="1" BorderThickness="5" 
+                            CornerRadius="10" Margin="5,0,0,0" x:Name="loadCell2Container" Cursor="Hand" MouseLeftButtonDown="selectLoadCell2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Content="Load Cell 2" Style="{StaticResource DisplaySensorValue}"/>
+                            <Label Grid.Column="2" Grid.Row="1" x:Name="LoadCell2" Content="5" Style="{StaticResource DisplaySensorValue}"/>
+                        </Grid>
+                    </Border>
+
+                    <!--RPM-->
+                    <Border Background="{DynamicResource darkBackGroundInCalibration}" 
+                            Grid.Column="2" Grid.Row="1" BorderThickness="5" 
+                            CornerRadius="10" Margin="5,0,0,0" x:Name="rpmContainer" Cursor="Hand" MouseLeftButtonDown="selectRpm">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Content="RPM" Style="{StaticResource DisplaySensorValue}"/>
+                            <Label Grid.Column="2" Grid.Row="1" x:Name="rpm" Content="6" Style="{StaticResource DisplaySensorValue}"/>
+                        </Grid>
+                    </Border>
+
+                    <!--Speed-->
+                    <Border Background="{DynamicResource darkBackGroundInCalibration}" 
+                            Grid.Column="1" Grid.Row="2" BorderThickness="5" 
+                            CornerRadius="10" Margin="5,0,0,0" x:Name="speedContainer" Cursor="Hand" MouseLeftButtonDown="selectSpeed">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Content="speed" Style="{StaticResource DisplaySensorValue}"/>
+                            <Label Grid.Column="2" Grid.Row="1" x:Name="speedSensor" Content="7" Style="{StaticResource DisplaySensorValue}"/>
+                        </Grid>
+                    </Border>
+                    
                 </Grid>
             </Border>
 

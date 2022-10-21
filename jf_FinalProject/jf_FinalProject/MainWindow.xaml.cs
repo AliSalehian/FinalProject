@@ -34,6 +34,7 @@ namespace jf_FinalProject
         private string _green = "#00ff00";
         private string _gray = "#DCE0E4";
         private string _yellow = "#FFDD00";
+        private string _darkYellow = "#8f7c27";
         private SolidColorBrush _greenColor;
         private bool _fileHasError = false;
         private List<string> _errorMessages = new List<string>();
@@ -44,6 +45,7 @@ namespace jf_FinalProject
         private SensorHandler sensor = new SensorHandler();
         private Compiler compiler;
         private Runner runner;
+        private SolidColorBrush _animatedBrush;
         private bool IsMenuOpen { get; set; }
 
         public bool IsManual { get; set; }
@@ -56,15 +58,24 @@ namespace jf_FinalProject
         public MainWindow()
         {
             InitializeComponent();
-            HardwareInterface hardware = new HardwareInterface();
+            //HardwareInterface hardware = new HardwareInterface();
             _greenColor = (SolidColorBrush)new BrushConverter().ConvertFrom(_green);
             IsMenuOpen = false;
             IsManual = true;
             Label label = CreateLabel(Visibility.Hidden, $"l{_rtbIndex}", _greenColor);
             codePointer.Children.Add(label);
             lineIndex.AppendText($"{++_rtbIndex}");
-            this.runner = new Runner(this.sensor);
-            this.compiler = new Compiler();
+            runner = new Runner(this.sensor);
+            compiler = new Compiler();
+
+            ColorAnimation calibrationColorAnim = new ColorAnimation();
+            _animatedBrush = new SolidColorBrush();
+            calibrationColorAnim.From = (Color)ColorConverter.ConvertFromString(_darkBackGroundValue);
+            calibrationColorAnim.To = (Color)ColorConverter.ConvertFromString(_darkYellow);
+            calibrationColorAnim.Duration = new Duration(TimeSpan.FromSeconds(2));
+            calibrationColorAnim.RepeatBehavior = RepeatBehavior.Forever;
+            calibrationColorAnim.AutoReverse = true;
+            _animatedBrush.BeginAnimation(SolidColorBrush.ColorProperty, calibrationColorAnim);
         }
 
         private Label CreateLabel(Visibility visibility, string name, SolidColorBrush color)
@@ -140,13 +151,14 @@ namespace jf_FinalProject
 
         private void selectTemp1(object sender, EventArgs e)
         {
-            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
-            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp1Container.Background = this._animatedBrush;
+            speedContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp3Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            rpmContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+
             this.selectedSensor = "t1";
             selectedSensorName.Content = "temperature 1";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t1");
@@ -156,13 +168,14 @@ namespace jf_FinalProject
 
         private void selectSpeed(object sender, EventArgs e)
         {
-            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
-            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            speedContainer.Background = this._animatedBrush;
+            temp1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp3Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            rpmContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+
             this.selectedSensor = "speed";
             selectedSensorName.Content = "speed";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("n"); //TODO: in aya bayad hamin bashe? sensor n aya speed mide be ma? 
@@ -172,13 +185,14 @@ namespace jf_FinalProject
 
         private void selectTemp2(object sender, EventArgs e)
         {
-            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
-            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp2Container.Background = this._animatedBrush;
+            speedContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp3Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            rpmContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+
             this.selectedSensor = "t2";
             selectedSensorName.Content = "temperature 2";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t2");
@@ -188,13 +202,14 @@ namespace jf_FinalProject
 
         private void selectTemp3(object sender, EventArgs e)
         {
-            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
-            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            temp3Container.Background = this._animatedBrush;
+            speedContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            rpmContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+
             this.selectedSensor = "t3";
             selectedSensorName.Content = "temperature 3";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("t3");
@@ -204,13 +219,14 @@ namespace jf_FinalProject
 
         private void selectLoadCell1(object sender, EventArgs e)
         {
-            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
-            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell1Container.Background = this._animatedBrush;
+            speedContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp3Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            rpmContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+
             this.selectedSensor = "mleft";
             selectedSensorName.Content = "loadCell 1";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("mleft");
@@ -220,13 +236,14 @@ namespace jf_FinalProject
 
         private void selectLoadCell2(object sender, EventArgs e)
         {
-            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
-            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            loadCell2Container.Background = this._animatedBrush;
+            speedContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp3Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            rpmContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+
             this.selectedSensor = "mright";
             selectedSensorName.Content = "loadCell 2";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("mright");
@@ -236,13 +253,14 @@ namespace jf_FinalProject
 
         private void selectRpm(object sender, EventArgs e)
         {
-            rpmContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_darkBackGroundValue);
-            temp2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp3Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            loadCell2Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            temp1Container.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
-            speedContainer.Background = (SolidColorBrush)new BrushConverter().ConvertFrom(_lightBackGroundValue);
+            rpmContainer.Background = this._animatedBrush;
+            speedContainer.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp3Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            loadCell2Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+            temp1Container.Background = this.FindResource("darkBackGround") as SolidColorBrush;
+
             this.selectedSensor = "p";
             selectedSensorName.Content = "RPM";
             Tuple<double, double> sensorCalibration = this.sensor.getCalibration("p");//TODO: RPM bayad beshe Presure
@@ -719,11 +737,11 @@ namespace jf_FinalProject
 
         private void OnRichTextNeedUpdate(object sender, CommandEventArgs e)
         {
-            TextRange range = new TextRange(lineIndex.Document.ContentStart, lineIndex.Document.ContentEnd);
-            TextPointer current = range.Start.GetInsertionPosition(LogicalDirection.Forward);
-            int line = 0;
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
+                TextRange range = new TextRange(lineIndex.Document.ContentStart, lineIndex.Document.ContentEnd);
+                TextPointer current = range.Start.GetInsertionPosition(LogicalDirection.Forward);
+                int line = 0;
                 while (current != null)
                 {
                     if (line == e.LineNumber)

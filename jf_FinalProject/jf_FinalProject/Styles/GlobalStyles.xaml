@@ -7,6 +7,15 @@
     <SolidColorBrush x:Key="lightBackGround" Color="#3A4149" />
     <SolidColorBrush x:Key="grayBackGround" Color="#DCE0E4" />
     <SolidColorBrush x:Key="customYellow" Color="#FFDD00" />
+    <SolidColorBrush x:Key="darkBackGroundInCalibration" Color="#292F34" />
+
+    <!--display sensor value in calibration page-->
+    <Style x:Key="DisplaySensorValue" TargetType="Label">
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource grayBackGround}"/>
+    </Style>
 
     <!--yellow buttons-->
     <Style x:Key="YelloBtn" TargetType="Button">
