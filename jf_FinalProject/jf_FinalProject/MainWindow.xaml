@@ -675,7 +675,7 @@
                             <Button Grid.Row="0" Grid.Column="2" x:Name="deleteSelectedFileButton" Content="Delete Selected" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="DeleteSelectedFileButton_Click"/>
                             <Button Grid.Row="0" Grid.Column="3" x:Name="runAllButton" Content="Run All" Margin="5,10,5,10" FontSize="11" Style="{StaticResource YelloBtn}" Click="RunAllButton_Click"/>
                             <Border Grid.Row="1" Grid.ColumnSpan="4" BorderBrush="{StaticResource customYellow}" BorderThickness="1" CornerRadius="5">
-                                <ListBox x:Name="selectedFileListBox" Background="#292F34" Margin="5" BorderThickness="0" FontSize="14" Foreground="White" SelectionChanged="FileListBox_SelectionChanged"/>
+                                <ListBox x:Name="selectedFileListBox" Background="#292F34" Margin="5" BorderThickness="0" FontSize="14" Foreground="White"/>
                             </Border>
                         </Grid>
                     </Border>

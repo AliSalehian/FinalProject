@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace jf_FinalProject
     {
 
         private int _numberOfSelectedFile = 0;
-        private List<string> _selectedFilePath = new List<string>();
+        private ObservableCollection<string> _selectedFilePath = new ObservableCollection<string>();
         private int _rtbIndex = 0;
         private string _darkBackGroundValue = "#292F34";
         private string _lightBackGroundValue = "#3A4149";
@@ -46,11 +47,13 @@ namespace jf_FinalProject
         private Compiler compiler;
         private Runner runner;
         private SolidColorBrush _animatedBrush;
+        private ObservableCollection<string> _selectedItemsInListBox;
+        
         private bool IsMenuOpen { get; set; }
 
         public bool IsManual { get; set; }
 
-        public List<string> SelectedFilePath
+        public ObservableCollection<string> SelectedFilePath
         {
             get { return _selectedFilePath; }
             set { _selectedFilePath = value; }
@@ -67,6 +70,8 @@ namespace jf_FinalProject
             lineIndex.AppendText($"{++_rtbIndex}");
             runner = new Runner(this.sensor);
             compiler = new Compiler();
+            runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
+            runner.NewLog += OnNewLog;
 
             ColorAnimation calibrationColorAnim = new ColorAnimation();
             _animatedBrush = new SolidColorBrush();
@@ -76,6 +81,8 @@ namespace jf_FinalProject
             calibrationColorAnim.RepeatBehavior = RepeatBehavior.Forever;
             calibrationColorAnim.AutoReverse = true;
             _animatedBrush.BeginAnimation(SolidColorBrush.ColorProperty, calibrationColorAnim);
+
+            _selectedItemsInListBox = new ObservableCollection<string>();
         }
 
         private Label CreateLabel(Visibility visibility, string name, SolidColorBrush color)
@@ -292,15 +299,67 @@ namespace jf_FinalProject
             {
                 foreach (string filename in openFileDialog.FileNames)
                 {
-                    this._selectedFilePath.Add(filename);
-                    selectedFileListBox.Items.Add($"{++_numberOfSelectedFile}\t{Path.GetFileName(filename)}");
+                    _selectedFilePath.Add(filename);
+                    //selectedFileListBox.Items.Add($"{++_numberOfSelectedFile}\t{Path.GetFileName(filename)}");
+                    _selectedItemsInListBox.Add($"{++_numberOfSelectedFile}\t{Path.GetFileName(filename)}");
+                }
+                selectedFileListBox.ItemsSource = _selectedItemsInListBox;
+                Style itemContainerStyle = new Style(typeof(ListBoxItem));
+                itemContainerStyle.Setters.Add(new Setter(ListBoxItem.AllowDropProperty, true));
+                itemContainerStyle.Setters.Add(new EventSetter(ListBoxItem.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(selectedFileListBox_PreviewMouseLeftButtonDown)));
+                itemContainerStyle.Setters.Add(new EventSetter(ListBoxItem.DropEvent, new DragEventHandler(selectedFileListBox_Drop)));
+                selectedFileListBox.ItemContainerStyle = itemContainerStyle;
+            }
+        }
+
+        void selectedFileListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListBoxItem)
+            {
+                ListBoxItem draggedItem = sender as ListBoxItem;
+                DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
+                draggedItem.IsSelected = true;
+            }
+        }
+        void selectedFileListBox_Drop(object sender, DragEventArgs e)
+        {
+            string droppedData = e.Data.GetData(typeof(string)) as string;
+            string target = ((ListBoxItem)(sender)).DataContext as string;
+
+            int removedIdx = selectedFileListBox.Items.IndexOf(droppedData);
+            int targetIdx = selectedFileListBox.Items.IndexOf(target);
+
+            string droppedFullPath = _selectedFilePath[removedIdx];
+
+            if (removedIdx < targetIdx)
+            {
+                _selectedItemsInListBox.Insert(targetIdx + 1, droppedData);
+                _selectedItemsInListBox.RemoveAt(removedIdx);
+
+                _selectedFilePath.Insert(targetIdx + 1, droppedFullPath);
+                _selectedFilePath.RemoveAt(removedIdx);
+            }
+            else
+            {
+                int remIdx = removedIdx + 1;
+                if (_selectedItemsInListBox.Count + 1 > remIdx)
+                {
+                    _selectedItemsInListBox.Insert(targetIdx, droppedData);
+                    _selectedItemsInListBox.RemoveAt(remIdx);
+
+                    _selectedFilePath.Insert(targetIdx, droppedFullPath);
+                    _selectedFilePath.RemoveAt(remIdx);
                 }
             }
+            selectedFileListBox.SelectedIndex = targetIdx;
+            FileListBox_SelectionChanged();
         }
 
         private void DeleteAllFileButton_Click(object sender, EventArgs e)
         {
-            selectedFileListBox.Items.Clear();
+            this._selectedFilePath.Clear();
+            //selectedFileListBox.Items.Clear();
+            _selectedItemsInListBox.Clear();
             selectedCode.Document.Blocks.Clear();
             lineIndex.Document.Blocks.Clear();
             codePointer.Children.Clear();
@@ -323,7 +382,9 @@ namespace jf_FinalProject
         private void DeleteSelectedFileButton_Click(object sender, EventArgs e)
         {
             int selectedIndex = selectedFileListBox.Items.IndexOf(selectedFileListBox.SelectedItem);
-            selectedFileListBox.Items.RemoveAt(selectedIndex);
+            if (selectedIndex < 0) return;
+            //selectedFileListBox.Items.RemoveAt(selectedIndex);
+            _selectedItemsInListBox.RemoveAt(selectedIndex);
             selectedCode.Document.Blocks.Clear();
             lineIndex.Document.Blocks.Clear();
             codePointer.Children.Clear();
@@ -336,13 +397,13 @@ namespace jf_FinalProject
             codePrintedLogLabel.Content = "Log of ' untitled.jf '";
             _numberOfSelectedFile--;
             _selectedFilePath.RemoveAt(selectedIndex);
-            int index = 0;
-            for (int i = 0; i < selectedFileListBox.Items.Count; i++)
-            {
-                string oldValue = selectedFileListBox.Items[i].ToString();
-                oldValue = Regex.Replace(oldValue, @"[\d-]", string.Empty).Trim();
-                selectedFileListBox.Items[i] = $"{++index}\t{oldValue}";
-            }
+            //int index = 0;
+            //for (int i = 0; i < selectedFileListBox.Items.Count; i++)
+            //{
+            //    string oldValue = selectedFileListBox.Items[i].ToString();
+            //    oldValue = Regex.Replace(oldValue, @"[\d-]", string.Empty).Trim();
+            //    //selectedFileListBox.Items[i] = $"{++index}\t{oldValue}";
+            //}
         }
 
         #region Manual Hanlders
@@ -388,7 +449,7 @@ namespace jf_FinalProject
 
         #endregion
 
-        private void FileListBox_SelectionChanged(object sender, EventArgs e)
+        private void FileListBox_SelectionChanged()
         {
             string selectedFileName = selectedFileListBox.SelectedItem as string;
             if (selectedFileListBox.SelectedIndex < 0) return;
@@ -608,9 +669,14 @@ namespace jf_FinalProject
             //}
         }
 
-        private void StartRunThread(List<string> pathList)
+        private void StartRunThread(ObservableCollection<string> pathList)
         {
-            
+
+            //this.Dispatcher.BeginInvoke(new Action(() =>
+            //{
+            //    runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
+            //    runner.NewLog += OnNewLog;
+            //}));
             foreach (string path in pathList)
             {
                 this.Dispatcher.BeginInvoke(new Action(() =>
@@ -629,11 +695,6 @@ namespace jf_FinalProject
                 }));
                 compiler.compile(path);
                 runner._compiler = compiler;
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    runner.RichTextNeedUpdate += OnRichTextNeedUpdate;
-                    runner.NewLog += OnNewLog;
-                })); 
                 this._fileHasError = runner.Run();
                 this.Dispatcher.BeginInvoke(new Action(() => {
 
@@ -668,6 +729,8 @@ namespace jf_FinalProject
                                 Text = $"{error}\n\n"
                             });
                         }
+                        _errorCount = 0;
+                        _errorMessages.Clear();
                     }
                     jfErrorsContainer.Children.Add(textBlock);
                 }));
